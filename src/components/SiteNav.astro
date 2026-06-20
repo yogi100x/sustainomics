@@ -550,21 +550,18 @@ const UTILITY_LINKS = [
 		border-top: 2px solid var(--color-kicker, #c8102e);
 		box-shadow: var(--shadow-dropdown);
 		padding: var(--spacing-4);
+		padding-top: calc(var(--spacing-4) + 6px);
+		margin-top: -6px;
 		opacity: 0;
 		visibility: hidden;
-		transform: translateY(6px);
 		transition:
-			opacity var(--transition-fast),
-			transform var(--transition-fast),
-			visibility var(--transition-fast);
+			opacity 0.15s ease,
+			visibility 0.15s ease;
 		z-index: 120;
 	}
-	.snav-cat-wrap:hover > .snav-dropdown,
-	.snav-cat-wrap:focus-within > .snav-dropdown,
 	.snav-dropdown.is-open {
 		opacity: 1;
 		visibility: visible;
-		transform: translateY(0);
 	}
 	.snav-dropdown-blurb {
 		font-size: var(--font-size-xs);
@@ -894,13 +891,29 @@ const UTILITY_LINKS = [
 			const panel = item.querySelector<HTMLElement>("[data-snav-panel]");
 			if (!trigger || !panel) return;
 
-			// For <a> triggers, click should still toggle the panel on desktop
-			// (the section landing page remains reachable via the row link on
-			// mobile / via middle-click). Buttons just toggle.
+			// Hover: show dropdown with a delay on hide to bridge the gap
+			let hideTimer: ReturnType<typeof setTimeout>;
+			function showPanel() {
+				if (!isDesktop()) return;
+				clearTimeout(hideTimer);
+				closeAll(item);
+				panel.classList.add("is-open");
+				trigger.setAttribute("aria-expanded", "true");
+			}
+			function hidePanel() {
+				hideTimer = setTimeout(() => {
+					panel.classList.remove("is-open");
+					trigger.setAttribute("aria-expanded", "false");
+				}, 150);
+			}
+			item.addEventListener("mouseenter", showPanel);
+			item.addEventListener("mouseleave", hidePanel);
+			panel.addEventListener("mouseenter", () => clearTimeout(hideTimer));
+			panel.addEventListener("mouseleave", hidePanel);
+
+			// Click: <a> triggers navigate; <button> triggers (More) toggle panel
 			trigger.addEventListener("click", (e) => {
 				if (!isDesktop()) return;
-				// <a> triggers navigate immediately on click; dropdown is shown via CSS hover.
-				// Only <button> triggers (e.g. More) toggle the panel.
 				if (trigger.tagName === "A") return;
 				e.preventDefault();
 				const open = panel.classList.contains("is-open");

@@ -6,6 +6,7 @@ import emdash, { local } from "emdash/astro";
 import { sqlite } from "emdash/db";
 
 export default defineConfig({
+	site: process.env.ORIGIN || "http://localhost:4321",
 	output: "server",
 	adapter: node({
 		mode: "standalone",

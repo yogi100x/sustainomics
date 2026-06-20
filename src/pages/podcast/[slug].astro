@@ -1,0 +1,115 @@
+---
+import { getEmDashEntry } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import PodcastPlayer from "../../components/PodcastPlayer.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+
+const { entry: ep, cacheHint } = await getEmDashEntry("podcasts", slug);
+if (!ep) return Astro.redirect("/404");
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+function mediaUrl(v: any): string | null {
+	if (!v) return null;
+	if (typeof v === "string") return v;
+	if (v.src) return v.src;
+	if (v.url) return v.url;
+	const key = v.meta?.storageKey;
+	if (key) return `/_emdash/api/media/file/${key}`;
+	if (v.id) return `/_emdash/api/media/file/${v.id}`;
+	return null;
+}
+const audioUrl = mediaUrl(ep.data.audio);
+const fmt = (d: Date | string | null | undefined) =>
+	d ? new Date(d).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : null;
+---
+
+<Base title={ep.data.title} description={ep.data.excerpt} type="article">
+	<div class="wrap">
+		<a href="/podcast" class="back">‹ Podcast</a>
+		<span class="kick">Episode</span>
+		<h1 class="h1">{ep.data.title}</h1>
+		{
+			(fmt(ep.data.episode_date) || ep.data.duration) && (
+				<p class="meta">
+					{fmt(ep.data.episode_date)}
+					{ep.data.episode_date && ep.data.duration ? " · " : ""}
+					{ep.data.duration}
+				</p>
+			)
+		}
+		<div class="player">
+			<PodcastPlayer
+				videoUrl={ep.data.video_url}
+				spotifyUrl={ep.data.spotify_url}
+				audioUrl={audioUrl}
+				cover={ep.data.cover}
+				title={ep.data.title}
+			/>
+		</div>
+		{ep.data.excerpt && <p class="dek">{ep.data.excerpt}</p>}
+		{
+			ep.data.content && (
+				<div class="notes">
+					<PortableText value={ep.data.content} />
+				</div>
+			)
+		}
+	</div>
+</Base>
+
+<style>
+	.wrap {
+		max-width: 820px;
+		margin: 0 auto;
+		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
+	}
+	.back {
+		display: inline-block;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: var(--color-muted);
+		text-decoration: none;
+		margin-bottom: var(--spacing-5);
+	}
+	.back:hover {
+		color: var(--color-text);
+	}
+	.kick {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-kicker);
+	}
+	.h1 {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: clamp(1.8rem, 3vw, 2.5rem);
+		font-weight: 700;
+		line-height: 1.13;
+		margin: var(--spacing-2) 0;
+	}
+	.meta {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+		margin-bottom: var(--spacing-5);
+	}
+	.player {
+		margin: var(--spacing-5) 0;
+	}
+	.dek {
+		font-size: var(--font-size-lg);
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		margin: var(--spacing-5) 0;
+	}
+	.notes {
+		font-size: var(--font-size-base);
+		line-height: var(--leading-relaxed);
+	}
+</style>

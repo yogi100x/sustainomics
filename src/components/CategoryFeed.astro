@@ -1,0 +1,1134 @@
+---
+import { Image } from "emdash/ui";
+import type { Section } from "../config/site-nav";
+import type { Post, Episode } from "../../emdash-env";
+
+export interface FeedPost {
+	post: Post;
+	tags: Array<{ slug: string; label: string }>;
+	category: { slug: string; label: string } | null;
+}
+
+interface Props {
+	section: Section;
+	posts: FeedPost[];
+	topic: string | null;
+	/** Optional podcasts to fill the "Listen" sidebar strip. */
+	podcasts?: Episode[];
+	/** When true, the active topic filter matched nothing and we fell back to all. */
+	topicFellBack?: boolean;
+	/** Override the canonical section base path (e.g. "/video"). Defaults to /category/<slug>. */
+	basePath?: string;
+	/** Bloomberg-style sub-category bands: each sub-tab heading + its stories. */
+	subSections?: Array<{ subtab: { label: string; slug: string }; posts: FeedPost[] }>;
+}
+
+const {
+	section,
+	posts,
+	topic,
+	podcasts = [],
+	topicFellBack = false,
+	basePath,
+	subSections = [],
+} = Astro.props;
+
+const base = basePath ?? `/category/${section.slug}`;
+const activeSubtab = topic ? section.subtabs.find((s) => s.slug === topic) : null;
+
+// ---- relative timestamp helper ----
+function timeAgo(d: Date | null | undefined): string {
+	if (!d) return "";
+	const date = d instanceof Date ? d : new Date(d);
+	const secs = Math.floor((Date.now() - date.getTime()) / 1000);
+	if (Number.isNaN(secs)) return "";
+	if (secs < 60) return "just now";
+	const mins = Math.floor(secs / 60);
+	if (mins < 60) return `${mins} min ago`;
+	const hrs = Math.floor(mins / 60);
+	if (hrs < 24) return `${hrs} hr${hrs === 1 ? "" : "s"} ago`;
+	const days = Math.floor(hrs / 24);
+	if (days < 7) return `${days} day${days === 1 ? "" : "s"} ago`;
+	return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+function bylineNames(p: Post): string[] {
+	return (p.data.bylines ?? []).map((b) => b.byline?.displayName).filter(Boolean) as string[];
+}
+
+const postDate = (p: Post) => p.data.publishedAt ?? p.data.createdAt ?? null;
+
+// ---- layout slices ----
+const lead = posts[0]?.post ?? null;
+const leadMeta = posts[0] ?? null;
+const secondLead = posts[1]?.post ?? null;
+const secondMeta = posts[1] ?? null;
+
+// secondary story cards
+const secondary = posts.slice(2, 8);
+// explainers row
+const explainers = posts.slice(8, 12);
+// "More News" list — everything after the hero+secondary block
+const moreNews = posts.slice(2);
+
+const INITIAL_MORE = 8;
+
+const podStrip = podcasts.slice(0, 4);
+---
+
+<section class="cat">
+	<!-- Masthead -->
+	<header class="cat-head">
+		<h1 class="cat-title">{section.label}</h1>
+		{section.blurb && <p class="cat-dek">{section.blurb}</p>}
+	</header>
+
+	<!-- Sub-tab row -->
+	<nav class="subtabs" aria-label={`${section.label} topics`}>
+		<div class="subtabs-inner">
+			<a
+				href={base}
+				class:list={["subtab", { active: !activeSubtab }]}
+				aria-current={!activeSubtab ? "page" : undefined}>All</a
+			>
+			{
+				section.subtabs.map((t) => (
+					<a
+						href={`${base}?topic=${t.slug}`}
+						class:list={["subtab", { active: activeSubtab?.slug === t.slug }]}
+						aria-current={activeSubtab?.slug === t.slug ? "page" : undefined}
+						title={t.desc}
+					>
+						{t.label}
+					</a>
+				))
+			}
+		</div>
+	</nav>
+
+	{
+		topicFellBack && activeSubtab && (
+			<p class="fallback-note">
+				No stories tagged <strong>{activeSubtab.label}</strong> yet — showing all{" "}
+				{section.label}.
+			</p>
+		)
+	}
+
+	{
+		posts.length === 0 ? (
+			<div class="empty">
+				<h2 class="empty-title">No stories yet</h2>
+				<p class="empty-dek">
+					Coverage for {section.label}
+					{activeSubtab ? ` · ${activeSubtab.label}` : ""} is being curated. Check back
+					shortly.
+				</p>
+				<a class="empty-cta" href="/">
+					Back to the front page →
+				</a>
+			</div>
+		) : (
+			<div class="layout">
+				{/* ===== MAIN COLUMN ===== */}
+				<div class="main">
+					{/* Lead hero */}
+					<div class="hero">
+						{lead && (
+							<article class="hero-lead">
+								{lead.data.featured_image && (
+									<a href={`/posts/${lead.id}`} class="hero-media">
+										<Image image={lead.data.featured_image} />
+									</a>
+								)}
+								<div class="hero-body">
+									{leadMeta?.category && (
+										<a class="kicker" href={`/category/${leadMeta.category.slug}`}>
+											{leadMeta.category.label}
+										</a>
+									)}
+									<a href={`/posts/${lead.id}`} class="hl-link">
+										<h2 class="hl hl--hero">{lead.data.title}</h2>
+									</a>
+									{lead.data.excerpt && <p class="dek">{lead.data.excerpt}</p>}
+									<div class="byline">
+										{bylineNames(lead).length > 0 && (
+											<span class="by">By {bylineNames(lead).join(", ")}</span>
+										)}
+										{timeAgo(postDate(lead)) && (
+											<>
+												<span class="dot" />
+												<time>{timeAgo(postDate(lead))}</time>
+											</>
+										)}
+									</div>
+								</div>
+							</article>
+						)}
+
+						{secondLead && (
+							<article class="hero-second">
+								{secondLead.data.featured_image && (
+									<a href={`/posts/${secondLead.id}`} class="hero2-media">
+										<Image image={secondLead.data.featured_image} />
+									</a>
+								)}
+								{secondMeta?.category && (
+									<a class="kicker sm" href={`/category/${secondMeta.category.slug}`}>
+										{secondMeta.category.label}
+									</a>
+								)}
+								<a href={`/posts/${secondLead.id}`} class="hl-link">
+									<h3 class="hl hl--second">{secondLead.data.title}</h3>
+								</a>
+								{secondLead.data.excerpt && <p class="dek dek--clamp">{secondLead.data.excerpt}</p>}
+								<div class="byline">
+									{timeAgo(postDate(secondLead)) && (
+										<time>{timeAgo(postDate(secondLead))}</time>
+									)}
+								</div>
+							</article>
+						)}
+					</div>
+
+					{/* Secondary story grid */}
+					{secondary.length > 0 && (
+						<>
+							<hr class="rule" />
+							<div class="grid-cards">
+								{secondary.map(({ post, category }) => (
+									<article class="card">
+										{post.data.featured_image && (
+											<a href={`/posts/${post.id}`} class="card-media">
+												<Image image={post.data.featured_image} />
+											</a>
+										)}
+										{category && (
+											<a class="kicker sm" href={`/category/${category.slug}`}>
+												{category.label}
+											</a>
+										)}
+										<a href={`/posts/${post.id}`} class="hl-link">
+											<h3 class="hl hl--card">{post.data.title}</h3>
+										</a>
+									</article>
+								))}
+							</div>
+						</>
+					)}
+
+					{/* Explainers */}
+					{explainers.length > 0 && (
+						<section class="explainers">
+							<h2 class="band-name">Explainers</h2>
+							<div class="explain-grid">
+								{explainers.map(({ post }) => (
+									<a class="explain-card" href={`/posts/${post.id}`}>
+										<div class="explain-thumb">
+											{post.data.featured_image ? (
+												<Image image={post.data.featured_image} />
+											) : (
+												<div class="noimg" />
+											)}
+										</div>
+										<h4 class="explain-title">{post.data.title}</h4>
+									</a>
+								))}
+							</div>
+						</section>
+					)}
+
+					{/* Sub-category bands */}
+					{subSections.length > 0 && (
+						<div class="subbands">
+							{subSections.map(({ subtab, posts: bandPosts }) => (
+								<section class="subband">
+									<div class="subband-head">
+										<a class="subband-name" href={`${base}?topic=${subtab.slug}`}>
+											{subtab.label}
+										</a>
+										<a class="subband-more" href={`${base}?topic=${subtab.slug}`}>
+											More ›
+										</a>
+									</div>
+									<div class="subband-grid">
+										{bandPosts.map(({ post }) => (
+											<article class="sbcard">
+												<a href={`/posts/${post.id}`} class="sbcard-media">
+													{post.data.featured_image ? (
+														<Image image={post.data.featured_image} />
+													) : (
+														<div class="noimg" />
+													)}
+												</a>
+												<a href={`/posts/${post.id}`} class="hl-link">
+													<h3 class="hl hl--sb">{post.data.title}</h3>
+												</a>
+											</article>
+										))}
+									</div>
+								</section>
+							))}
+						</div>
+					)}
+
+					{/* More News list */}
+					{moreNews.length > 0 && (
+						<section class="more">
+							<h2 class="more-head">More {section.label} News</h2>
+							<ol class="more-list" id="more-list">
+								{moreNews.map(({ post }, i) => (
+									<li
+										class:list={["more-item", { hidden: i >= INITIAL_MORE }]}
+										data-more-idx={i}
+									>
+										<span class="more-time">{timeAgo(postDate(post)) || "—"}</span>
+										<div class="more-body">
+											<a href={`/posts/${post.id}`} class="hl-link">
+												<h3 class="hl hl--more">{post.data.title}</h3>
+											</a>
+											{post.data.excerpt && <p class="more-dek">{post.data.excerpt}</p>}
+										</div>
+									</li>
+								))}
+							</ol>
+							{moreNews.length > INITIAL_MORE && (
+								<div class="more-actions">
+									<button
+										type="button"
+										class="load-more"
+										id="load-more"
+										data-step={INITIAL_MORE}
+									>
+										Load more
+									</button>
+								</div>
+							)}
+						</section>
+					)}
+				</div>
+
+				{/* ===== SIDEBAR ===== */}
+				<aside class="rail">
+					{/* Newsletter signup */}
+					<section class="signup">
+						<span class="signup-kicker">Subscriber only</span>
+						<h3 class="signup-head">Get the {section.label} brief</h3>
+						<p class="signup-dek">
+							Analysis and scoops on {section.label.toLowerCase()} from the Sustainomics
+							desk, in your inbox each week.
+						</p>
+						<form class="signup-form" onsubmit="return false">
+							<input
+								type="email"
+								placeholder="Enter your email"
+								aria-label="Email address"
+							/>
+							<button type="submit">Sign Up</button>
+						</form>
+					</section>
+
+					{/* Featured / video widget */}
+					<section class="widget-video">
+						<span class="widget-kicker">Featured</span>
+						<a class="vid-card" href="/video">
+							<div class="vid-thumb">
+								{lead?.data.featured_image ? (
+									<Image image={lead.data.featured_image} />
+								) : (
+									<div class="noimg" />
+								)}
+								<span class="play" aria-hidden="true">
+									▶
+								</span>
+							</div>
+							<h4 class="vid-title">
+								Watch: The {section.label} stories moving markets this week
+							</h4>
+						</a>
+					</section>
+
+					{/* Podcast strip */}
+					{podStrip.length > 0 && (
+						<section class="pods">
+							<h3 class="pods-head">Listen</h3>
+							<ul class="pods-list">
+								{podStrip.map((ep) => (
+									<li class="pod-item">
+										<div class="pod-thumb">
+											{ep.data.cover ? <Image image={ep.data.cover} /> : <div class="noimg" />}
+										</div>
+										<div class="pod-body">
+											<a href={`/podcast/${ep.id}`} class="pod-title">
+												{ep.data.title}
+											</a>
+											<span class="pod-pill">▶ Listen {ep.data.duration ?? "32:00"}</span>
+										</div>
+									</li>
+								))}
+							</ul>
+							<a class="see-all" href="/podcast">
+								All episodes →
+							</a>
+						</section>
+					)}
+				</aside>
+			</div>
+		)
+	}
+</section>
+
+<script>
+	const btn = document.getElementById("load-more");
+	if (btn) {
+		btn.addEventListener("click", () => {
+			const step = Number(btn.getAttribute("data-step")) || 8;
+			const hidden = Array.from(
+				document.querySelectorAll<HTMLElement>("#more-list .more-item.hidden"),
+			);
+			hidden.slice(0, step).forEach((el) => el.classList.remove("hidden"));
+			if (
+				document.querySelectorAll("#more-list .more-item.hidden").length === 0
+			) {
+				btn.remove();
+			}
+		});
+	}
+</script>
+
+<style>
+	.cat {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
+	}
+
+	/* ===== Masthead ===== */
+	.cat-head {
+		padding-bottom: var(--spacing-4);
+	}
+
+	.cat-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: clamp(2.2rem, 4vw, 3.2rem);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.05;
+		color: var(--color-ink);
+	}
+
+	.cat-dek {
+		margin-top: var(--spacing-2);
+		max-width: 56ch;
+		font-size: var(--font-size-base);
+		line-height: 1.5;
+		color: var(--color-text-secondary);
+	}
+
+	/* ===== Sub-tab row ===== */
+	.subtabs {
+		border-top: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+		margin-top: var(--spacing-4);
+	}
+
+	.subtabs-inner {
+		display: flex;
+		gap: var(--spacing-5);
+		overflow-x: auto;
+		scrollbar-width: none;
+		max-width: 100%;
+	}
+
+	.subtabs-inner::-webkit-scrollbar {
+		display: none;
+	}
+
+	.subtab {
+		flex: none;
+		padding: var(--spacing-3) 0;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		white-space: nowrap;
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		border-bottom: 2px solid transparent;
+		margin-bottom: -1px;
+		transition: color var(--transition-fast);
+	}
+
+	.subtab:hover {
+		color: var(--color-ink);
+	}
+
+	.subtab.active {
+		color: var(--color-ink);
+		border-bottom-color: var(--color-kicker);
+	}
+
+	.fallback-note {
+		margin-top: var(--spacing-4);
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+	}
+
+	.fallback-note strong {
+		color: var(--color-text);
+	}
+
+	/* ===== Layout ===== */
+	.layout {
+		margin-top: var(--spacing-8);
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 320px;
+		gap: var(--spacing-12);
+	}
+
+	.main {
+		min-width: 0;
+	}
+
+	/* ===== Shared typographic atoms ===== */
+	.hl {
+		font-family: var(--font-serif, Georgia, serif);
+		color: var(--color-ink);
+		font-weight: 700;
+		line-height: 1.13;
+		letter-spacing: -0.01em;
+	}
+
+	.hl-link {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+	}
+
+	.hl-link:hover .hl {
+		color: var(--color-accent);
+	}
+
+	.hl--hero {
+		font-size: clamp(1.7rem, 2.8vw, 2.5rem);
+		margin: var(--spacing-1) 0 var(--spacing-3);
+	}
+
+	.hl--second {
+		font-size: var(--font-size-xl);
+		margin: var(--spacing-1) 0 var(--spacing-2);
+	}
+
+	.hl--card {
+		font-size: var(--font-size-lg);
+		margin: var(--spacing-1) 0;
+	}
+
+	.hl--more {
+		font-size: 1.0625rem;
+		line-height: 1.25;
+	}
+
+	.kicker {
+		display: inline-block;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-kicker);
+		text-decoration: none;
+	}
+
+	.kicker:hover {
+		color: var(--color-ink);
+	}
+
+	.kicker.sm {
+		font-size: 0.6875rem;
+	}
+
+	.dek {
+		font-family: var(--font-sans);
+		font-size: 0.95rem;
+		line-height: 1.5;
+		color: var(--color-text-secondary);
+		margin-top: var(--spacing-2);
+	}
+
+	.dek--clamp {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.byline {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--spacing-2);
+		margin-top: var(--spacing-3);
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+	}
+
+	.byline .by {
+		color: var(--color-text-secondary);
+		font-weight: 600;
+	}
+
+	.dot {
+		width: 3px;
+		height: 3px;
+		border-radius: 50%;
+		background: var(--color-muted);
+	}
+
+	.rule {
+		height: 0;
+		border: 0;
+		border-top: 1px solid var(--color-border);
+		margin: var(--spacing-8) 0;
+	}
+
+	.noimg {
+		width: 100%;
+		height: 100%;
+		background: var(--color-border);
+	}
+
+	/* ===== Hero ===== */
+	.hero {
+		display: grid;
+		grid-template-columns: 1.5fr 1fr;
+		gap: var(--spacing-8);
+		align-items: start;
+	}
+
+	.hero-media,
+	.hero2-media,
+	.card-media {
+		display: block;
+		overflow: hidden;
+		background: var(--color-surface);
+	}
+
+	.hero-media :global(img) {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 10;
+		object-fit: cover;
+		transition: transform 0.4s ease;
+	}
+
+	.hero2-media {
+		margin-bottom: var(--spacing-3);
+	}
+
+	.hero2-media :global(img) {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 10;
+		object-fit: cover;
+	}
+
+	.hero-second {
+		border-left: 1px solid var(--color-border-subtle);
+		padding-left: var(--spacing-8);
+	}
+
+	.hero-media:hover :global(img),
+	.hero2-media:hover :global(img),
+	.card-media:hover :global(img) {
+		transform: scale(1.02);
+	}
+
+	/* ===== Secondary grid ===== */
+	.grid-cards {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--spacing-8) var(--spacing-6);
+	}
+
+	.card-media {
+		margin-bottom: var(--spacing-2);
+	}
+
+	.card-media :global(img) {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 10;
+		object-fit: cover;
+	}
+
+	/* ===== Explainers ===== */
+	.band-name {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-text);
+		padding-bottom: var(--spacing-3);
+		border-bottom: 1px solid var(--color-border);
+		margin: var(--spacing-12) 0 var(--spacing-5);
+	}
+
+	.explain-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--spacing-6);
+	}
+
+	.explain-card {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.explain-thumb {
+		aspect-ratio: 16 / 10;
+		overflow: hidden;
+		background: var(--color-surface);
+		margin-bottom: var(--spacing-2);
+	}
+
+	.explain-thumb :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.explain-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-base);
+		font-weight: 700;
+		line-height: 1.25;
+		color: var(--color-ink);
+	}
+
+	.explain-card:hover .explain-title {
+		color: var(--color-accent);
+	}
+
+	/* ===== More News ===== */
+	.more-head {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-text);
+		padding-bottom: var(--spacing-3);
+		border-bottom: 1px solid var(--color-border);
+		margin: var(--spacing-12) 0 0;
+	}
+
+	.more-list {
+		list-style: none;
+	}
+
+	.more-item {
+		display: grid;
+		grid-template-columns: 80px 1fr;
+		gap: var(--spacing-5);
+		padding: var(--spacing-5) 0;
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+
+	.more-item.hidden {
+		display: none;
+	}
+
+	.more-time {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+		padding-top: 3px;
+		white-space: nowrap;
+	}
+
+	.more-dek {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		line-height: 1.45;
+		color: var(--color-text-secondary);
+		margin-top: var(--spacing-1);
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.more-actions {
+		display: flex;
+		justify-content: center;
+		margin-top: var(--spacing-8);
+	}
+
+	.load-more {
+		padding: var(--spacing-3) var(--spacing-8);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: var(--color-text);
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		cursor: pointer;
+		transition:
+			background var(--transition-fast),
+			border-color var(--transition-fast);
+	}
+
+	.load-more:hover {
+		background: var(--color-bg-subtle);
+		border-color: var(--color-ink);
+	}
+
+	/* ===== Sidebar ===== */
+	.rail {
+		min-width: 0;
+		border-left: 1px solid var(--color-border);
+		padding-left: var(--spacing-8);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-8);
+	}
+
+	.signup {
+		background: var(--color-bg-subtle);
+		border: 1px solid var(--color-border-subtle);
+		padding: var(--spacing-5);
+	}
+
+	.signup-kicker,
+	.widget-kicker {
+		display: block;
+		font-family: var(--font-sans);
+		font-size: 0.6875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-kicker);
+		margin-bottom: var(--spacing-2);
+	}
+
+	.signup-head {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-lg);
+		font-weight: 700;
+		color: var(--color-ink);
+	}
+
+	.signup-dek {
+		margin-top: var(--spacing-2);
+		font-size: var(--font-size-sm);
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+	}
+
+	.signup-form {
+		display: flex;
+		gap: var(--spacing-2);
+		margin-top: var(--spacing-4);
+	}
+
+	.signup-form input {
+		flex: 1;
+		min-width: 0;
+		padding: var(--spacing-2) var(--spacing-3);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		background: var(--color-bg);
+		color: var(--color-text);
+	}
+
+	.signup-form button {
+		padding: var(--spacing-2) var(--spacing-4);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: var(--color-on-accent);
+		background: var(--color-ink);
+		border: none;
+		border-radius: var(--radius);
+		cursor: pointer;
+		white-space: nowrap;
+	}
+
+	/* Video widget */
+	.vid-card {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+	}
+
+	.vid-thumb {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		background: var(--color-surface);
+	}
+
+	.vid-thumb :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.play {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		background: rgba(0, 0, 0, 0.55);
+		color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 16px;
+		padding-left: 3px;
+	}
+
+	.vid-card:hover .play {
+		background: var(--color-kicker);
+	}
+
+	.vid-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-base);
+		font-weight: 700;
+		line-height: 1.25;
+		margin-top: var(--spacing-3);
+		color: var(--color-ink);
+	}
+
+	.vid-card:hover .vid-title {
+		color: var(--color-accent);
+	}
+
+	/* Podcast strip */
+	.pods-head {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-lg);
+		font-weight: 700;
+		color: var(--color-kicker);
+		padding-bottom: var(--spacing-2);
+		border-bottom: 2px solid var(--color-kicker);
+		margin-bottom: var(--spacing-2);
+	}
+
+	.pods-list {
+		list-style: none;
+	}
+
+	.pod-item {
+		display: grid;
+		grid-template-columns: 64px 1fr;
+		gap: var(--spacing-3);
+		align-items: center;
+		padding: var(--spacing-3) 0;
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+
+	.pod-thumb {
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		background: var(--color-surface);
+	}
+
+	.pod-thumb :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.pod-title {
+		display: block;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		line-height: 1.3;
+		color: var(--color-text);
+		text-decoration: none;
+	}
+
+	.pod-title:hover {
+		color: var(--color-accent);
+	}
+
+	.pod-pill {
+		display: inline-block;
+		margin-top: var(--spacing-1);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 600;
+		color: var(--color-muted);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.see-all {
+		display: inline-block;
+		margin-top: var(--spacing-3);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+
+	/* ===== Empty state ===== */
+	.empty {
+		margin: var(--spacing-12) 0;
+		padding: var(--spacing-16) var(--spacing-6);
+		text-align: center;
+		border: 1px dashed var(--color-border);
+		border-radius: var(--radius-lg);
+	}
+
+	.empty-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+		color: var(--color-ink);
+	}
+
+	.empty-dek {
+		margin-top: var(--spacing-2);
+		color: var(--color-text-secondary);
+	}
+
+	.empty-cta {
+		display: inline-block;
+		margin-top: var(--spacing-4);
+		font-weight: 600;
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+
+	/* ===== Responsive ===== */
+	@media (max-width: 980px) {
+		.layout {
+			grid-template-columns: 1fr;
+			gap: var(--spacing-10);
+		}
+
+		.rail {
+			border-left: none;
+			padding-left: 0;
+			border-top: 2px solid var(--color-ink);
+			padding-top: var(--spacing-6);
+		}
+
+		.explain-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 760px) {
+		.hero {
+			grid-template-columns: 1fr;
+			gap: var(--spacing-6);
+		}
+
+		.hero-second {
+			border-left: none;
+			padding-left: 0;
+			border-top: 1px solid var(--color-border);
+			padding-top: var(--spacing-5);
+		}
+
+		.grid-cards {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.explain-grid {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.more-item {
+			grid-template-columns: 1fr;
+			gap: var(--spacing-1);
+		}
+
+		.more-time {
+			padding-top: 0;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.grid-cards {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* Sub-category bands */
+	.subbands {
+		margin-top: var(--spacing-10);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-8);
+	}
+	.subband-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		border-bottom: 2px solid var(--color-ink);
+		padding-bottom: var(--spacing-2);
+		margin-bottom: var(--spacing-4);
+	}
+	.subband-name {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-xl);
+		font-weight: 700;
+		color: var(--color-text);
+		text-decoration: none;
+		letter-spacing: var(--tracking-snug);
+	}
+	.subband-name:hover { color: var(--color-kicker); }
+	.subband-more {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-muted);
+		text-decoration: none;
+		white-space: nowrap;
+	}
+	.subband-more:hover { color: var(--color-kicker); }
+	.subband-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--spacing-5);
+	}
+	.sbcard-media {
+		display: block;
+		aspect-ratio: 16 / 10;
+		overflow: hidden;
+		background: var(--color-surface);
+		margin-bottom: var(--spacing-2);
+	}
+	.sbcard-media :global(img) {
+		width: 100%; height: 100%; object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+	.sbcard:hover .sbcard-media :global(img) { transform: scale(1.04); }
+	.sbcard-media .noimg { width: 100%; height: 100%; }
+	.hl--sb {
+		font-size: var(--font-size-base);
+		line-height: 1.25;
+		font-weight: 600;
+	}
+	@media (max-width: 900px) {
+		.subband-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+	@media (max-width: 520px) {
+		.subband-grid { grid-template-columns: 1fr 1fr; gap: var(--spacing-4); }
+	}
+
+</style>

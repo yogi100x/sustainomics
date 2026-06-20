@@ -1,0 +1,5935 @@
+{
+	"$schema": "https://emdashcms.com/seed.schema.json",
+	"version": "1",
+	"meta": {
+		"name": "Exported Seed",
+		"description": "Exported from existing EmDash database"
+	},
+	"settings": {
+		"title": "Sustainomics",
+		"tagline": "The economics of a sustainable world — markets, policy, and the climate transition."
+	},
+	"collections": [
+		{
+			"slug": "articles",
+			"label": "Articles",
+			"labelSingular": "Articles",
+			"description": "Magazine issue articles",
+			"supports": [
+				"drafts",
+				"revisions"
+			],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string"
+				},
+				{
+					"slug": "featured_image",
+					"label": "Featured Image",
+					"type": "image"
+				},
+				{
+					"slug": "excerpt",
+					"label": "Excerpt",
+					"type": "text"
+				},
+				{
+					"slug": "content",
+					"label": "Content",
+					"type": "portableText"
+				},
+				{
+					"slug": "issue",
+					"label": "Issue",
+					"type": "reference"
+				},
+				{
+					"slug": "mag_section",
+					"label": "Magazine Section",
+					"type": "string"
+				},
+				{
+					"slug": "read_time",
+					"label": "Read Time",
+					"type": "string"
+				}
+			]
+		},
+		{
+			"slug": "magazines",
+			"label": "Magazine",
+			"labelSingular": "Issue",
+			"supports": [
+				"drafts",
+				"search",
+				"seo"
+			],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "cover",
+					"label": "Cover Image",
+					"type": "image"
+				},
+				{
+					"slug": "pdf",
+					"label": "PDF File",
+					"type": "file"
+				},
+				{
+					"slug": "issue_date",
+					"label": "Issue Date",
+					"type": "datetime"
+				},
+				{
+					"slug": "excerpt",
+					"label": "Description",
+					"type": "text",
+					"searchable": true
+				}
+			]
+		},
+		{
+			"slug": "pages",
+			"label": "Pages",
+			"labelSingular": "Page",
+			"supports": [
+				"drafts",
+				"revisions",
+				"search"
+			],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "content",
+					"label": "Content",
+					"type": "portableText",
+					"searchable": true
+				}
+			]
+		},
+		{
+			"slug": "podcasts",
+			"label": "Podcast",
+			"labelSingular": "Episode",
+			"supports": [
+				"drafts",
+				"search",
+				"seo"
+			],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "cover",
+					"label": "Artwork",
+					"type": "image"
+				},
+				{
+					"slug": "excerpt",
+					"label": "Summary",
+					"type": "text",
+					"searchable": true
+				},
+				{
+					"slug": "content",
+					"label": "Show Notes",
+					"type": "portableText",
+					"searchable": true
+				},
+				{
+					"slug": "video_url",
+					"label": "Video URL (YouTube/Vimeo)",
+					"type": "url"
+				},
+				{
+					"slug": "spotify_url",
+					"label": "Spotify / Apple Embed URL",
+					"type": "url"
+				},
+				{
+					"slug": "audio",
+					"label": "Audio File (MP3)",
+					"type": "file"
+				},
+				{
+					"slug": "episode_date",
+					"label": "Episode Date",
+					"type": "datetime"
+				},
+				{
+					"slug": "duration",
+					"label": "Duration (e.g. 32:56)",
+					"type": "string"
+				}
+			]
+		},
+		{
+			"slug": "posts",
+			"label": "Posts",
+			"labelSingular": "Post",
+			"supports": [
+				"drafts",
+				"revisions",
+				"search",
+				"seo"
+			],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "featured_image",
+					"label": "Featured Image",
+					"type": "image"
+				},
+				{
+					"slug": "content",
+					"label": "Content",
+					"type": "portableText",
+					"searchable": true
+				},
+				{
+					"slug": "excerpt",
+					"label": "Excerpt",
+					"type": "text"
+				}
+			]
+		}
+	],
+	"taxonomies": [
+		{
+			"id": "tax:category",
+			"name": "category",
+			"label": "Categories",
+			"labelSingular": "Category",
+			"hierarchical": true,
+			"collections": [
+				"posts"
+			],
+			"terms": [
+				{
+					"id": "term:category:business",
+					"slug": "business",
+					"label": "Business"
+				},
+				{
+					"id": "term:category:climate",
+					"slug": "climate",
+					"label": "Climate"
+				},
+				{
+					"id": "term:category:esg",
+					"slug": "esg",
+					"label": "ESG"
+				},
+				{
+					"id": "term:category:economics",
+					"slug": "economics",
+					"label": "Economics"
+				},
+				{
+					"id": "term:category:energy",
+					"slug": "energy",
+					"label": "Energy"
+				},
+				{
+					"id": "term:category:finance",
+					"slug": "finance",
+					"label": "Finance"
+				},
+				{
+					"id": "term:category:industries",
+					"slug": "industries",
+					"label": "Industries"
+				},
+				{
+					"id": "term:category:markets",
+					"slug": "markets",
+					"label": "Markets"
+				},
+				{
+					"id": "term:category:opinion",
+					"slug": "opinion",
+					"label": "Opinion"
+				},
+				{
+					"id": "term:category:policy",
+					"slug": "policy",
+					"label": "Policy"
+				},
+				{
+					"id": "term:category:tech",
+					"slug": "tech",
+					"label": "Tech"
+				}
+			]
+		},
+		{
+			"id": "tax:tag",
+			"name": "tag",
+			"label": "Tags",
+			"labelSingular": "Tag",
+			"hierarchical": false,
+			"collections": [
+				"posts"
+			],
+			"terms": [
+				{
+					"id": "term:tag:agriculture-and-food",
+					"slug": "agriculture-and-food",
+					"label": "Agriculture & Food"
+				},
+				{
+					"id": "term:tag:artificial-intelligence",
+					"slug": "artificial-intelligence",
+					"label": "Artificial Intelligence"
+				},
+				{
+					"id": "term:tag:biodiversity",
+					"slug": "biodiversity",
+					"label": "Biodiversity"
+				},
+				{
+					"id": "term:tag:carbon-markets",
+					"slug": "carbon-markets",
+					"label": "Carbon Markets"
+				},
+				{
+					"id": "term:tag:central-banking",
+					"slug": "central-banking",
+					"label": "Central Banking"
+				},
+				{
+					"id": "term:tag:circular-economy",
+					"slug": "circular-economy",
+					"label": "Circular Economy"
+				},
+				{
+					"id": "term:tag:cleantech",
+					"slug": "cleantech",
+					"label": "CleanTech"
+				},
+				{
+					"id": "term:tag:climate-and-net-zero",
+					"slug": "climate-and-net-zero",
+					"label": "Climate & Net Zero"
+				},
+				{
+					"id": "term:tag:commodities",
+					"slug": "commodities",
+					"label": "Commodities"
+				},
+				{
+					"id": "term:tag:consumer-goods",
+					"slug": "consumer-goods",
+					"label": "Consumer Goods"
+				},
+				{
+					"id": "term:tag:crypto-and-digital-assets",
+					"slug": "crypto-and-digital-assets",
+					"label": "Crypto & Digital Assets"
+				},
+				{
+					"id": "term:tag:cybersecurity",
+					"slug": "cybersecurity",
+					"label": "Cybersecurity"
+				},
+				{
+					"id": "term:tag:de-and-i",
+					"slug": "de-and-i",
+					"label": "DE&I"
+				},
+				{
+					"id": "term:tag:deals-and-underwriting",
+					"slug": "deals-and-underwriting",
+					"label": "Deals & Underwriting"
+				},
+				{
+					"id": "term:tag:development-economics",
+					"slug": "development-economics",
+					"label": "Development Economics"
+				},
+				{
+					"id": "term:tag:diaspora",
+					"slug": "diaspora",
+					"label": "Diaspora"
+				},
+				{
+					"id": "term:tag:esg",
+					"slug": "esg",
+					"label": "ESG"
+				},
+				{
+					"id": "term:tag:emerging-markets",
+					"slug": "emerging-markets",
+					"label": "Emerging Markets"
+				},
+				{
+					"id": "term:tag:energy-and-utilities",
+					"slug": "energy-and-utilities",
+					"label": "Energy & Utilities"
+				},
+				{
+					"id": "term:tag:enterprise",
+					"slug": "enterprise",
+					"label": "Enterprise"
+				},
+				{
+					"id": "term:tag:fashion",
+					"slug": "fashion",
+					"label": "Fashion"
+				},
+				{
+					"id": "term:tag:fintech",
+					"slug": "fintech",
+					"label": "Fintech"
+				},
+				{
+					"id": "term:tag:fixed-income",
+					"slug": "fixed-income",
+					"label": "Fixed Income"
+				},
+				{
+					"id": "term:tag:frontier-tech",
+					"slug": "frontier-tech",
+					"label": "Frontier Tech"
+				},
+				{
+					"id": "term:tag:governance",
+					"slug": "governance",
+					"label": "Governance"
+				},
+				{
+					"id": "term:tag:green-standards",
+					"slug": "green-standards",
+					"label": "Green Standards"
+				},
+				{
+					"id": "term:tag:healthcare-and-biotech",
+					"slug": "healthcare-and-biotech",
+					"label": "Healthcare & Biotech"
+				},
+				{
+					"id": "term:tag:hydrogen",
+					"slug": "hydrogen",
+					"label": "Hydrogen"
+				},
+				{
+					"id": "term:tag:innovation",
+					"slug": "innovation",
+					"label": "Innovation"
+				},
+				{
+					"id": "term:tag:international-trade",
+					"slug": "international-trade",
+					"label": "International Trade"
+				},
+				{
+					"id": "term:tag:investment",
+					"slug": "investment",
+					"label": "Investment"
+				},
+				{
+					"id": "term:tag:labor-and-employment",
+					"slug": "labor-and-employment",
+					"label": "Labor & Employment"
+				},
+				{
+					"id": "term:tag:m-and-a",
+					"slug": "m-and-a",
+					"label": "M&A"
+				},
+				{
+					"id": "term:tag:msme",
+					"slug": "msme",
+					"label": "MSME"
+				},
+				{
+					"id": "term:tag:macro-indicators",
+					"slug": "macro-indicators",
+					"label": "Macro Indicators"
+				},
+				{
+					"id": "term:tag:net-zero",
+					"slug": "net-zero",
+					"label": "Net Zero"
+				},
+				{
+					"id": "term:tag:policy-and-regulation",
+					"slug": "policy-and-regulation",
+					"label": "Policy & Regulation"
+				},
+				{
+					"id": "term:tag:public-equities",
+					"slug": "public-equities",
+					"label": "Public Equities"
+				},
+				{
+					"id": "term:tag:real-estate",
+					"slug": "real-estate",
+					"label": "Real Estate"
+				},
+				{
+					"id": "term:tag:renewables",
+					"slug": "renewables",
+					"label": "Renewables"
+				},
+				{
+					"id": "term:tag:saas-and-cloud",
+					"slug": "saas-and-cloud",
+					"label": "SaaS & Cloud"
+				},
+				{
+					"id": "term:tag:social-impact",
+					"slug": "social-impact",
+					"label": "Social Impact"
+				},
+				{
+					"id": "term:tag:startups",
+					"slug": "startups",
+					"label": "Startups"
+				},
+				{
+					"id": "term:tag:supply-chain-and-logistics",
+					"slug": "supply-chain-and-logistics",
+					"label": "Supply Chain & Logistics"
+				},
+				{
+					"id": "term:tag:supply-chains",
+					"slug": "supply-chains",
+					"label": "Supply Chains"
+				},
+				{
+					"id": "term:tag:tech-policy",
+					"slug": "tech-policy",
+					"label": "Tech Policy"
+				},
+				{
+					"id": "term:tag:trade-alliances",
+					"slug": "trade-alliances",
+					"label": "Trade Alliances"
+				},
+				{
+					"id": "term:tag:venture-capital",
+					"slug": "venture-capital",
+					"label": "Venture Capital"
+				},
+				{
+					"id": "term:tag:womenomics",
+					"slug": "womenomics",
+					"label": "Womenomics"
+				}
+			]
+		}
+	],
+	"menus": [
+		{
+			"id": "menu:primary",
+			"name": "primary",
+			"label": "Primary Navigation",
+			"items": [
+				{
+					"type": "custom",
+					"label": "Home",
+					"url": "/"
+				},
+				{
+					"type": "custom",
+					"label": "Climate",
+					"url": "/category/climate"
+				},
+				{
+					"type": "custom",
+					"label": "Policy",
+					"url": "/category/policy"
+				},
+				{
+					"type": "custom",
+					"label": "Markets",
+					"url": "/category/markets"
+				},
+				{
+					"type": "custom",
+					"label": "Energy",
+					"url": "/category/energy"
+				},
+				{
+					"type": "custom",
+					"label": "About",
+					"url": "/pages/about"
+				}
+			]
+		}
+	],
+	"widgetAreas": [
+		{
+			"name": "sidebar",
+			"label": "Sidebar",
+			"description": "Widget area displayed on single post pages",
+			"widgets": [
+				{
+					"type": "component",
+					"title": "Search",
+					"componentId": "core:search"
+				},
+				{
+					"type": "component",
+					"title": "Sections",
+					"componentId": "core:categories"
+				},
+				{
+					"type": "component",
+					"title": "Topics",
+					"componentId": "core:tags"
+				},
+				{
+					"type": "component",
+					"title": "Latest",
+					"componentId": "core:recent-posts"
+				},
+				{
+					"type": "component",
+					"title": "Archives",
+					"componentId": "core:archives"
+				}
+			]
+		},
+		{
+			"name": "footer",
+			"label": "Footer",
+			"description": "Widget area displayed in the site footer",
+			"widgets": [
+				{
+					"type": "content",
+					"title": "About",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Sustainomics covers the economics of the climate transition — the markets, policies, and businesses shaping a sustainable world.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						}
+					]
+				}
+			]
+		}
+	],
+	"bylines": [
+		{
+			"id": "byline:marcus-brenner",
+			"slug": "marcus-brenner",
+			"displayName": "Marcus Brenner"
+		},
+		{
+			"id": "byline:lena-whitfield",
+			"slug": "lena-whitfield",
+			"displayName": "Dr. Lena Whitfield"
+		},
+		{
+			"id": "byline:vikram-rao",
+			"slug": "vikram-rao",
+			"displayName": "Vikram Rao"
+		},
+		{
+			"id": "byline:amara-okafor",
+			"slug": "amara-okafor",
+			"displayName": "Amara Okafor"
+		},
+		{
+			"id": "byline:sustainomics-desk",
+			"slug": "sustainomics-desk",
+			"displayName": "Sustainomics Desk"
+		}
+	],
+	"content": {
+		"articles": [
+			{
+				"id": "articles:innovators-list-10-companies-rewiring-heavy-industry",
+				"slug": "innovators-list-10-companies-rewiring-heavy-industry",
+				"status": "published",
+				"data": {
+					"title": "Innovators List: 10 Companies Rewiring Heavy Industry",
+					"featured_image": {
+						"id": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11",
+						"provider": "local",
+						"filename": "green-hydrogen.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "Wind turbines on a ridge",
+						"meta": {
+							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
+						}
+					},
+					"excerpt": "Our annual ranking of the firms disrupting the hardest sectors.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "The methodology",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "We scored firms on abatement potential, capital efficiency, and traction.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "The list",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "From green steel to grid software, these ten are setting the pace.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "Innovators List",
+					"read_time": "9 min"
+				}
+			},
+			{
+				"id": "articles:pursuits-the-new-geography-of-sustainable-luxury",
+				"slug": "pursuits-the-new-geography-of-sustainable-luxury",
+				"status": "published",
+				"data": {
+					"title": "Pursuits: The New Geography of Sustainable Luxury",
+					"featured_image": {
+						"id": "01KV6H2TPR8C30SF6E19EE98KP",
+						"provider": "local",
+						"filename": "net-zero-reckoning.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "City skyline of glass towers",
+						"meta": {
+							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
+						}
+					},
+					"excerpt": "Where the climate-conscious wealthy are putting their time and money.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "Quiet luxury, lower carbon",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "The status symbol is shifting from excess to provenance.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "Destinations",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "Regenerative travel is the season's defining trend.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "Pursuits",
+					"read_time": "6 min"
+				}
+			},
+			{
+				"id": "articles:the-brief-the-week-the-tariffs-turned-green",
+				"slug": "the-brief-the-week-the-tariffs-turned-green",
+				"status": "published",
+				"data": {
+					"title": "The Brief: The Week the Tariffs Turned Green",
+					"featured_image": {
+						"id": "01KV6H2TR3KJPC7EGR5AX4JMJM",
+						"provider": "local",
+						"filename": "biodiversity-credits.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "Sunlight through a forest canopy",
+						"meta": {
+							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
+						}
+					},
+					"excerpt": "Trade policy is becoming climate policy by another name.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "Border adjustments arrive",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "Carbon border levies are reshaping who exports what.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "The ripple",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "Supply chains are rerouting around embedded emissions.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "The Brief",
+					"read_time": "4 min"
+				}
+			},
+			{
+				"id": "articles:the-brief-five-charts-on-the-carbon-market-reset",
+				"slug": "the-brief-five-charts-on-the-carbon-market-reset",
+				"status": "published",
+				"data": {
+					"title": "The Brief: Five Charts on the Carbon Market Reset",
+					"featured_image": {
+						"id": "01KV6H2TTBAT8AZ3X7WYWFJKPP",
+						"provider": "local",
+						"filename": "esg-pragmatic.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "A trading screen showing financial charts",
+						"meta": {
+							"storageKey": "01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg"
+						}
+					},
+					"excerpt": "Prices, volumes, and the credibility crunch — at a glance.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "What moved",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "Voluntary carbon prices wobbled as buyers demanded integrity.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "What to watch",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "Regulated markets are quietly absorbing the demand.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "The Brief",
+					"read_time": "4 min"
+				}
+			},
+			{
+				"id": "articles:profile-scaling-climate-tech-from-a-lagos-garage",
+				"slug": "profile-scaling-climate-tech-from-a-lagos-garage",
+				"status": "published",
+				"data": {
+					"title": "Profile: Scaling Climate Tech From a Lagos Garage",
+					"featured_image": {
+						"id": "01KV6H2TS6SQ9N5MT4V1M1615A",
+						"provider": "local",
+						"filename": "grid-bottlenecks.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "High-voltage transmission towers at dusk",
+						"meta": {
+							"storageKey": "01KV6H2TS6SQ9N5MT4V1M1615A.jpg"
+						}
+					},
+					"excerpt": "The founder turning grid instability into an export business.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "From outage to opportunity",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "Unreliable power birthed a generation of African energy entrepreneurs.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "Going global",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "His storage startup now ships hardware to three continents.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "Profiles",
+					"read_time": "7 min"
+				}
+			},
+			{
+				"id": "articles:profile-the-banker-betting-against-cement",
+				"slug": "profile-the-banker-betting-against-cement",
+				"status": "published",
+				"data": {
+					"title": "Profile: The Banker Betting Against Cement",
+					"featured_image": {
+						"id": "01KV6H2TR3KJPC7EGR5AX4JMJM",
+						"provider": "local",
+						"filename": "biodiversity-credits.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "Sunlight filtering through a dense green forest",
+						"meta": {
+							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
+						}
+					},
+					"excerpt": "One financier's contrarian wager on low-carbon materials.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "A contrarian desk",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "While peers chased renewables, she built a book around the hardest-to-abate materials.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "The thesis",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "Scarcity of green cement, she argues, is the next great mispricing.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "Profiles",
+					"read_time": "9 min"
+				}
+			},
+			{
+				"id": "articles:the-quiet-reinvention-of-the-multilateral-bank",
+				"slug": "the-quiet-reinvention-of-the-multilateral-bank",
+				"status": "published",
+				"data": {
+					"title": "The Quiet Reinvention of the Multilateral Bank",
+					"featured_image": {
+						"id": "01KV6H2TPR8C30SF6E19EE98KP",
+						"provider": "local",
+						"filename": "net-zero-reckoning.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "Glass corporate office towers seen from below",
+						"meta": {
+							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
+						}
+					},
+					"excerpt": "Development banks are rewriting their mandates for a hotter world.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "Mandate creep, or mandate renewal?",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "The old development bank financed roads. The new one underwrites climate resilience.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "Leverage as policy",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "Every public dollar is now judged by how much private capital it can pull in.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "Special Reports",
+					"read_time": "11 min"
+				}
+			},
+			{
+				"id": "articles:inside-the-sovereign-green-bond-boom",
+				"slug": "inside-the-sovereign-green-bond-boom",
+				"status": "published",
+				"data": {
+					"title": "Inside the Sovereign Green Bond Boom",
+					"featured_image": {
+						"id": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11",
+						"provider": "local",
+						"filename": "green-hydrogen.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "Wind turbines on a ridge under a wide sky",
+						"meta": {
+							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
+						}
+					},
+					"excerpt": "From novelty to benchmark in under a decade.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "A new benchmark",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "Sovereign green bonds have crossed from symbolism into the core of fixed-income strategy.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "Who underwrites the future",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "Blended finance now routinely pairs concessional public money with institutional capital.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "Special Reports",
+					"read_time": "12 min"
+				}
+			},
+			{
+				"id": "articles:the-trillion-dollar-gap-nobody-is-pricing",
+				"slug": "the-trillion-dollar-gap-nobody-is-pricing",
+				"status": "published",
+				"data": {
+					"title": "The Trillion-Dollar Gap Nobody Is Pricing",
+					"featured_image": {
+						"id": "01KV6H2TMNTN8K80GHM4BCDGXR",
+						"provider": "local",
+						"filename": "clean-energy-investment.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "Solar panels stretching toward the horizon at sunset",
+						"meta": {
+							"storageKey": "01KV6H2TMNTN8K80GHM4BCDGXR.jpg"
+						}
+					},
+					"excerpt": "Industrial heat is the transition's stubborn, underfunded frontier.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "Where emissions hide",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "A quarter of global emissions come from making physical things. Capital still treats it as an afterthought.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "The fundable tonne problem",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "The cheapest abatement is rarely the most bankable. That mismatch defines the decade.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "Features",
+					"read_time": "8 min"
+				}
+			},
+			{
+				"id": "articles:gold-rolexes-and-boardroom-nerves-how-ceos-are-hedging-the-transition",
+				"slug": "gold-rolexes-and-boardroom-nerves-how-ceos-are-hedging-the-transition",
+				"status": "published",
+				"data": {
+					"title": "Gold Rolexes and Boardroom Nerves: How CEOs Are Hedging the Transition",
+					"featured_image": {
+						"id": "01KV6H2TJE47QT14ZHTXKNDM5P",
+						"provider": "local",
+						"filename": "cbam-steel.jpg",
+						"mimeType": "image/jpeg",
+						"width": 1200,
+						"height": 800,
+						"alt": "Molten steel pouring in an industrial mill",
+						"meta": {
+							"storageKey": "01KV6H2TJE47QT14ZHTXKNDM5P.jpg"
+						}
+					},
+					"excerpt": "Executives are quietly repricing climate risk — and their own incentives.",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "The mood in the C-suite",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "Behind the glossy sustainability reports, chief executives are running a colder calculation about where the transition actually pays.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "Following the incentives",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "Compensation committees are the unsung architects of corporate climate strategy. When bonuses tilt toward decarbonisation milestones, capital follows.",
+									"marks": []
+								}
+							]
+						}
+					],
+					"issue": "$ref:01KV6HE1EWMXQAAMN82SP6D6RK",
+					"mag_section": "Features",
+					"read_time": "10 min"
+				}
+			}
+		],
+		"magazines": [
+			{
+				"id": "magazines:sustainomics-quarterly-q2-2026",
+				"slug": "sustainomics-quarterly-q2-2026",
+				"status": "published",
+				"data": {
+					"title": "Sustainomics Quarterly — Q2 2026",
+					"pdf": {
+						"id": "01KV6HDPZX14YTCVYHW9RQYK8W",
+						"provider": "local",
+						"filename": "sustainomics-quarterly-q2-2026.pdf",
+						"mimeType": "application/pdf",
+						"alt": "Sustainomics Quarterly Q2 2026",
+						"meta": {
+							"storageKey": "01KV6HDPZXGX53YTB2P4H8KX1X.pdf",
+							"caption": null,
+							"blurhash": null,
+							"dominantColor": null
+						}
+					},
+					"issue_date": "2026-06-01T00:00:00Z",
+					"excerpt": "Our Q2 2026 issue examines how sovereign wealth funds are reshaping grid infrastructure investment, the maturation of carbon markets, and the pragmatic new era of ESG finance."
+				}
+			}
+		],
+		"pages": [
+			{
+				"id": "pages:about",
+				"slug": "about",
+				"status": "published",
+				"data": {
+					"title": "About Sustainomics",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Sustainomics is an independent newsroom covering the economics of the climate transition. We report on the carbon markets, energy systems, policy decisions, and corporate strategies that will determine whether the world meets its climate goals — and who pays for it.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Our coverage cuts through the noise of pledges and press releases to follow the money and the megatons. We write for investors, policymakers, and operators who need signal, not spin.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						}
+					]
+				}
+			}
+		],
+		"podcasts": [
+			{
+				"id": "podcasts:financing-the-green-transition-in-emerging-markets",
+				"slug": "financing-the-green-transition-in-emerging-markets",
+				"status": "published",
+				"data": {
+					"title": "Financing the Green Transition in Emerging Markets",
+					"excerpt": "Why the $100 billion climate finance pledge fell short and what a credible multilateral framework must look like.",
+					"audio": {
+						"id": "01KV6HC3RDT663HW48B634N469",
+						"provider": "local",
+						"filename": "podcast-sample-15s.mp3",
+						"mimeType": "audio/mpeg",
+						"meta": {
+							"storageKey": "01KV6HC3RCWW10HF72PWP4QW99.mp3",
+							"caption": null,
+							"blurhash": null,
+							"dominantColor": null
+						}
+					},
+					"episode_date": "2026-06-01T00:00:00Z",
+					"duration": "0:15"
+				}
+			},
+			{
+				"id": "podcasts:carbon-pricing-mechanisms-what-works-and-what-does-not",
+				"slug": "carbon-pricing-mechanisms-what-works-and-what-does-not",
+				"status": "published",
+				"data": {
+					"title": "Carbon Pricing Mechanisms: What Works and What Does Not",
+					"excerpt": "A rigorous look at emissions trading schemes, carbon taxes, and border adjustment mechanisms across the G20.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"episode_date": "2026-04-28T00:00:00Z",
+					"duration": "21:40"
+				}
+			},
+			{
+				"id": "podcasts:the-energy-transitions-economic-tipping-point",
+				"slug": "the-energy-transitions-economic-tipping-point",
+				"status": "published",
+				"data": {
+					"title": "The Energy Transition’s Economic Tipping Point",
+					"excerpt": "How falling renewable costs have permanently shifted the economics of the global energy system.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"episode_date": "2026-05-12T00:00:00Z",
+					"duration": "13:23"
+				}
+			}
+		],
+		"posts": [
+			{
+				"id": "posts:industrial-energy-efficiency-the-trillion-dollar-gap-nobody-is-talking-about",
+				"slug": "industrial-energy-efficiency-the-trillion-dollar-gap-nobody-is-talking-about",
+				"status": "published",
+				"data": {
+					"title": "Industrial Energy Efficiency: The Trillion-Dollar Gap Nobody Is Talking About",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TJE47QT14ZHTXKNDM5P.jpg",
+							"filename": "cbam-steel.jpg",
+							"alt": "Molten steel pouring in an industrial mill"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a8b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a8s1",
+									"text": "The energy transition narrative is dominated by electricity: solar panels, wind turbines, batteries, and electric vehicles. What receives far less attention is the stubborn 25 percent of global greenhouse gas emissions that come from making physical things — steel, cement, aluminium, chemicals, glass, paper. These industries burn hydrocarbons not just for power but as chemical feedstocks and process heat, and switching them to electricity or hydrogen requires engineering solutions that are still maturing."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "a8b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a8s2",
+									"text": "Where the Cheapest Tonnes Are Being Left Untouched"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a8b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a8s3",
+									"text": "The IEA estimates that roughly 40 percent of industrial emissions reductions required by 2030 for a 1.5-degree pathway could be achieved with energy efficiency measures that already have positive returns on investment at current energy prices. Heat recovery systems, variable-speed drives, and process optimisation software collectively represent an enormous and largely unmobilised resource. The barrier is not technology or economics but rather the capital allocation priorities of CFOs who regard energy as an operating cost, not an investment opportunity."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a8b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a8s4",
+									"text": "Policy is beginning to catch up. The EU's revised Energy Efficiency Directive mandates audits and implementation plans for large industrial sites, and US IRA provisions for industrial decarbonisation grants are beginning to flow to steel and cement plants. But analysts warn that without carbon pricing at 80 dollars or more per tonne of CO2, the market signal will not be strong enough to drive the scale of investment required before 2035."
+								}
+							]
+						}
+					],
+					"excerpt": "Heavy industry accounts for a quarter of global emissions, yet efficiency upgrades in steel, cement, and chemicals receive a fraction of the capital flowing into power-sector renewables."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"supply-chains",
+						"public-equities",
+						"commodities",
+						"fixed-income",
+						"emerging-markets",
+						"enterprise",
+						"diaspora",
+						"policy-and-regulation",
+						"trade-alliances",
+						"fashion",
+						"supply-chain-and-logistics",
+						"consumer-goods",
+						"innovation",
+						"saas-and-cloud",
+						"womenomics",
+						"governance"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:geothermal-energy-is-having-its-unlikely-second-act",
+				"slug": "geothermal-energy-is-having-its-unlikely-second-act",
+				"status": "published",
+				"data": {
+					"title": "Geothermal Energy Is Having Its Unlikely Second Act",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TMNTN8K80GHM4BCDGXR.jpg",
+							"filename": "clean-energy-investment.jpg",
+							"alt": "Solar panels stretching toward the horizon at sunset"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a7b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a7s1",
+									"text": "Geothermal power has been the forgotten member of the clean energy family for decades — reliable, dispatchable, and largely ignored because conventional resources are limited to volcanically active regions. A new generation of enhanced geothermal system companies, applying horizontal drilling and hydraulic fracturing techniques refined by the shale industry, is now attempting to make geothermal viable almost anywhere. Fervo Energy drilled the first commercial enhanced geothermal well in Utah in 2023; by 2026 it has five projects operating or under construction."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "a7b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a7s2",
+									"text": "What Makes This Time Different"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a7b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a7s3",
+									"text": "Directional drilling costs have fallen 60 percent over the past decade as techniques became standardised in oil and gas extraction. That cost curve, combined with high-temperature sensors and real-time reservoir modelling software, has changed the economics of geothermal fundamentally. Fervo's Utah project delivers power to Google's data centres at prices competitive with solar-plus-storage, and crucially it operates around the clock regardless of weather or season."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a7b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a7s4",
+									"text": "The Department of Energy's Enhanced Geothermal Shot programme has set a target of reducing geothermal power costs to 45 dollars per megawatt-hour by 2035. Grid operators in California and Nevada, acutely aware of their solar-heavy generation mix, are watching the technology with unusual attention as a source of clean, firm, around-the-clock power."
+								}
+							]
+						}
+					],
+					"excerpt": "Advances in drilling technology borrowed from the shale industry are unlocking heat resources beneath cities that were previously too expensive to tap."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"renewables",
+						"public-equities",
+						"fixed-income",
+						"msme",
+						"startups",
+						"deals-and-underwriting",
+						"central-banking",
+						"labor-and-employment",
+						"real-estate",
+						"artificial-intelligence",
+						"cleantech",
+						"cybersecurity",
+						"saas-and-cloud",
+						"de-and-i",
+						"governance",
+						"green-standards",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:the-fossil-fuel-phase-out-debate-is-getting-messier",
+				"slug": "the-fossil-fuel-phase-out-debate-is-getting-messier",
+				"status": "published",
+				"data": {
+					"title": "The Fossil-Fuel Phase-Out Debate Is Getting Messier",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg",
+							"filename": "green-hydrogen.jpg",
+							"alt": "Wind turbines on a ridge under a wide sky"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a6b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a6s1",
+									"text": "The COP28 agreement to transition away from fossil fuels reflected a genuine shift in international climate diplomacy. Since then, the direction of travel in practice has been murkier. Germany has quietly extended the operational life of several lignite plants. Japan has signed new LNG supply agreements running to 2040. South Korea has shelved a coal retirement schedule that required grid investments that have not materialised."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "a6b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a6s2",
+									"text": "Energy Security Versus Climate Commitments"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a6b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a6s3",
+									"text": "The 2022 energy crisis exposed a hard truth that climate modellers had underweighted: electricity systems need firm, dispatchable capacity to survive extreme weather events, and in the near term that mostly means gas or coal. Governments that rushed to close fossil plants before alternatives were ready found themselves scrambling to reopen them. That political memory is now slowing the transition in ways that are hard to quantify but easy to observe."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a6b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a6s4",
+									"text": "None of this means the transition has stalled. Renewable capacity additions in 2025 hit another record, and coal's share of global electricity generation fell below 35 percent for the first time since the industrial revolution. But the path to net zero now looks more like a contested negotiation between climate physics and political economy than the smooth S-curve that optimistic models once projected."
+								}
+							]
+						}
+					],
+					"excerpt": "Countries that once championed rapid coal and gas exits are quietly stretching timelines, exposing the gap between climate ambition and energy security anxiety."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"investment",
+						"public-equities",
+						"development-economics",
+						"de-and-i",
+						"governance",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:americas-ev-charging-buildout-hits-a-reliability-wall",
+				"slug": "americas-ev-charging-buildout-hits-a-reliability-wall",
+				"status": "published",
+				"data": {
+					"title": "America's EV Charging Buildout Hits a Reliability Wall",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TPR8C30SF6E19EE98KP.jpg",
+							"filename": "net-zero-reckoning.jpg",
+							"alt": "Glass corporate office towers seen from below"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a5b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a5s1",
+									"text": "The United States crossed 200,000 public charging ports in 2025, a milestone the infrastructure law was designed to accelerate. What the headlines have been slower to report is that roughly 25 percent of those ports are out of service on any given day, according to data from ChargePoint, PlugShare, and independent audits commissioned by several state utility commissions. For drivers who depend on public charging, the experience undermines confidence in the transition."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "a5b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a5s2",
+									"text": "The Maintenance Problem Nobody Budgeted For"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a5b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a5s3",
+									"text": "Most reliability issues trace to a straightforward but underappreciated problem: the federal grants that funded installation did not require operators to budget adequately for ongoing maintenance, software updates, and grid connection upkeep. A DC fast charger with a broken payment terminal or a tripped breaker is worthless to a driver, yet fixing it requires a technician visit costing several hundred dollars. Thin-margin charging network operators have struggled to staff that need consistently."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a5b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a5s4",
+									"text": "The Department of Energy and several state regulators have begun tying future funding tranches to uptime requirements. Automakers including Ford and GM, stung by customer complaints, have taken matters into their own hands by building proprietary high-reliability networks. The result is a two-tier market emerging between well-maintained brand-affiliated corridors and the patchwork of publicly funded stations."
+								}
+							]
+						}
+					],
+					"excerpt": "Federal funding has paid for hundreds of thousands of new charging points, but a worrying share are offline on any given day — and that is slowing EV adoption."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"fixed-income",
+						"development-economics",
+						"real-estate",
+						"consumer-goods",
+						"cleantech",
+						"climate-and-net-zero",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:carbon-tax-or-cap-and-trade-the-wrong-question-is-killing-the-right-policy",
+				"slug": "carbon-tax-or-cap-and-trade-the-wrong-question-is-killing-the-right-policy",
+				"status": "published",
+				"data": {
+					"title": "Carbon Tax or Cap-and-Trade? The Wrong Question Is Killing the Right Policy",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TVKKGDKBSFBXYHP9Q08.jpg",
+							"filename": "swf-grid.jpg",
+							"alt": "Financial market data and charts on screens"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "ct1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ct1s1",
+									"text": "Carbon pricing is the closest thing economics has to a consensus climate policy. Put a price on the externality, let the market find the cheapest abatement, collect the revenue and recycle it as you see fit. In theory this is elegant. In practice it has produced three decades of theological dispute between two camps: those who favour a carbon tax for its price certainty and administrative simplicity, and those who favour cap-and-trade for its quantity certainty and political durability. Both camps have spent more energy fighting each other than fighting the fossil fuel industry, and the result is that barely fifteen percent of global emissions are currently covered by any carbon pricing mechanism at all."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "ct2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ct2s1",
+									"text": "What the Evidence Actually Shows"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "ct3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ct3s1",
+									"text": "The empirical literature on the two instruments is more equivocal than partisans on either side admit. British Columbia's carbon tax and the EU ETS have both produced measurable emissions reductions. Both have also had their prices undercut by political pressure at crucial moments, the EU ETS through overallocation, BC through tax freeze commitments. The canonical advantages of each instrument largely wash out in practice: taxes can be frozen, caps can be loosened. What matters far more than instrument choice is the price level, the coverage, and the political insulation of the mechanism."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "ct4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ct4s1",
+									"text": "My strong preference is to stop relitigating the instrument debate and start asking which design is most likely to survive a change in government in your specific political context. In Westminster-style systems with strong executive power, a tax is administratively simpler and easier to administer at a high price. In federal or multi-jurisdictional settings, a cap-and-trade system with permit trading can build cross-border political coalitions that a tax cannot. Both can be made to work. Neither works at all if we keep delaying while arguing about the theory."
+								}
+							]
+						}
+					],
+					"excerpt": "Economists have spent thirty years arguing about the ideal carbon pricing instrument while emitters have spent thirty years paying nothing, and it is time to end the perfect being the enemy of the good."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"opinion",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"esg",
+						"fixed-income",
+						"emerging-markets",
+						"deals-and-underwriting",
+						"venture-capital",
+						"development-economics",
+						"trade-alliances",
+						"supply-chain-and-logistics",
+						"innovation",
+						"de-and-i",
+						"womenomics"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:lena-whitfield",
+						"roleLabel": "Columnist"
+					}
+				]
+			},
+			{
+				"id": "posts:us-solar-tariffs-open-a-new-front-in-the-clean-energy-trade-war",
+				"slug": "us-solar-tariffs-open-a-new-front-in-the-clean-energy-trade-war",
+				"status": "published",
+				"data": {
+					"title": "US Solar Tariffs Open a New Front in the Clean Energy Trade War",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TR3KJPC7EGR5AX4JMJM.jpg",
+							"filename": "biodiversity-credits.jpg",
+							"alt": "Sunlight filtering through a dense green forest"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a4b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a4s1",
+									"text": "The tariff package on Chinese solar cells, extended and expanded under the current administration, has created a paradox at the heart of US clean energy policy. Panel prices for residential and commercial installers have risen 18 percent over the past year, slowing deployment in price-sensitive markets, while a domestic manufacturing wave catalysed by Inflation Reduction Act tax credits is bringing new capacity online across Georgia, Ohio, and New Mexico."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "a4b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a4s2",
+									"text": "Who Wins and Who Loses"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a4b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a4s3",
+									"text": "Domestic manufacturers and their investors are clear winners; the likes of First Solar and Qcells have announced capacity expansions totalling 15 gigawatts over the next three years. Installers and their customers face higher equipment costs that erode the payback period on rooftop systems. Low-income households face the sharpest squeeze."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a4b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a4s4",
+									"text": "The deeper question is whether domestic manufacturing at scale can ultimately bring US panel prices below imported levels. Most analysts put that crossover point at five to seven years out, assuming the manufacturing ramp-up proceeds without further supply-chain disruptions or political reversals."
+								}
+							]
+						}
+					],
+					"excerpt": "Washington's latest round of import duties on Chinese solar panels is squeezing domestic installers even as it spurs a manufacturing renaissance in the Sun Belt."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"renewables",
+						"supply-chains",
+						"commodities",
+						"enterprise",
+						"fintech",
+						"international-trade",
+						"agriculture-and-food",
+						"fashion",
+						"energy-and-utilities",
+						"real-estate",
+						"artificial-intelligence",
+						"governance"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:nuclear-is-non-negotiable-the-sooner-climate-hawks-accept-this-the-better",
+				"slug": "nuclear-is-non-negotiable-the-sooner-climate-hawks-accept-this-the-better",
+				"status": "published",
+				"data": {
+					"title": "Nuclear Is Non-Negotiable. The Sooner Climate Hawks Accept This, the Better",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg",
+							"filename": "esg-pragmatic.jpg",
+							"alt": "A trading screen showing financial charts"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "nu1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "nu1s1",
+									"text": "I came to nuclear late. For most of my career covering energy I shared the ambient environmentalist assumption that nuclear was too expensive, too slow, and too politically toxic to be worth defending. Then I spent eighteen months working through the IPCC scenario literature for a long piece on net-zero pathways. The finding that stopped me was consistent across virtually every modelling group: the scenarios that keep 1.5 degrees within reach while avoiding speculative carbon removal almost all require nuclear capacity to at least hold steady and in most cases to grow."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "nu2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "nu2s1",
+									"text": "The Arguments Against Nuclear Have Not Aged Well"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "nu3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "nu3s1",
+									"text": "The case against nuclear rests on three pillars: cost, time, and risk. All three look weaker than they did a decade ago. Small modular reactors are entering commercial deployment in South Korea, Canada, and the UK, with overnight costs that, while still higher than solar in sun-rich regions, are competitive with firm dispatchable power when system costs are counted. Construction timelines for the new generation of reactors, built with standardised designs and factory components, are shorter than the post-Chernobyl fleet."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "nu4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "nu4s1",
+									"text": "I am not arguing that nuclear is cheap or easy. I am arguing that for a civilisation trying to provide reliable low-carbon electricity to eight billion people, refusing to use one of its best tools because of aesthetic and historical associations is a luxury we can no longer afford. Every nuclear plant we shut down ahead of schedule is a coal or gas plant that runs longer. Climate activists who oppose nuclear should be required to explain, clearly, which fossil capacity they are replacing it with."
+								}
+							]
+						}
+					],
+					"excerpt": "Every serious decarbonisation model that limits warming to 1.5 degrees includes nuclear power, and it is time the environmental movement stopped pretending otherwise."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"opinion",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"carbon-markets",
+						"crypto-and-digital-assets",
+						"msme",
+						"fintech",
+						"venture-capital",
+						"labor-and-employment",
+						"supply-chain-and-logistics",
+						"healthcare-and-biotech",
+						"tech-policy",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:marcus-brenner",
+						"roleLabel": "Columnist"
+					}
+				]
+			},
+			{
+				"id": "posts:grid-scale-batteries-are-winning-the-balancing-market",
+				"slug": "grid-scale-batteries-are-winning-the-balancing-market",
+				"status": "published",
+				"data": {
+					"title": "Grid-Scale Batteries Are Winning the Balancing Market",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TS6SQ9N5MT4V1M1615A.jpg",
+							"filename": "grid-bottlenecks.jpg",
+							"alt": "High-voltage transmission towers at dusk"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a3b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a3s1",
+									"text": "Battery storage has crossed a threshold that grid engineers said would take until 2030: it is now cheaper to build a new four-hour lithium iron phosphate system than to run an existing gas peaker in most US electricity markets. That arithmetic is transforming how grid operators plan for hot summer afternoons and winter demand spikes, with CAISO, ERCOT, and PJM all reporting record battery interconnection queues in 2025."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "a3b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a3s2",
+									"text": "Beyond Four Hours: The Next Frontier"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a3b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a3s3",
+									"text": "The industry's next challenge is duration. Four-hour systems handle afternoon peaks but cannot bridge multi-day lulls in wind and solar output. Developers are now piloting iron-air, vanadium flow, and compressed-air systems targeting 100 hours or more of storage. Unit costs remain two to four times higher than lithium per kilowatt-hour, but economies of scale are arriving faster than most forecasters predicted."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a3b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a3s4",
+									"text": "Investment is following the physics. BloombergNEF estimates 200 gigawatt-hours of new storage will be added globally in 2026, double the 2024 figure. Utilities in Texas and California are signing 15-year battery offtake agreements at prices that would have seemed impossible three years ago, locking in the economics that renewable-heavy grids require to operate reliably without dispatchable gas backup."
+								}
+							]
+						}
+					],
+					"excerpt": "Four-hour lithium iron phosphate systems are undercutting gas peakers on price and response time, reshaping how grids manage demand spikes."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"renewables",
+						"fintech",
+						"venture-capital",
+						"diaspora",
+						"policy-and-regulation",
+						"labor-and-employment",
+						"macro-indicators",
+						"fashion",
+						"energy-and-utilities",
+						"real-estate",
+						"healthcare-and-biotech",
+						"innovation",
+						"frontier-tech",
+						"de-and-i",
+						"governance",
+						"green-standards",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:small-modular-reactors-move-from-blueprint-to-build-site",
+				"slug": "small-modular-reactors-move-from-blueprint-to-build-site",
+				"status": "published",
+				"data": {
+					"title": "Small Modular Reactors Move From Blueprint to Build Site",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg",
+							"filename": "esg-pragmatic.jpg",
+							"alt": "A trading screen showing financial charts"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a2b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a2s1",
+									"text": "Small modular reactors have been the nuclear industry's perpetual tomorrow for the better part of two decades. That narrative shifted in 2025 when NuScale, Rolls-Royce SMR, and a consortium led by TerraPower each secured final regulatory clearance for demonstration units in the United States, the United Kingdom, and Wyoming respectively. Construction has now started on two of the three sites."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "a2b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a2s2",
+									"text": "The Economics Are Unproven but Improving"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a2b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a2s3",
+									"text": "SMRs promise cheaper, faster construction by replacing bespoke on-site engineering with factory-built modules shipped by road or rail. Critics note that no commercial unit has yet operated long enough to validate those cost projections, and early estimates for the Wyoming site have already been revised upward by 30 percent. Proponents counter that first-of-a-kind premiums will evaporate once manufacturers hit double-digit unit volumes."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a2b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a2s4",
+									"text": "Governments are increasingly willing to backstop that bet. The UK Treasury has committed 2.5 billion pounds to the Rolls-Royce programme under a new Great British Nuclear funding vehicle, while the US Department of Energy is co-funding advanced reactor projects at a ratio of roughly one public dollar for every two private dollars. Whether that is enough to close the financing gap remains the central question for the industry over the next three years."
+								}
+							]
+						}
+					],
+					"excerpt": "After decades of promises, the first grid-scale SMRs are breaking ground — but financing, regulation, and public trust remain formidable hurdles."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"m-and-a",
+						"investment",
+						"fixed-income",
+						"emerging-markets",
+						"startups",
+						"development-economics",
+						"energy-and-utilities",
+						"supply-chain-and-logistics",
+						"innovation",
+						"artificial-intelligence",
+						"cleantech",
+						"cybersecurity",
+						"saas-and-cloud",
+						"governance"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:degrowth-vs-green-growth-a-false-dichotomy-we-need-to-retire",
+				"slug": "degrowth-vs-green-growth-a-false-dichotomy-we-need-to-retire",
+				"status": "published",
+				"data": {
+					"title": "Degrowth vs. Green Growth: A False Dichotomy We Need to Retire",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TS6SQ9N5MT4V1M1615A.jpg",
+							"filename": "grid-bottlenecks.jpg",
+							"alt": "High-voltage transmission towers at dusk"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "dg1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dg1s1",
+									"text": "I have sat through enough climate conferences to recognise the ritual. Someone proposes a carbon price or a new efficiency standard. A degrowth advocate stands up and says that no amount of green tinkering will fix a system built on infinite expansion. A green growth economist fires back with GDP-per-unit-of-carbon charts. The room divides. Nothing gets decided. This debate has consumed enormous intellectual energy in climate circles for the past decade, and I want to suggest, as directly as I can, that it is largely a distraction."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "dg2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dg2s1",
+									"text": "The Question Neither Side Answers Well"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "dg3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dg3s1",
+									"text": "Degrowth theorists are right that material throughput cannot expand indefinitely on a finite planet. Green growth advocates are right that the technologies and institutional designs needed to decarbonise exist and can be deployed at scale without shrinking measured output. Both camps tend to talk past the actually hard question: what do you do in the next ten years, in the jurisdictions where emissions are still rising, with the governments and economic systems you actually have? Abstract commitments to either paradigm do not answer that."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "dg4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "dg4s1",
+									"text": "My own view is that the practical agenda, electrify transport, clean the grid, price carbon, reform agriculture, does not require settling the growth question at all. You can believe GDP is a poor welfare metric, that consumerism is spiritually impoverished, and that the economy needs deep structural reform, and still support those interventions. The people blocking them are not degrowth economists. They are fossil fuel incumbents and their political allies. That is the fight worth having."
+								}
+							]
+						}
+					],
+					"excerpt": "The debate between degrowth advocates and green growth proponents generates more heat than light, and the framing itself is part of the problem."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"opinion",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"esg",
+						"public-equities",
+						"emerging-markets",
+						"fintech",
+						"international-trade",
+						"labor-and-employment",
+						"macro-indicators",
+						"agriculture-and-food",
+						"supply-chain-and-logistics",
+						"real-estate",
+						"consumer-goods",
+						"artificial-intelligence",
+						"cybersecurity",
+						"frontier-tech",
+						"tech-policy",
+						"de-and-i",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:lena-whitfield",
+						"roleLabel": "Columnist"
+					}
+				]
+			},
+			{
+				"id": "posts:fossil-fuel-subsidy-reform-stalls-as-energy-security-concerns-mount",
+				"slug": "fossil-fuel-subsidy-reform-stalls-as-energy-security-concerns-mount",
+				"status": "published",
+				"data": {
+					"title": "Fossil-Fuel Subsidy Reform Stalls as Energy Security Concerns Mount",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TR3KJPC7EGR5AX4JMJM.jpg",
+							"filename": "biodiversity-credits.jpg",
+							"alt": "Sunlight filtering through a dense green forest"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "fs1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fs1s1",
+									"text": "The numbers are not ambiguous. The IMF's latest fiscal monitor calculates that explicit and implicit subsidies to fossil fuels exceeded 7 trillion dollars globally in the past fiscal year, up from 5.9 trillion two years earlier. The increase is driven partly by continued direct budget support in emerging markets and partly by the failure to price the externalities that efficient carbon pricing would capture. Every dollar of this subsidy is a dollar working against every net-zero target on the books."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "fs2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fs2s1",
+									"text": "Why Reform Keeps Getting Deferred"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "fs3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fs3s1",
+									"text": "The politics are intractable. In countries where energy costs directly affect consumer welfare, cutting fuel subsidies provokes immediate, visible pain while the climate benefits are diffuse and long-dated. Recent subsidy reform attempts in Indonesia, Ecuador, and Nigeria all produced street protests within weeks. The political economy strongly favours the status quo, and energy security anxieties following recent geopolitical disruptions have given governments additional cover for inaction."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "fs4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "fs4s1",
+									"text": "Reformers argue the solution is sequencing: pair subsidy cuts with targeted cash transfers to lower-income households, invest the fiscal savings in public transit and energy efficiency, and give industry a credible multi-year glide path. The approach has worked in Iran and Morocco. But it requires political capital and administrative capacity that most subsidy-dependent governments do not currently possess in sufficient quantity."
+								}
+							]
+						}
+					],
+					"excerpt": "Governments promised to phase out inefficient fossil-fuel subsidies at COP26, but a new IMF report shows global support for oil, gas, and coal hit a record high last year, exposing the gap between political commitments and fiscal reality."
+				},
+				"taxonomies": {
+					"category": [
+						"policy",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"hydrogen",
+						"enterprise",
+						"fintech",
+						"macro-indicators",
+						"supply-chain-and-logistics",
+						"healthcare-and-biotech",
+						"innovation",
+						"cleantech",
+						"frontier-tech",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:cop31-closes-with-a-finance-deal-and-unresolved-methane-fight",
+				"slug": "cop31-closes-with-a-finance-deal-and-unresolved-methane-fight",
+				"status": "published",
+				"data": {
+					"title": "COP31 Closes With a Finance Deal and Unresolved Methane Fight",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TPR8C30SF6E19EE98KP.jpg",
+							"filename": "net-zero-reckoning.jpg",
+							"alt": "Glass corporate office towers seen from below"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "cp1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cp1s1",
+									"text": "COP31 ended in the early hours of Saturday morning after 36 hours of extended negotiations, producing a final text that climate finance advocates are cautiously calling the most consequential since Paris. The headline figure is a 300 billion dollar annual commitment to the Loss and Damage Fund from developed-country governments, a number that doubles the prior pledge. Less visible but arguably more significant is a side deal allowing qualifying developing nations to swap a portion of sovereign debt obligations for verified emissions reductions."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "cp2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cp2s1",
+									"text": "Where the Summit Failed: Methane and Fossil Fuel Language"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "cp3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cp3s1",
+									"text": "The areas of failure were just as visible. A bloc of OPEC-aligned states successfully watered down methane language, replacing binding timelines with voluntary guidance. The hard-won fossil fuel phase-down language from COP28 was weakened further, with qualifications added that environmental groups say effectively neutralise it for the world's largest oil producers. The Global Stocktake, due to be completed at this summit, was deferred by 18 months citing data gaps."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "cp4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cp4s1",
+									"text": "The net verdict from analysts is that COP31 was a meaningful step on finance and an embarrassing failure on mitigation ambition. The two tracks are pulling apart. Whether the finance commitments can be mobilised fast enough to offset the ambition gap is the central question heading into COP32."
+								}
+							]
+						}
+					],
+					"excerpt": "The latest UN climate summit delivered a landmark agreement on loss-and-damage financing and a new sovereign debt-for-climate-action framework, but deadlocked on methane commitments from major oil-producing states."
+				},
+				"taxonomies": {
+					"category": [
+						"policy",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"carbon-markets",
+						"m-and-a",
+						"emerging-markets",
+						"enterprise",
+						"startups",
+						"international-trade",
+						"macro-indicators",
+						"agriculture-and-food",
+						"energy-and-utilities",
+						"saas-and-cloud",
+						"frontier-tech",
+						"de-and-i"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:coastal-infrastructure-spending-is-surging-but-cities-are-falling-behind",
+				"slug": "coastal-infrastructure-spending-is-surging-but-cities-are-falling-behind",
+				"status": "published",
+				"data": {
+					"title": "Coastal Infrastructure Spending Is Surging — but Cities Are Falling Behind",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TJE47QT14ZHTXKNDM5P.jpg",
+							"filename": "cbam-steel.jpg",
+							"alt": "Molten steel pouring in an industrial mill"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "Rotterdam completed its iconic Maeslant storm-surge barrier in 1997; Jakarta has been planning a comparable sea wall for the better part of two decades. That contrast captures the central tension in coastal resilience spending: wealthy cities in Northern Europe have largely built the infrastructure they need, while rapidly urbanising coastal cities in Asia, Africa, and Latin America face a combination of accelerating sea-level rise, subsiding land, and fiscal constraints that make similar investments difficult to finance without external support."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "The Cost of Delay Compounds Annually"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s3",
+									"text": "Every year that a resilience project is deferred, both the physical risk and the construction cost tend to rise. Miami-Dade County's Resilient305 programme has seen project cost estimates increase 35 percent since 2020 due to material price inflation and the discovery of more extensive infrastructure deterioration. A Global Commission on Adaptation survey of 100 coastal cities found that two-thirds had revised their resilience cost estimates upward by more than 20 percent in the past three years."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s4",
+									"text": "Green municipal bonds tied to resilience outcomes have raised $18 billion globally since 2022, and the Asian Development Bank has piloted a catastrophe-indexed lending facility that automatically lowers borrowing costs for member countries that hit pre-agreed resilience milestones. But analysts caution that financing supply is not the primary bottleneck: most cities lack the project-preparation capacity to turn resilience plans into bankable proposals."
+								}
+							]
+						}
+					],
+					"excerpt": "Global investment in sea walls, storm-surge barriers, and resilient transport is set to exceed $300 billion this decade, yet independent assessments warn that planned spending covers only a third of identified need."
+				},
+				"taxonomies": {
+					"category": [
+						"climate",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"supply-chains",
+						"m-and-a",
+						"msme",
+						"fintech",
+						"deals-and-underwriting",
+						"diaspora",
+						"policy-and-regulation",
+						"labor-and-employment",
+						"real-estate",
+						"consumer-goods",
+						"artificial-intelligence",
+						"cleantech",
+						"de-and-i",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:putting-a-price-on-forests-carbon-sinks-and-the-battle-over-natural-asset-valuat",
+				"slug": "putting-a-price-on-forests-carbon-sinks-and-the-battle-over-natural-asset-valuat",
+				"status": "published",
+				"data": {
+					"title": "Putting a Price on Forests: Carbon Sinks and the Battle Over Natural Asset Valuation",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TR3KJPC7EGR5AX4JMJM.jpg",
+							"filename": "biodiversity-credits.jpg",
+							"alt": "Sunlight filtering through a dense green forest"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "The voluntary carbon market was supposed to be the mechanism that made forest conservation financially competitive with timber harvesting and agricultural conversion. At its peak in 2022, the market traded credits worth roughly $2 billion, with REDD+ projects in the Amazon, Congo Basin, and Southeast Asia generating the bulk of supply. Then the methodologies collapsed: investigative reporting revealed that a significant share of avoided-deforestation credits had been issued against baseline scenarios that exaggerated the threat to forests never at serious risk of being cleared."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "Rebuilding Trust Through Satellite Verification"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s3",
+									"text": "The Integrity Council for the Voluntary Carbon Market has since issued revised Core Carbon Principles that mandate near-real-time satellite monitoring and independent third-party verification of all nature-based credits. Early adopters of the new standard — including a consortium of ten Amazon states backed by Brazil's federal government — have issued credits that trade at a premium of 40 to 60 percent over older vintage offsets, suggesting the market can reward credibility when verification is robust."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s4",
+									"text": "Beyond offsets, a parallel debate is emerging about whether sovereign wealth funds and pension funds should hold natural forest assets on balance sheet as a distinct asset class. Proponents argue that without a mechanism to capitalise nature, markets will continue to treat its destruction as an externality rather than a loss."
+								}
+							]
+						}
+					],
+					"excerpt": "New frameworks for valuing standing forests as economic assets are reshaping conservation finance, but disputes over measurement integrity threaten to undermine the voluntary carbon market."
+				},
+				"taxonomies": {
+					"category": [
+						"climate",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"biodiversity",
+						"investment",
+						"fixed-income",
+						"crypto-and-digital-assets",
+						"enterprise",
+						"startups",
+						"international-trade",
+						"policy-and-regulation",
+						"labor-and-employment",
+						"agriculture-and-food",
+						"saas-and-cloud",
+						"frontier-tech",
+						"governance",
+						"green-standards",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:tipping-points-are-now-on-the-risk-committee-agenda",
+				"slug": "tipping-points-are-now-on-the-risk-committee-agenda",
+				"status": "published",
+				"data": {
+					"title": "Tipping Points Are Now on the Risk Committee Agenda",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TVKKGDKBSFBXYHP9Q08.jpg",
+							"filename": "swf-grid.jpg",
+							"alt": "Financial market data and charts on screens"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "For most of its history, climate risk in finance was modelled as a smooth, roughly linear function of warming: more degrees, more damage, discounted back to a present value. That assumption is being forced open by evidence that the Earth system contains tipping points — thresholds at which self-reinforcing feedbacks could drive rapid, irreversible change regardless of subsequent emissions reductions. The Bank of England's Prudential Regulation Authority now requires insurers and banks to run scenarios that include at least one plausible tipping-point cascade."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "Stranded Assets in a Cascading Climate"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s3",
+									"text": "A sudden, sustained loss of the West Antarctic Ice Sheet — projected to add up to a metre of sea-level rise by 2100 under some scenarios — would strand trillions of dollars of coastal real estate, port infrastructure, and agricultural land in ways that current mortgage and bond markets have not priced. A 2024 working paper from the European Central Bank estimated that credit losses from such a scenario could exceed those of the 2008 financial crisis in twelve of the eurozone's nineteen member states."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s4",
+									"text": "Asset managers are responding by building proprietary tipping-point modules into their portfolio construction tools. BlackRock's Aladdin platform now flags securities with above-average exposure to permafrost-thaw methane release and Atlantic circulation slowdown. But modelling nonlinear systems requires probability distributions that science cannot yet fully constrain, leaving risk managers to choose between underestimating tail risk and over-hedging against scenarios that may not materialise within investment horizons."
+								}
+							]
+						}
+					],
+					"excerpt": "With permafrost thaw, ice-sheet destabilisation, and Amazon dieback crossing scientific thresholds, financial risk managers are grappling with nonlinear climate scenarios that standard models cannot price."
+				},
+				"taxonomies": {
+					"category": [
+						"climate",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"carbon-markets",
+						"enterprise",
+						"deals-and-underwriting",
+						"venture-capital",
+						"agriculture-and-food",
+						"healthcare-and-biotech",
+						"consumer-goods",
+						"tech-policy",
+						"green-standards",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:insurers-are-retreating-from-wildfire-zones-and-the-fiscal-fallout-is-just-begin",
+				"slug": "insurers-are-retreating-from-wildfire-zones-and-the-fiscal-fallout-is-just-begin",
+				"status": "published",
+				"data": {
+					"title": "Insurers Are Retreating from Wildfire Zones — and the Fiscal Fallout Is Just Beginning",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg",
+							"filename": "esg-pragmatic.jpg",
+							"alt": "A trading screen showing financial charts"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "When State Farm and Allstate announced they would stop writing new homeowner policies in California in 2023, it marked a turning point in how climate risk is priced and borne. Since then, seven more carriers have followed, and California's insurer of last resort — the FAIR Plan — has seen its exposure balloon from $150 billion to over $400 billion. The pattern has repeated in Florida and parts of Louisiana, where insurers have cancelled existing policies after consecutive hurricane seasons breached their catastrophe models."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "The Taxpayer as Reinsurer of Last Resort"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s3",
+									"text": "State-backed plans were designed as temporary safety nets, not primary carriers. As they absorb an ever-larger share of the market, their thin capitalisation relative to potential losses creates a sovereign risk problem: a single major wildfire season or hurricane landfall could exhaust reserves, triggering emergency levies on all policyholders or direct state budget transfers. Moody's has placed California's General Obligation bond rating on review in part because of this contingent liability."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s4",
+									"text": "The insurance retreat is also beginning to affect property values and mortgage markets. Fannie Mae and Freddie Mac have tightened underwriting requirements in fire-prone zip codes, and several regional banks have stopped originating thirty-year mortgages in areas designated as high-risk. The result is a slow-motion withdrawal of financial infrastructure from the communities most exposed to climate damage."
+								}
+							]
+						}
+					],
+					"excerpt": "As major carriers exit California, Florida, and Louisiana, state-backed insurers of last resort are absorbing catastrophic exposure that threatens to shift climate risk onto taxpayers."
+				},
+				"taxonomies": {
+					"category": [
+						"climate",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"esg",
+						"fixed-income",
+						"crypto-and-digital-assets",
+						"macro-indicators",
+						"development-economics",
+						"trade-alliances",
+						"cybersecurity",
+						"de-and-i",
+						"social-impact",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:climate-migration-is-now-a-balance-of-payments-problem",
+				"slug": "climate-migration-is-now-a-balance-of-payments-problem",
+				"status": "published",
+				"data": {
+					"title": "Climate Migration Is Now a Balance-of-Payments Problem",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TS6SQ9N5MT4V1M1615A.jpg",
+							"filename": "grid-bottlenecks.jpg",
+							"alt": "High-voltage transmission towers at dusk"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "The World Bank's latest Groundswell update projects that by 2050, up to 216 million people could be forced to move within their own countries due to climate change. The economic ripple effects stretch far beyond the individuals displaced: climate migration reshapes agricultural labour supply, strains urban infrastructure in receiving cities, alters remittance corridors, and in extreme cases erodes the tax base of origin regions to the point of fiscal collapse."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "When Whole Economies Move"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s3",
+									"text": "Bangladesh presents the most studied case. The delta nation has seen internal migration from coastal and char-land zones rise sharply since 2010, with Dhaka absorbing an estimated 400,000 climate-linked migrants per year. The influx has suppressed wages in informal construction and garment sectors while inflating urban land prices, and the depopulating origin districts face shrinking local government revenue."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s4",
+									"text": "Cross-border climate flows are not yet recognised under the 1951 Refugee Convention, leaving migrants in a legal grey zone that limits their labour-market participation and, consequently, their remittance capacity. Several Pacific Island nations have begun negotiating bilateral labour-mobility agreements that function as de facto climate migration pathways, embedding a productive economic circuit into what would otherwise be humanitarian displacement."
+								}
+							]
+						}
+					],
+					"excerpt": "As heat and floods displace millions, economists are mapping how climate-driven migration reshapes labour markets, remittance flows, and fiscal capacity in origin and destination countries."
+				},
+				"taxonomies": {
+					"category": [
+						"climate",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"esg",
+						"supply-chains",
+						"m-and-a",
+						"investment",
+						"commodities",
+						"crypto-and-digital-assets",
+						"emerging-markets",
+						"fintech",
+						"deals-and-underwriting",
+						"international-trade",
+						"policy-and-regulation",
+						"development-economics",
+						"agriculture-and-food",
+						"innovation",
+						"cleantech",
+						"green-standards"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:the-loss-and-damage-fund-hits-1-billion-and-falls-short-of-what-is-needed",
+				"slug": "the-loss-and-damage-fund-hits-1-billion-and-falls-short-of-what-is-needed",
+				"status": "published",
+				"data": {
+					"title": "The Loss-and-Damage Fund Hits $1 Billion — and Falls Short of What Is Needed",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg",
+							"filename": "green-hydrogen.jpg",
+							"alt": "Wind turbines on a ridge under a wide sky"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "The Loss and Damage Fund — established at COP28 in Dubai as a historic acknowledgment that some climate harms are now unavoidable — crossed the $1 billion mark in pledged contributions this spring. The UN Environment Programme estimates that climate-related loss and damage will cost developing countries between $290 billion and $580 billion annually by 2030, making the fund a symbolic gesture relative to the scale of need."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "Governance Battles Slow Disbursement"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s3",
+									"text": "Disputes over governance — who sits on the board, whether the World Bank should serve as trustee, and how to distinguish loss-and-damage claims from adaptation financing — consumed the fund's first two years. As of this writing, less than $120 million has reached recipient countries, with most disbursements going to small island states already identified as priority cases under the Santiago Network."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s4",
+									"text": "Advocates argue the fund's architecture is too narrow, excluding slow-onset losses such as saltwater intrusion, desertification, and biodiversity collapse. A parallel proposal from the V20 group of climate-vulnerable economies would create a separate debt-relief mechanism, allowing countries hit by climate disasters to suspend loan repayments without triggering credit-rating downgrades."
+								}
+							]
+						}
+					],
+					"excerpt": "Two years after COP28 created the world's first formal loss-and-damage mechanism, contributions have trickled in while the scale of climate harm races ahead."
+				},
+				"taxonomies": {
+					"category": [
+						"climate",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"esg",
+						"emerging-markets",
+						"policy-and-regulation",
+						"macro-indicators",
+						"energy-and-utilities",
+						"artificial-intelligence",
+						"cybersecurity",
+						"tech-policy",
+						"de-and-i",
+						"climate-and-net-zero"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:rich-nations-agree-to-double-climate-adaptation-finance-by-2030",
+				"slug": "rich-nations-agree-to-double-climate-adaptation-finance-by-2030",
+				"status": "published",
+				"data": {
+					"title": "Rich Nations Agree to Double Climate Adaptation Finance by 2030",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TMNTN8K80GHM4BCDGXR.jpg",
+							"filename": "clean-energy-investment.jpg",
+							"alt": "Solar panels stretching toward the horizon at sunset"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "Finance ministers from the G20's wealthiest economies emerged from Nairobi last month with a headline commitment that climate advocates have demanded since the 2015 Paris Agreement: a binding pledge to double adaptation finance flows to $200 billion per year by 2030. The agreement establishes an independent monitoring body with authority to publish quarterly compliance scorecards — a transparency mechanism absent from previous pledges."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "From Pledges to Pipelines"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s3",
+									"text": "The OECD estimates that only 63 percent of the $100 billion annual mitigation commitment made in 2009 had been delivered by 2023. The Nairobi accord routes funds through multilateral development banks rather than bilateral aid channels, enabling project-level tracking from commitment to construction."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s4",
+									"text": "Adaptation projects eligible for funding span sea-wall construction, drought-resistant agricultural programmes, early-warning systems, and urban heat-island mitigation. Economists project that the $200 billion annual commitment, if fully delivered, could reduce climate-related GDP losses in the fifty most vulnerable nations by up to 30 percent by mid-century."
+								}
+							]
+						}
+					],
+					"excerpt": "After years of stalled pledges, a G20 accord commits developed economies to channel $200 billion annually toward helping vulnerable nations build climate resilience."
+				},
+				"taxonomies": {
+					"category": [
+						"climate",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"esg",
+						"investment",
+						"public-equities",
+						"msme",
+						"startups",
+						"deals-and-underwriting",
+						"venture-capital",
+						"diaspora",
+						"consumer-goods",
+						"de-and-i",
+						"womenomics",
+						"climate-and-net-zero",
+						"governance"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:extreme-weather-now-costs-the-global-economy-700-billion-a-year",
+				"slug": "extreme-weather-now-costs-the-global-economy-700-billion-a-year",
+				"status": "published",
+				"data": {
+					"title": "Extreme Weather Now Costs the Global Economy $700 Billion a Year",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TPR8C30SF6E19EE98KP.jpg",
+							"filename": "net-zero-reckoning.jpg",
+							"alt": "Glass corporate office towers seen from below"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "The economic toll of extreme weather has reached a grim new milestone. According to Munich Re's 2026 Natural Catastrophe Report, climate-linked floods, droughts, wildfires, and storms inflicted an estimated $700 billion in global economic losses last year — triple the inflation-adjusted average from 2000 to 2010. The acceleration reflects both more frequent high-intensity events and decades of development in exposed coastal and floodplain zones."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "The Protection Gap Widens"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s3",
+									"text": "Of the $700 billion, only $280 billion was covered by insurance — a protection gap that has grown in absolute terms every decade. Low- and middle-income countries bear the brunt: a cyclone that devastates a South Asian coastal city produces losses that are 90 percent uninsured, compared with roughly 50 percent in the United States. The IMF has begun factoring these uninsured losses into sovereign debt risk assessments, warning that repeated disaster shocks can permanently impair GDP growth trajectories."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s4",
+									"text": "Governments are responding unevenly. The European Union has proposed mandatory climate-risk stress tests for national budgets, while the US Congressional Budget Office now includes a separate extreme-weather cost line in its ten-year fiscal outlooks. Every dollar of resilience investment made before a disaster prevents an estimated six to twelve dollars in recovery costs, yet global adaptation spending remains a fraction of mitigation outlays."
+								}
+							]
+						}
+					],
+					"excerpt": "A landmark Munich Re analysis finds that climate-linked disasters have tripled in economic cost since 2000, with uninsured losses falling disproportionately on emerging markets."
+				},
+				"taxonomies": {
+					"category": [
+						"climate",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"esg",
+						"investment",
+						"venture-capital",
+						"diaspora",
+						"energy-and-utilities",
+						"healthcare-and-biotech",
+						"cleantech",
+						"cybersecurity",
+						"governance",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:the-eu-green-deal-rollback-what-brussels-is-actually-walking-back",
+				"slug": "the-eu-green-deal-rollback-what-brussels-is-actually-walking-back",
+				"status": "published",
+				"data": {
+					"title": "The EU Green Deal Rollback: What Brussels Is Actually Walking Back",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg",
+							"filename": "green-hydrogen.jpg",
+							"alt": "Wind turbines on a ridge under a wide sky"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "gd1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "gd1s1",
+									"text": "When Ursula von der Leyen launched the European Green Deal in 2019, it was billed as Europe's man-on-the-moon moment. Six years later, the Commission is in retreat on several fronts: the Nature Restoration Law was gutted, the Corporate Sustainability Due Diligence Directive was scaled back, and several pesticide targets under the Farm to Fork strategy have been abandoned after sustained farmer protests. The question is how much of the original architecture remains intact."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "gd2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "gd2s1",
+									"text": "What Survives and What Has Been Shelved"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "gd3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "gd3s1",
+									"text": "The core carbon pricing mechanism, the EU Emissions Trading System, has not been touched and continues to set near-record prices. Mandatory building renovation targets remain on the table. The 2035 combustion engine phase-out survived an intensive lobbying campaign, though the Commission signalled openness to a review clause. What has eroded is the regulatory ambition around biodiversity and agricultural emissions, where the political coalition that supported the Green Deal has fractured badly."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "gd4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "gd4s1",
+									"text": "Environmental groups have largely pivoted from opposition to damage limitation, focusing their energy on ensuring the ETS reform and the hydrogen strategy remain on track. Whether the rollback proves temporary or permanent depends heavily on the 2029 Parliament elections and whether centrist parties can hold their climate flank against far-right and agricultural bloc pressure."
+								}
+							]
+						}
+					],
+					"excerpt": "Under pressure from farmers, industry lobbies, and a resurgent centre-right, the European Commission is quietly dismantling parts of its flagship climate agenda, but the picture is more complicated than a simple reversal."
+				},
+				"taxonomies": {
+					"category": [
+						"policy",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"renewables",
+						"public-equities",
+						"commodities",
+						"fixed-income",
+						"enterprise",
+						"startups",
+						"deals-and-underwriting",
+						"macro-indicators",
+						"fashion",
+						"cybersecurity",
+						"saas-and-cloud"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:how-the-inflation-reduction-act-rewired-american-clean-energy",
+				"slug": "how-the-inflation-reduction-act-rewired-american-clean-energy",
+				"status": "published",
+				"data": {
+					"title": "How the Inflation Reduction Act Rewired American Clean Energy",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TMNTN8K80GHM4BCDGXR.jpg",
+							"filename": "clean-energy-investment.jpg",
+							"alt": "Solar panels stretching toward the horizon at sunset"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "ir1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ir1s1",
+									"text": "The Inflation Reduction Act was never a climate bill in the traditional sense. It was an industrial strategy dressed in green, built on the wager that making clean technology profitable would do more than any carbon price could. Two and a half years of data suggest the wager is paying off. Battery factories, solar manufacturing lines, and electrolyser plants have sprung up across the American South and Midwest at a pace that has surprised even the law's architects."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "ir2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ir2s1",
+									"text": "The Subsidy Race the IRA Started"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "ir3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ir3s1",
+									"text": "The IRA's most consequential side effect may be what it did to other governments. The EU launched the Net-Zero Industry Act, Japan doubled its green transformation budget, and Canada rewrote its clean technology tax credits, all explicitly in response to the competitive pressure from Washington. Critics who warned of a subsidy war have been partially vindicated: the global cost of industrial green policy has risen sharply, but so has deployment."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "ir4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ir4s1",
+									"text": "The unresolved tension is whether the domestic content requirements embedded in IRA credits are consistent with WTO obligations. Several trading partners have filed consultations. A formal panel ruling could force revisions that alter the economics of the whole enterprise, a risk that manufacturers now quietly factor into their investment models."
+								}
+							]
+						}
+					],
+					"excerpt": "Three years after passage, the IRA has shifted more than 300 billion dollars in private investment, reshaped the manufacturing map, and created a policy template that rivals are scrambling to match."
+				},
+				"taxonomies": {
+					"category": [
+						"policy",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"renewables",
+						"m-and-a",
+						"enterprise",
+						"fintech",
+						"venture-capital",
+						"central-banking",
+						"fashion",
+						"real-estate",
+						"consumer-goods",
+						"innovation",
+						"frontier-tech",
+						"green-standards"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:cbam-expands-to-chemicals-and-polymers-upending-supply-chains",
+				"slug": "cbam-expands-to-chemicals-and-polymers-upending-supply-chains",
+				"status": "published",
+				"data": {
+					"title": "CBAM Expands to Chemicals and Polymers, Upending Supply Chains",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TJE47QT14ZHTXKNDM5P.jpg",
+							"filename": "cbam-steel.jpg",
+							"alt": "Molten steel pouring in an industrial mill"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "cb1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cb1s1",
+									"text": "When the EU launched CBAM in 2023, most trade lawyers assumed it would stay confined to heavy industry. That assumption has been shattered. A Commission proposal tabled last month would extend the mechanism to chemicals, polymers, and organic compounds by 2028, covering roughly 180 billion euros in annual imports and effectively turning the EU carbon price into a de-facto global standard for anyone who wants access to the single market."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "cb2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cb2s1",
+									"text": "Who Pays and Who Passes the Cost On"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "cb3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cb3s1",
+									"text": "The distributional politics are ferocious. Petrochemical exporters in South Korea, Saudi Arabia, and Malaysia face certificate costs that could erode decades of competitive advantage built on cheap feedstocks. European downstream manufacturers, meanwhile, worry that CBAM will make their inputs more expensive if domestic suppliers cannot meet demand at scale. The Commission impact assessment pegs the net welfare effect for the EU as modestly positive but acknowledges significant adjustment costs for trading partners."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "cb4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "cb4s1",
+									"text": "What happens next depends on the WTO. A formal dispute filing by India and Indonesia is expected before year-end. Legal scholars are divided on whether CBAM survives scrutiny under GATT Article XX, the environmental exception clause, given that the mechanism applies to embedded carbon rather than the product itself. The outcome could define the legality of carbon border measures for a generation."
+								}
+							]
+						}
+					],
+					"excerpt": "The European Union is set to broaden its Carbon Border Adjustment Mechanism beyond steel and cement, drawing fierce opposition from Asian exporters and forcing a global rethink of industrial trade policy."
+				},
+				"taxonomies": {
+					"category": [
+						"policy",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"carbon-markets",
+						"investment",
+						"commodities",
+						"venture-capital",
+						"central-banking",
+						"diaspora",
+						"labor-and-employment",
+						"development-economics",
+						"agriculture-and-food",
+						"energy-and-utilities",
+						"cybersecurity",
+						"saas-and-cloud",
+						"tech-policy",
+						"womenomics",
+						"green-standards"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:supply-chain-decarbonisation-is-costing-more-than-companies-budgeted",
+				"slug": "supply-chain-decarbonisation-is-costing-more-than-companies-budgeted",
+				"status": "published",
+				"data": {
+					"title": "Supply-Chain Decarbonisation Is Costing More Than Companies Budgeted",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg",
+							"filename": "green-hydrogen.jpg",
+							"alt": "Wind turbines on a ridge under a wide sky"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "h1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "h1s1",
+									"text": "When Apple announced in 2023 that it would require all suppliers to use 100 percent renewable energy by 2030, the implicit cost transfer drew little comment. Two years on, with tens of thousands of companies in similar positions — pressed by customers, regulators, and investors to decarbonise their supply chains — the true cost of Scope 3 emissions reduction is becoming visible in procurement data, and it is higher than most corporate sustainability teams modelled."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "h2s1",
+									"text": "Where the Costs Are Landing"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "h3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "h3s1",
+									"text": "The cost is distributed unevenly. Tier-one suppliers — large manufacturers with scale and capital access — are absorbing renewable energy transition costs with manageable margin impact. The crunch is concentrated at tier two and tier three: the smaller, often family-owned component makers and materials processors who lack the balance sheet to self-fund decarbonisation and face contract loss if they fail to comply. For many, the choice is between taking on debt at elevated interest rates or losing marquee customers."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "h4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "h4s1",
+									"text": "The strategic response emerging from leading firms is a shift from mandates to enablement. Microsoft, Unilever, and several major automotive OEMs have launched dedicated supply-chain financing facilities that give smaller suppliers preferential rates on green capex loans, in exchange for verified emissions reporting. The data emerging from these programmes is becoming valuable intelligence about where decarbonisation costs are genuinely material — and how they flow through to end-product pricing."
+								}
+							]
+						}
+					],
+					"excerpt": "Scope 3 targets are forcing businesses to price carbon into supplier relationships, and the bill is landing hard on procurement budgets."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"business",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"supply-chains",
+						"m-and-a",
+						"public-equities",
+						"macro-indicators",
+						"development-economics",
+						"energy-and-utilities",
+						"consumer-goods",
+						"climate-and-net-zero"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:the-new-commodity-supercycle-is-a-climate-story",
+				"slug": "the-new-commodity-supercycle-is-a-climate-story",
+				"status": "published",
+				"data": {
+					"title": "The New Commodity Supercycle Is a Climate Story",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TR3KJPC7EGR5AX4JMJM.jpg",
+							"filename": "biodiversity-credits.jpg",
+							"alt": "Sunlight filtering through a dense green forest"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "g1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "g1s1",
+									"text": "The commodity supercycle thesis has a troubled history. Every decade seems to produce a new version that ends badly for investors who bought the peak. But the current cycle has a structural driver unlike previous episodes: the physical material requirements of decarbonising a global economy are unlike anything commodity markets have processed before. The IEA mineral demand scenarios show a six-fold increase in critical mineral requirements under a net-zero pathway by 2040."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "g2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "g2s1",
+									"text": "What Differentiates This Cycle"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "g3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "g3s1",
+									"text": "Previous supercycles were largely demand-side phenomena: Chinese infrastructure build-out absorbed iron ore, copper, and coal at a pace that overwhelmed incumbent supply chains. The clean energy supercycle is different in two respects. First, it is driven by policy mandates as much as by market demand, creating a floor that purely economic analysis misses. Second, it is concentrated in materials where supply is geographically constrained and environmentally contested in ways that iron ore never was."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "g4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "g4s1",
+									"text": "For commodity-focused portfolios, the implication is a longer duration cycle than the 2000s China boom. Analysts model a copper supply deficit persisting through 2032 even under aggressive capex scenarios. The investable opportunity extends beyond the metals themselves to royalty companies, streaming businesses, and logistics infrastructure that serve the extraction sector."
+								}
+							]
+						}
+					],
+					"excerpt": "Rising demand for clean energy materials is reviving the commodity supercycle thesis, but this time the driver is decarbonisation, not Chinese urbanisation."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"supply-chains",
+						"emerging-markets",
+						"startups",
+						"fashion",
+						"green-standards",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:offshore-wind-faces-a-reckoning-as-installation-costs-surge-1",
+				"slug": "offshore-wind-faces-a-reckoning-as-installation-costs-surge-1",
+				"status": "published",
+				"data": {
+					"title": "Offshore Wind Faces a Reckoning as Installation Costs Surge",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TVKKGDKBSFBXYHP9Q08.jpg",
+							"filename": "swf-grid.jpg",
+							"alt": "Financial market data and charts on screens"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a1b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a1s1",
+									"text": "The offshore wind sector entered 2026 under pressure from all sides. Rising steel prices, constrained port capacity, and persistently high interest rates forced developers to renegotiate or abandon contracts that looked profitable just three years ago. Industry analysts estimate the levelised cost of energy from new offshore projects has risen nearly 40 percent since 2021."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "a1b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a1s2",
+									"text": "Why the Numbers No Longer Add Up"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a1b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a1s3",
+									"text": "The core problem is that many existing auction contracts locked in prices below 60 dollars per megawatt-hour, a threshold that no longer covers construction and financing costs in most northern European markets. Orsted, Vattenfall, and BP have each walked away from multi-gigawatt projects, booking billions in write-downs."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a1b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a1s4",
+									"text": "Policy responses are emerging. The UK government relaunched its CfD auction with substantially higher strike prices, while Washington has fast-tracked permitting reform for projects in federal waters. Analysts argue the industry can right itself within two to three years if supply-chain bottlenecks ease and specialised installation vessels come online as scheduled."
+								}
+							]
+						}
+					],
+					"excerpt": "A wave of cancelled contracts and cost overruns is forcing the offshore wind industry to rethink its economics before the decade-long buildout can get back on track."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"renewables",
+						"crypto-and-digital-assets",
+						"emerging-markets",
+						"central-banking",
+						"fashion",
+						"energy-and-utilities",
+						"innovation",
+						"womenomics"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:banks-are-finally-pricing-their-climate-exposure-some-of-them",
+				"slug": "banks-are-finally-pricing-their-climate-exposure-some-of-them",
+				"status": "published",
+				"data": {
+					"title": "Banks Are Finally Pricing Their Climate Exposure — Some of Them",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TVKKGDKBSFBXYHP9Q08.jpg",
+							"filename": "swf-grid.jpg",
+							"alt": "Financial market data and charts on screens"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "f1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "f1s1",
+									"text": "The Bank of England scenario analysis published last year revealed that under a disorderly transition, several major UK banks faced potential loan losses of 10 to 15 percent of their fossil-fuel-linked portfolios. The exercise, and similar stress tests run by the ECB and the Federal Reserve, marks the moment climate risk stopped being a reputational question for banks and became a balance-sheet one."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "f2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "f2s1",
+									"text": "Transition Finance as a Business Line"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "f3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "f3s1",
+									"text": "The banks moving fastest are those that have reframed climate exposure as a business development question rather than a risk management chore. Financing the energy transition represents a multi-trillion addressable market that dwarfs the runoff from fossil lending books. JPMorgan, HSBC, and BNP Paribas have each built dedicated transition finance divisions in the past three years, competing for mandates on the largest clean energy infrastructure projects globally."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "f4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "f4s1",
+									"text": "The divergence between climate-forward and climate-exposed lenders is increasingly visible in the funding markets. Banks with credible transition plans and cleaner balance sheets are accessing wholesale funding at tighter spreads. The Basel Committee climate-related financial risk work programme points toward capital requirement adjustments for high-emission lending portfolios within the next regulatory cycle."
+								}
+							]
+						}
+					],
+					"excerpt": "Regulators are pushing financial institutions to stress-test fossil fuel lending books, but the gap between leaders and laggards is widening."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"business",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"esg",
+						"m-and-a",
+						"crypto-and-digital-assets",
+						"enterprise",
+						"msme",
+						"central-banking",
+						"international-trade",
+						"diaspora",
+						"real-estate",
+						"green-standards"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:corporate-climate-disclosure-rules-are-reshaping-boardroom-priorities",
+				"slug": "corporate-climate-disclosure-rules-are-reshaping-boardroom-priorities",
+				"status": "published",
+				"data": {
+					"title": "Corporate Climate Disclosure Rules Are Reshaping Boardroom Priorities",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TPR8C30SF6E19EE98KP.jpg",
+							"filename": "net-zero-reckoning.jpg",
+							"alt": "Glass corporate office towers seen from below"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "e1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "e1s1",
+									"text": "When the SEC finalised its climate disclosure rule requiring listed companies to report Scope 1 and 2 emissions alongside material climate-related risks, the reaction from corporate counsel was a mixture of dread and resignation. The rule, paired with the EU Corporate Sustainability Reporting Directive and the ISSB S2 standard rapidly becoming the global baseline, means that by 2027 the majority of large public companies worldwide will be disclosing climate data under audit-quality standards for the first time."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "e2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "e2s1",
+									"text": "From Voluntary to Mandatory: What Changes"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "e3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "e3s1",
+									"text": "The shift from voluntary frameworks like TCFD to mandatory, audited disclosure fundamentally changes the incentive structure. Companies can no longer publish aspirational climate narratives unchallenged. CFOs are now responsible for the numbers, which means internal carbon accounting systems, previously the preserve of sustainability teams, are becoming core finance infrastructure. Consultancies with climate risk quantification practices are reporting demand backlogs of 12 to 18 months."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "e4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "e4s1",
+									"text": "The boardroom implications run deeper than compliance cost. Companies with poor disclosure quality — whether from genuinely high exposure or from inadequate data systems — face a measurable cost-of-capital penalty as ESG-mandated investors seek cleaner alternatives. The disclosure regime is effectively a market mechanism, channelling institutional capital away from the least-prepared and toward firms that have made the compliance investment early."
+								}
+							]
+						}
+					],
+					"excerpt": "New mandatory reporting standards from the SEC, EU, and ISSB are forcing companies to quantify climate risk in ways that are already moving capital."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"business",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"esg",
+						"investment",
+						"enterprise",
+						"venture-capital",
+						"central-banking",
+						"healthcare-and-biotech",
+						"cybersecurity",
+						"tech-policy",
+						"womenomics",
+						"green-standards",
+						"social-impact",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:sustainable-aviation-fuel-markets-price-in-a-decade-of-scarcity",
+				"slug": "sustainable-aviation-fuel-markets-price-in-a-decade-of-scarcity",
+				"status": "published",
+				"data": {
+					"title": "Sustainable Aviation Fuel: Markets Price In a Decade of Scarcity",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TS6SQ9N5MT4V1M1615A.jpg",
+							"filename": "grid-bottlenecks.jpg",
+							"alt": "High-voltage transmission towers at dusk"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "d1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "d1s1",
+									"text": "Sustainable aviation fuel trades at a 4-to-6 times premium over conventional jet fuel, a spread that airline treasuries are only beginning to absorb. The EU ReFuelEU mandate requiring 2 percent SAF blending by 2025 — rising to 70 percent by 2050 — has collided with a production base that currently supplies less than 0.1 percent of global aviation fuel demand. The result is a pricing environment unlike anything the aviation sector has navigated."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "d2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "d2s1",
+									"text": "Feedstock Wars and Production Bottlenecks"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "d3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "d3s1",
+									"text": "The bottleneck is not technology — multiple approved pathways exist, from hydroprocessed esters to power-to-liquid synthetic fuels. The constraint is feedstock. Used cooking oil, the preferred and cheapest feedstock, is already heavily competed for by road transport biofuels. Next-generation pathways using agricultural residues or direct air capture carbon require capital outlays that are difficult to finance without long-term airline offtake contracts at prices most carriers are reluctant to commit to."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "d4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "d4s1",
+									"text": "For markets, the SAF premium is a structural feature, not a transitional artifact. Airlines are effectively paying a carbon abatement cost embedded in their fuel bill, a price signal that will only compress as production scales. Investors in SAF production infrastructure — particularly those owning the feedstock supply chains — are positioned to capture a decade-long margin story."
+								}
+							]
+						}
+					],
+					"excerpt": "The gap between SAF mandates and production capacity has turned a niche biofuel into one of the hottest pricing stories in energy markets."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"renewables",
+						"carbon-markets",
+						"investment",
+						"public-equities",
+						"startups",
+						"venture-capital",
+						"international-trade",
+						"policy-and-regulation",
+						"labor-and-employment",
+						"development-economics",
+						"trade-alliances",
+						"fashion",
+						"supply-chain-and-logistics",
+						"healthcare-and-biotech",
+						"artificial-intelligence",
+						"cleantech",
+						"saas-and-cloud",
+						"frontier-tech",
+						"tech-policy",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:the-lithium-and-copper-squeeze-that-could-stall-the-energy-transition",
+				"slug": "the-lithium-and-copper-squeeze-that-could-stall-the-energy-transition",
+				"status": "published",
+				"data": {
+					"title": "The Lithium and Copper Squeeze That Could Stall the Energy Transition",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TJE47QT14ZHTXKNDM5P.jpg",
+							"filename": "cbam-steel.jpg",
+							"alt": "Molten steel pouring in an industrial mill"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "c1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "c1s1",
+									"text": "Every electric vehicle requires roughly 8 kilograms of lithium and 80 kilograms of copper. Every offshore wind turbine needs tonnes of copper cable and rare-earth magnets. The arithmetic of the energy transition has been known for years, but investment in new mine supply has consistently lagged demand projections, leaving analysts warning of structural shortfalls that could hit as early as 2028 for lithium and 2030 for copper."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "c2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "c2s1",
+									"text": "Why Miners Are Not Drilling Fast Enough"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "c3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "c3s1",
+									"text": "The problem is not geological — deposits are abundant. The bottleneck is the 15-to-20-year timeline from discovery to production, the permitting gauntlet in both the Global North and key producing nations like Chile and DRC, and the lingering risk aversion from miners scarred by the commodity bust of 2015. Even the current high prices have not unlocked a new supercycle in capacity additions at the scale the transition requires."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "c4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "c4s1",
+									"text": "The strategic response from major economies — the US Critical Minerals Strategy, the EU Critical Raw Materials Act, and bilateral offtake deals with lithium-rich nations — represent a recognition that market prices alone will not solve the problem quickly enough. For commodity investors, the implication is a structurally elevated price floor for copper and lithium through the 2030s, interrupted by demand-side corrections as recycling loops mature."
+								}
+							]
+						}
+					],
+					"excerpt": "Booming demand for transition metals is running into a decade-long mining investment drought, threatening EV and grid targets worldwide."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"supply-chains",
+						"commodities",
+						"fixed-income",
+						"startups",
+						"fintech",
+						"deals-and-underwriting",
+						"policy-and-regulation",
+						"trade-alliances",
+						"innovation",
+						"frontier-tech",
+						"climate-and-net-zero"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:carbon-credit-fraud-is-undermining-voluntary-markets",
+				"slug": "carbon-credit-fraud-is-undermining-voluntary-markets",
+				"status": "published",
+				"data": {
+					"title": "Carbon Credit Fraud Is Undermining Voluntary Markets",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg",
+							"filename": "esg-pragmatic.jpg",
+							"alt": "A trading screen showing financial charts"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a1s1",
+									"text": "Voluntary carbon markets were sold to corporations as the bridge between ambition and physics — a mechanism to pay for emissions reductions elsewhere while cutting their own. Over the past eighteen months, a series of investigations into leading project registries has revealed that a significant share of issued credits represent no real-world carbon removal at all, with avoided-deforestation projects repeatedly failing independent verification."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "a2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a2s1",
+									"text": "The Integrity Infrastructure Gap"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a3s1",
+									"text": "The credibility collapse is creating a bifurcated market: a premium tier for credits backed by rigorous third-party monitoring and satellite verification, and a discount tier of legacy credits trading at near-zero as corporates quietly retire them to avoid reputational exposure. The ICVCM Core Carbon Principles, designed to set a quality floor, have seen slow uptake as project developers balk at the compliance costs."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "a4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "a4s1",
+									"text": "For investors in carbon market infrastructure — exchanges, registries, monitoring technology companies — the scandal paradoxically creates opportunity. Demand for credible credits vastly exceeds verified supply. The firms that solve the integrity problem stand to capture the premium end of a market that analysts still size at $50 billion by 2030 in an optimistic scenario."
+								}
+							]
+						}
+					],
+					"excerpt": "A wave of quality scandals is eroding trust in offset markets that were supposed to channel billions into nature-based solutions."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"esg",
+						"commodities",
+						"msme",
+						"startups",
+						"deals-and-underwriting",
+						"international-trade",
+						"diaspora",
+						"policy-and-regulation",
+						"real-estate",
+						"artificial-intelligence",
+						"cleantech",
+						"womenomics"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:green-bonds-surge-past-1-trillion-as-investors-demand-climate-proof",
+				"slug": "green-bonds-surge-past-1-trillion-as-investors-demand-climate-proof",
+				"status": "published",
+				"data": {
+					"title": "Green Bonds Surge Past $1 Trillion as Investors Demand Climate Proof",
+					"featured_image": {
+						"$media": {
+							"url": "/_emdash/api/media/file/01KV6H2TVKKGDKBSFBXYHP9Q08.jpg",
+							"filename": "swf-grid.jpg",
+							"alt": "Financial market data and charts on screens"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b1",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s1",
+									"text": "Green bond issuance crossed the $1 trillion threshold in the first half of 2026, driven by sovereign debt programmes from Germany, Japan, and a clutch of emerging-market governments eager to lock in long-term financing for renewable infrastructure. The momentum marks a turning point for a market that spent most of the last decade fighting accusations of greenwashing and definitional drift."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"_key": "b2",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s2",
+									"text": "Additionality Under the Microscope"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b3",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s3",
+									"text": "Institutional investors are no longer content with use-of-proceeds frameworks that simply redirect cash to labelled projects. The new standard, pushed by coalitions of pension funds managing over $15 trillion in assets, requires issuers to demonstrate that bond proceeds financed projects that would not have proceeded under conventional funding — the additionality test that has long separated rigorous impact bonds from rebadged vanilla debt."
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"_key": "b4",
+							"children": [
+								{
+									"_type": "span",
+									"_key": "s4",
+									"text": "Analysts at Morgan Stanley estimate that roughly 30 percent of outstanding green bonds would fail a strict additionality screen, creating potential repricing risk as disclosure rules tighten. For portfolio managers, the opportunity lies in identifying the issuers whose projects genuinely move the needle — and charging a pricing premium, the so-called greenium, accordingly."
+								}
+							]
+						}
+					],
+					"excerpt": "The green bond market has shattered records in 2026, but pressure on issuers to demonstrate real-world impact is intensifying."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"esg",
+						"investment",
+						"commodities",
+						"enterprise",
+						"msme",
+						"fintech",
+						"labor-and-employment",
+						"development-economics",
+						"trade-alliances",
+						"agriculture-and-food",
+						"real-estate",
+						"healthcare-and-biotech",
+						"consumer-goods",
+						"innovation",
+						"womenomics",
+						"green-standards",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:sovereign-wealth-funds-grid-infrastructure",
+				"slug": "sovereign-wealth-funds-grid-infrastructure",
+				"status": "published",
+				"data": {
+					"title": "Sovereign Wealth Funds Pour Billions Into Grid Infrastructure",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TVKKGDKBSFBXYHP9Q08",
+						"alt": "Financial market data and charts on screens",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "swf-grid.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TVKKGDKBSFBXYHP9Q08.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Sovereign wealth and pension funds are channeling record sums into transmission lines, substations, and storage, drawn by stable, regulated returns and the surging demand of an electrifying economy.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Boring is the point",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "After a decade chasing volatile tech bets, institutional investors are rediscovering the appeal of infrastructure that pays predictable returns for decades regardless of the news cycle.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						}
+					],
+					"excerpt": "The unglamorous business of wires and substations has become a magnet for patient capital."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"renewables",
+						"m-and-a",
+						"commodities",
+						"emerging-markets",
+						"msme",
+						"central-banking",
+						"macro-indicators",
+						"trade-alliances",
+						"energy-and-utilities",
+						"healthcare-and-biotech",
+						"consumer-goods",
+						"artificial-intelligence",
+						"saas-and-cloud",
+						"frontier-tech",
+						"womenomics",
+						"climate-and-net-zero",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:heat-pumps-outsell-gas-boilers-europe",
+				"slug": "heat-pumps-outsell-gas-boilers-europe",
+				"status": "published",
+				"data": {
+					"title": "Heat Pumps Outsell Gas Boilers in Europe for First Time",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11",
+						"alt": "Wind turbines on a ridge",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "green-hydrogen.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "For the first time, European households installed more heat pumps than gas boilers over the past year, a tipping point driven by generous subsidies, volatile gas prices, and tightening building codes.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The grid question",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Mass electrification of heating will strain power networks in winter, adding urgency to grid upgrades and flexible tariffs that reward households for shifting demand.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						}
+					],
+					"excerpt": "Electrification of home heating crosses a milestone as subsidies and energy prices bite."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"renewables",
+						"crypto-and-digital-assets",
+						"msme",
+						"deals-and-underwriting",
+						"central-banking",
+						"international-trade",
+						"trade-alliances",
+						"agriculture-and-food",
+						"energy-and-utilities",
+						"cleantech",
+						"cybersecurity",
+						"tech-policy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:china-ev-glut-remaking-auto-market",
+				"slug": "china-ev-glut-remaking-auto-market",
+				"status": "published",
+				"data": {
+					"title": "China's EV Glut Is Remaking the Global Auto Market",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TPR8C30SF6E19EE98KP",
+						"alt": "City skyline of glass towers",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "net-zero-reckoning.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Chinese automakers, having built far more electric-vehicle capacity than their home market can absorb, are exporting the surplus at prices Western rivals struggle to match. The result is a price war reshaping the industry.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Tariffs versus affordability",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Governments face an uncomfortable trade-off: shield domestic carmakers with tariffs, or let cheap imports accelerate the transition away from combustion engines. Few have found a comfortable answer.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						}
+					],
+					"excerpt": "A wave of cheap, capable electric cars is upending pricing from Bangkok to Berlin."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"supply-chains",
+						"m-and-a",
+						"public-equities",
+						"startups",
+						"international-trade",
+						"diaspora",
+						"trade-alliances",
+						"consumer-goods",
+						"artificial-intelligence",
+						"frontier-tech",
+						"de-and-i",
+						"climate-and-net-zero"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:green-subsidies-need-sunset-clauses",
+				"slug": "green-subsidies-need-sunset-clauses",
+				"status": "published",
+				"data": {
+					"title": "Why Green Subsidies Need Sunset Clauses",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Subsidies kick-started solar, batteries, and electric vehicles when private capital would not. But support that never expires breeds dependence, distorts competition, and outlives its purpose.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The fix is not to abandon industrial policy but to design it to retire itself: clear milestones, declining support, and a credible exit once an industry can stand on its own.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						}
+					],
+					"excerpt": "Industrial policy built the clean-energy boom. Without expiry dates, it risks calcifying into corporate welfare."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"opinion",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"esg",
+						"m-and-a",
+						"public-equities",
+						"fixed-income",
+						"crypto-and-digital-assets",
+						"diaspora",
+						"trade-alliances",
+						"artificial-intelligence",
+						"cleantech",
+						"saas-and-cloud",
+						"tech-policy",
+						"de-and-i"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:lena-whitfield",
+						"roleLabel": "Columnist"
+					}
+				]
+			},
+			{
+				"id": "posts:adaptation-investment-we-ignore",
+				"slug": "adaptation-investment-we-ignore",
+				"status": "published",
+				"data": {
+					"title": "Adaptation Is the Climate Investment We Keep Ignoring",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Every climate summit lavishes attention on cutting emissions. Far less is said about the levees, cooling centers, and drought-resistant crops that will determine how many people survive the warming already locked in.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Adaptation is unglamorous and politically thankless, but the returns are real: every dollar spent preparing for disasters saves several in avoided damage. Markets have barely begun to price that in.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						}
+					],
+					"excerpt": "Mitigation gets the headlines and the capital. The far harder bill for adaptation is still going unpaid."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"opinion",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"commodities",
+						"venture-capital",
+						"fashion",
+						"supply-chain-and-logistics",
+						"real-estate",
+						"cybersecurity",
+						"womenomics",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:marcus-brenner",
+						"roleLabel": "Columnist"
+					}
+				]
+			},
+			{
+				"id": "posts:carbon-price-doing-its-job",
+				"slug": "carbon-price-doing-its-job",
+				"status": "published",
+				"data": {
+					"title": "The Carbon Price Is Finally Doing Its Job",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TR3KJPC7EGR5AX4JMJM",
+						"alt": "Sunlight through a forest canopy",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "biodiversity-credits.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Critics have long argued that carbon pricing is too low and too gamed to matter. That critique is aging badly. As allowance prices climb and free permits are phased out, the levy is finally changing where capital flows and how factories run.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Price discovery, at last",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "When pollution costs real money, abatement that once looked uneconomic suddenly pencils out. The carbon price is doing exactly what it was designed to do: making the cheapest tonne of avoided emissions the most profitable one.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						}
+					],
+					"excerpt": "For years carbon markets were dismissed as theater. The latest price signals tell a different story."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"opinion",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"emerging-markets",
+						"fintech",
+						"fashion",
+						"tech-policy",
+						"climate-and-net-zero",
+						"governance"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:lena-whitfield",
+						"roleLabel": "Columnist"
+					}
+				]
+			},
+			{
+				"id": "posts:climate-summit-preview",
+				"slug": "climate-summit-preview",
+				"status": "draft",
+				"data": {
+					"title": "What to Watch at the Next Climate Summit",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "A draft preview that will not appear in the public listing until it is published.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						}
+					],
+					"excerpt": "This preview is still being written."
+				}
+			},
+			{
+				"id": "posts:esg-investing-pragmatic-era",
+				"slug": "esg-investing-pragmatic-era",
+				"status": "published",
+				"data": {
+					"title": "ESG Investing Enters Its Pragmatic Era",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TTBAT8AZ3X7WYWFJKPP",
+						"alt": "A trading screen showing financial charts",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "esg-pragmatic.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "ESG investing has had a turbulent few years — celebrated as the future of finance, then attacked as both greenwashing and political overreach. The noise is now fading, and what remains is a more sober, data-driven discipline.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "From labels to materiality",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The smartest money has stopped treating ESG as a virtue label and started treating it as risk analysis: which climate exposures are financially material, which transition costs are mispriced, which companies are genuinely positioned for a low-carbon economy.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Tighter disclosure standards and better data are doing what slogans could not: making sustainability a measurable input to returns rather than a marketing afterthought.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						}
+					],
+					"excerpt": "After the backlash and the hype, sustainable investing is quietly maturing into something more disciplined."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"business",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"esg",
+						"public-equities",
+						"fixed-income",
+						"fintech",
+						"central-banking",
+						"diaspora",
+						"development-economics",
+						"agriculture-and-food",
+						"fashion",
+						"healthcare-and-biotech",
+						"innovation",
+						"tech-policy",
+						"climate-and-net-zero",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:grid-bottlenecks-threaten-renewable-boom",
+				"slug": "grid-bottlenecks-threaten-renewable-boom",
+				"status": "published",
+				"data": {
+					"title": "Grid Bottlenecks Threaten the Renewable Boom",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TS6SQ9N5MT4V1M1615A",
+						"alt": "High-voltage transmission towers at dusk",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "grid-bottlenecks.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TS6SQ9N5MT4V1M1615A.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The biggest obstacle to the clean-energy transition is no longer the cost of generating power — it is getting that power to market. Across the United States and Europe, thousands of gigawatts of wind and solar projects sit in interconnection queues, waiting years for permission to plug into creaking grids.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Copper and permits",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Building a transmission line can take a decade, four times longer than the solar farm it serves. Permitting reform, faster interconnection rules, and a looming shortage of transformers and copper have become the unglamorous bottlenecks that will decide how fast economies decarbonize.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Some utilities are turning to 'grid-enhancing technologies' — software and hardware that squeeze more capacity out of existing lines — as a faster stopgap while new infrastructure inches through approval.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						}
+					],
+					"excerpt": "Wind and solar are ready. The wires to carry their power are years behind — and the queue is getting longer."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"renewables",
+						"public-equities",
+						"fixed-income",
+						"crypto-and-digital-assets",
+						"msme",
+						"startups",
+						"policy-and-regulation",
+						"agriculture-and-food",
+						"energy-and-utilities",
+						"supply-chain-and-logistics",
+						"innovation",
+						"cybersecurity",
+						"saas-and-cloud",
+						"frontier-tech",
+						"climate-and-net-zero"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:hidden-economics-of-biodiversity-credits",
+				"slug": "hidden-economics-of-biodiversity-credits",
+				"status": "published",
+				"data": {
+					"title": "The Hidden Economics of Biodiversity Credits",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TR3KJPC7EGR5AX4JMJM",
+						"alt": "Sunlight filtering through a dense green forest",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "biodiversity-credits.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "After carbon, investors are turning to nature. Biodiversity credits — tradable units representing a measurable gain in ecosystem health — are being pitched as the next great environmental market. But pricing a hectare of restored wetland is far harder than pricing a tonne of carbon.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "No single unit of nature",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Carbon is fungible — a tonne is a tonne anywhere. Biodiversity is stubbornly local: a credit generated by protecting a mangrove tells you nothing about the value of a grassland. That makes standardized contracts, and therefore liquid markets, devilishly hard to design.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Proponents argue that even an imperfect market beats no market, channeling private capital toward conservation that public budgets cannot fund alone. Critics fear a repeat of the credibility problems that have dogged carbon offsets.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						}
+					],
+					"excerpt": "A market for nature is being built from scratch. The hard part is pricing something that was never meant to be sold."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"biodiversity",
+						"m-and-a",
+						"crypto-and-digital-assets",
+						"international-trade",
+						"diaspora",
+						"macro-indicators",
+						"development-economics",
+						"trade-alliances",
+						"supply-chain-and-logistics",
+						"womenomics",
+						"governance"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:corporate-net-zero-reckoning",
+				"slug": "corporate-net-zero-reckoning",
+				"status": "published",
+				"data": {
+					"title": "Why Corporate Net-Zero Pledges Face a Reckoning",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TPR8C30SF6E19EE98KP",
+						"alt": "Glass corporate office towers seen from below",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "net-zero-reckoning.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "In the rush of climate ambition five years ago, hundreds of multinationals pledged to halve their emissions by 2030. With the deadline now in sight, a reckoning is arriving: the gap between glossy commitments and audited progress has rarely looked wider.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Scope 3 is where it breaks",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Most firms can clean up their own operations and electricity use. The hard part is Scope 3 — the emissions buried in supply chains and product use — which often makes up the vast majority of a company's footprint and lies largely outside its direct control.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Regulators are losing patience with vague accounting. New disclosure rules in Europe and California will force companies to show their workings, and the era of the unverifiable pledge may finally be ending.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						}
+					],
+					"excerpt": "A wave of 2030 interim targets is coming due, and many of the companies that made them are nowhere close."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"business",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"net-zero",
+						"esg",
+						"m-and-a",
+						"enterprise",
+						"msme",
+						"deals-and-underwriting",
+						"venture-capital",
+						"central-banking",
+						"labor-and-employment",
+						"supply-chain-and-logistics",
+						"real-estate",
+						"healthcare-and-biotech",
+						"climate-and-net-zero",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			},
+			{
+				"id": "posts:india-green-hydrogen-roadmap-2030",
+				"slug": "india-green-hydrogen-roadmap-2030",
+				"status": "published",
+				"data": {
+					"title": "India Unveils Green Hydrogen Roadmap to 2030",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11",
+						"alt": "Wind turbines on a ridge under a wide sky",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "green-hydrogen.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "India has set out an ambitious roadmap to produce five million tonnes of green hydrogen annually by 2030, anchored by production-linked incentives for electrolyzer manufacturing and a mandate for fertilizer and refining firms to blend in the clean fuel.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The cost equation",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "With some of the cheapest solar electricity on the planet, India believes it can drive the cost of green hydrogen below two dollars a kilogram — the threshold at which it starts to compete with the fossil-derived 'grey' hydrogen that dominates industry today.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Skeptics note that water scarcity, grid constraints, and the absence of pipelines could slow the build-out. But the direction of travel is clear, and exporters in Europe and Japan are already lining up offtake deals.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						}
+					],
+					"excerpt": "New Delhi is betting that cheap renewable power can make it the lowest-cost producer of green hydrogen in the world."
+				},
+				"taxonomies": {
+					"category": [
+						"policy",
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"renewables",
+						"hydrogen",
+						"commodities",
+						"crypto-and-digital-assets",
+						"emerging-markets",
+						"msme",
+						"international-trade",
+						"policy-and-regulation",
+						"labor-and-employment",
+						"macro-indicators",
+						"agriculture-and-food",
+						"supply-chain-and-logistics",
+						"healthcare-and-biotech",
+						"consumer-goods",
+						"cleantech",
+						"circular-economy"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:vikram-rao"
+					}
+				]
+			},
+			{
+				"id": "posts:clean-energy-investment-hits-two-trillion",
+				"slug": "clean-energy-investment-hits-two-trillion",
+				"status": "published",
+				"data": {
+					"title": "Clean Energy Investment Hits $2 Trillion as Fossil Spending Stalls",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TMNTN8K80GHM4BCDGXR",
+						"alt": "Solar panels stretching toward the horizon at sunset",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "clean-energy-investment.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TMNTN8K80GHM4BCDGXR.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Global investment in clean energy is on track to cross two trillion dollars this year, according to fresh figures from energy analysts — a milestone that puts solar, wind, grids, and storage decisively ahead of new fossil-fuel supply for the first time.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Solar does the heavy lifting",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Photovoltaics alone account for more than half of the new capital, as module prices keep falling and developers race to connect projects before subsidy windows close. Battery storage is the fastest-growing line item on the ledger.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The headline figure hides a sharp divide: advanced economies and China capture the lion's share, while much of the developing world still struggles to attract financing at affordable rates. Closing that gap is now the central question of the transition.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						}
+					],
+					"excerpt": "For the first time, the world is putting nearly twice as much money into clean power as into oil, gas, and coal combined."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"energy",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"renewables",
+						"investment",
+						"commodities",
+						"deals-and-underwriting",
+						"central-banking",
+						"labor-and-employment",
+						"trade-alliances",
+						"frontier-tech",
+						"green-standards"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:sustainomics-desk"
+					}
+				]
+			},
+			{
+				"id": "posts:eu-carbon-border-tax-reshapes-steel-trade",
+				"slug": "eu-carbon-border-tax-reshapes-steel-trade",
+				"status": "published",
+				"data": {
+					"title": "EU Carbon Border Tax Reshapes Global Steel Trade",
+					"featured_image": {
+						"provider": "local",
+						"id": "01KV6H2TJE47QT14ZHTXKNDM5P",
+						"alt": "Molten steel pouring in an industrial mill",
+						"width": 1200,
+						"height": 800,
+						"mimeType": "image/jpeg",
+						"filename": "cbam-steel.jpg",
+						"meta": {
+							"storageKey": "01KV6H2TJE47QT14ZHTXKNDM5P.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The European Union's Carbon Border Adjustment Mechanism was designed to stop heavy industry from simply relocating its emissions abroad. Now that the levy is biting, it is rewiring the economics of the global steel market — rewarding producers who can document a low-carbon footprint and penalizing those who cannot.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "A premium on clean tons",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "For mills running on electric arc furnaces and green hydrogen, the border levy is quietly becoming a competitive advantage. For coal-fed blast furnaces, it is a tax on a business model that suddenly looks far more expensive than it did a year ago.",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Trade officials in Delhi and Ankara warn the rules could shut smaller exporters out of Europe entirely, and are pressing for their own carbon-pricing schemes so the revenue stays at home rather than flowing to Brussels.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						}
+					],
+					"excerpt": "As CBAM moves from reporting to real tariffs, exporters from India to Turkey are scrambling to prove how clean their steel really is."
+				},
+				"taxonomies": {
+					"category": [
+						"markets",
+						"finance",
+						"economics",
+						"industries",
+						"tech",
+						"esg"
+					],
+					"tag": [
+						"carbon-markets",
+						"supply-chains",
+						"investment",
+						"crypto-and-digital-assets",
+						"central-banking",
+						"policy-and-regulation",
+						"macro-indicators",
+						"fashion",
+						"artificial-intelligence",
+						"saas-and-cloud",
+						"tech-policy",
+						"womenomics",
+						"climate-and-net-zero",
+						"governance",
+						"social-impact"
+					]
+				},
+				"bylines": [
+					{
+						"byline": "byline:amara-okafor"
+					}
+				]
+			}
+		]
+	}
+}

@@ -1,0 +1,88 @@
+---
+import {
+	getEmDashCollection,
+	getTermsForEntries,
+	decodeSlug,
+} from "emdash";
+import Base from "../../layouts/Base.astro";
+import CategoryFeed from "../../components/CategoryFeed.astro";
+import type { FeedPost } from "../../components/CategoryFeed.astro";
+import { getSection } from "../../config/site-nav";
+
+const slug = decodeSlug(Astro.params.slug);
+const section = slug ? getSection(slug) : undefined;
+
+// Only "category"-kind sections resolve here; media sections own their own routes.
+if (!section || section.kind !== "category") {
+	return Astro.redirect("/404");
+}
+
+const topic = Astro.url.searchParams.get("topic");
+
+const { entries: posts, cacheHint } = await getEmDashCollection("posts", {
+	where: { category: section.slug },
+	orderBy: { published_at: "desc" },
+});
+
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+// Batched tag + category lookups (one round-trip each, not per post).
+const ids = posts.map((p) => p.data.id);
+const [tagsByEntry, catsByEntry] = await Promise.all([
+	getTermsForEntries("posts", ids, "tag"),
+	getTermsForEntries("posts", ids, "category"),
+]);
+
+const allFeed: FeedPost[] = posts.map((post) => {
+	const tags = (tagsByEntry.get(post.data.id) ?? []).map((t) => ({
+		slug: t.slug,
+		label: t.label,
+	}));
+	const cats = catsByEntry.get(post.data.id) ?? [];
+	const c = cats.find((t) => t.slug === section.slug) ?? cats[0];
+	return {
+		post,
+		tags,
+		category: c ? { slug: c.slug, label: c.label } : null,
+	};
+});
+
+// Best-effort topic filter: match the sub-tab slug against a post's tag slugs.
+let feed = allFeed;
+let topicFellBack = false;
+if (topic) {
+	const matched = allFeed.filter((f) => f.tags.some((t) => t.slug === topic));
+	if (matched.length > 0) {
+		feed = matched;
+	} else {
+		topicFellBack = true;
+	}
+}
+
+// Sub-category bands (Bloomberg-style): each sub-tab heading + its stories.
+const subSections = topic
+	? []
+	: section.subtabs
+			.map((st) => ({
+				subtab: { label: st.label, slug: st.slug },
+				posts: allFeed.filter((f) => f.tags.some((t) => t.slug === st.slug)).slice(0, 4),
+			}))
+			.filter((g) => g.posts.length > 0);
+
+// Podcasts for the sidebar "Listen" strip.
+const { entries: podcasts } = await getEmDashCollection("podcasts", { limit: 6 });
+---
+
+<Base
+	title={`${section.label} — Sustainomics`}
+	description={section.blurb}
+>
+	<CategoryFeed
+		section={section}
+		posts={feed}
+		topic={topic}
+		topicFellBack={topicFellBack}
+		subSections={subSections}
+		podcasts={podcasts}
+	/>
+</Base>

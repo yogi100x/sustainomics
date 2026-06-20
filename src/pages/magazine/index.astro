@@ -1,0 +1,174 @@
+---
+import { getEmDashCollection } from "emdash";
+import { Image } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+
+const { entries: issues, cacheHint } = await getEmDashCollection("magazines");
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+const toMs = (d: Date | string | null | undefined): number => {
+	if (!d) return 0;
+	if (d instanceof Date) return d.getTime?.() ?? 0;
+	const parsed = new Date(d as string);
+	return isNaN(parsed.getTime()) ? 0 : parsed.getTime();
+};
+
+const sorted = issues.toSorted((a, b) => {
+	const da = toMs(a.data.issue_date) || toMs(a.data.createdAt);
+	const db = toMs(b.data.issue_date) || toMs(b.data.createdAt);
+	return db - da;
+});
+
+const fmt = (d: Date | string | null | undefined) => {
+	if (!d) return null;
+	const date = d instanceof Date ? d : new Date(d as string);
+	return isNaN(date.getTime()) ? null : date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+};
+---
+
+<Base title="Magazine" description="The Sustainomics magazine — read every issue as a flipbook.">
+	<div class="wrap">
+		<header class="sec-head">
+			<h1 class="sec-name">Magazine</h1>
+			<p class="sec-sub">In-depth quarterly issues — read each one as a flipbook.</p>
+		</header>
+
+		{
+			sorted.length === 0 ? (
+				<section class="empty">
+					<h2>No issues yet</h2>
+					<p>Upload a magazine PDF in the admin to publish your first issue.</p>
+					<a class="btn" href="/_emdash/admin/content/magazines/new">
+						Add an issue
+					</a>
+				</section>
+			) : (
+				<div class="mag-grid">
+					{sorted.map((m) => (
+						<a class="mag-card" href={`/magazine/${m.id}`}>
+							<div class="mag-cover">
+								{m.data.cover ? (
+									<Image image={m.data.cover} />
+								) : (
+									<div class="mag-noimg">PDF</div>
+								)}
+							</div>
+							<h2 class="mag-title">{m.data.title}</h2>
+							{fmt(m.data.issue_date) && <p class="mag-date">{fmt(m.data.issue_date)}</p>}
+						</a>
+					))}
+				</div>
+			)
+		}
+	</div>
+</Base>
+
+<style>
+	.wrap {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
+	}
+	.sec-head {
+		border-top: 2px solid var(--color-ink);
+		padding-top: var(--spacing-3);
+		margin-bottom: var(--spacing-8);
+	}
+	.sec-name {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-3xl);
+		font-weight: 700;
+	}
+	.sec-sub {
+		margin-top: var(--spacing-1);
+		color: var(--color-muted);
+		font-size: var(--font-size-base);
+	}
+	.mag-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--spacing-8) var(--spacing-6);
+	}
+	.mag-card {
+		text-decoration: none;
+		color: inherit;
+	}
+	.mag-cover {
+		aspect-ratio: 3 / 4;
+		overflow: hidden;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border-subtle);
+		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+	}
+	.mag-cover :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+	.mag-card:hover .mag-cover :global(img) {
+		transform: scale(1.03);
+	}
+	.mag-noimg {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-muted);
+		font-family: var(--font-sans);
+		font-weight: 700;
+		letter-spacing: var(--tracking-wide);
+	}
+	.mag-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-lg);
+		font-weight: 700;
+		line-height: 1.2;
+		margin-top: var(--spacing-3);
+	}
+	.mag-card:hover .mag-title {
+		color: var(--color-accent);
+	}
+	.mag-date {
+		margin-top: var(--spacing-1);
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+	}
+	.empty {
+		text-align: center;
+		padding: var(--spacing-20) var(--spacing-6);
+	}
+	.empty h2 {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-2xl);
+	}
+	.empty p {
+		color: var(--color-muted);
+		margin-top: var(--spacing-2);
+	}
+	.btn {
+		display: inline-block;
+		margin-top: var(--spacing-4);
+		padding: var(--spacing-3) var(--spacing-6);
+		background: var(--color-ink);
+		color: #fff;
+		text-decoration: none;
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		border-radius: var(--radius);
+	}
+	@media (max-width: 900px) {
+		.mag-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (max-width: 560px) {
+		.mag-grid {
+			grid-template-columns: 1fr 1fr;
+			gap: var(--spacing-6) var(--spacing-4);
+		}
+	}
+</style>

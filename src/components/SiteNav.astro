@@ -1,0 +1,977 @@
+---
+import LiveSearch from "emdash/ui/search";
+import { PRIMARY_BAR, MEGA_COLUMNS } from "../config/site-nav";
+
+interface Props {
+	siteTitle: string;
+	siteLogo?: { url: string; alt?: string | null } | null;
+	isLoggedIn?: boolean;
+}
+
+const { siteTitle, siteLogo, isLoggedIn = false } = Astro.props;
+
+// Top utility strip links (subtle)
+const UTILITY_LINKS = [
+	{ label: "Newsletters", href: "/pages/about" },
+	{ label: "Live TV", href: "/video" },
+	{ label: "About", href: "/pages/about" },
+];
+---
+
+<header class="snav" data-snav>
+	<!-- Thin utility strip -->
+	<div class="snav-utility">
+		<div class="snav-utility-inner">
+			<a href="/pages/about" class="snav-utility-brand">The Sustainomics</a>
+			<nav class="snav-utility-links" aria-label="Utility">
+				{
+					UTILITY_LINKS.map((l) => (
+						<a href={l.href}>{l.label}</a>
+					))
+				}
+			</nav>
+		</div>
+	</div>
+
+	<!-- Masthead row -->
+	<div class="snav-masthead">
+		<div class="snav-masthead-inner">
+			<button
+				type="button"
+				class="snav-burger"
+				aria-label="Open menu"
+				aria-expanded="false"
+				aria-controls="snav-mobile"
+				data-snav-burger
+			>
+				<span></span><span></span><span></span>
+			</button>
+
+			<a href="/" class="snav-wordmark">
+				{
+					siteLogo ? (
+						<img
+							src={siteLogo.url}
+							alt={siteLogo.alt || siteTitle}
+							class="snav-logo-img"
+						/>
+					) : (
+						siteTitle
+					)
+				}
+			</a>
+
+			<div class="snav-actions">
+				<LiveSearch
+					placeholder="Search news, markets…"
+					class="snav-search"
+					inputClass="snav-search-input"
+					resultsClass="snav-search-results"
+					resultClass="snav-search-result"
+					collections={["posts", "pages"]}
+				/>
+				<a
+					href="/_emdash/admin"
+					class="snav-signin">{isLoggedIn ? "Admin" : "Sign In"}</a
+				>
+				<a href="/pages/about" class="snav-subscribe">Subscribe</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Category bar -->
+	<div class="snav-catbar">
+		<nav class="snav-catbar-inner" aria-label="Sections">
+			<a href="/video" class="snav-cat snav-live">
+				<span class="snav-live-dot" aria-hidden="true"></span>Live TV
+			</a>
+			{
+				PRIMARY_BAR.map((section) => (
+					<div class="snav-cat-wrap" data-snav-item>
+						<a
+							href={section.href}
+							class="snav-cat"
+							aria-haspopup="true"
+							aria-expanded="false"
+							data-snav-trigger
+						>
+							{section.label}
+							{section.subtabs.length > 0 && (
+								<span class="snav-caret" aria-hidden="true">▾</span>
+							)}
+						</a>
+						{section.subtabs.length > 0 && (
+							<div class="snav-dropdown" data-snav-panel role="menu">
+								<div class="snav-dropdown-blurb">{section.blurb}</div>
+								<ul class="snav-dropdown-list">
+									{section.subtabs.map((st) => (
+										<li role="none">
+											<a
+												role="menuitem"
+												href={
+													section.kind === "category"
+														? `${section.href}?topic=${st.slug}`
+														: section.href
+												}
+											>
+												<span class="snav-dd-label">{st.label}</span>
+												{st.desc && (
+													<span class="snav-dd-desc">{st.desc}</span>
+												)}
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+					</div>
+				))
+			}
+
+			<!-- More mega panel trigger -->
+			<div class="snav-cat-wrap snav-more-wrap" data-snav-item>
+				<button
+					type="button"
+					class="snav-cat snav-more"
+					aria-haspopup="true"
+					aria-expanded="false"
+					data-snav-trigger
+				>
+					More <span class="snav-caret" aria-hidden="true">▾</span>
+				</button>
+				<div class="snav-mega" data-snav-panel role="menu">
+					<div class="snav-mega-inner">
+						{
+							MEGA_COLUMNS.map((col) => (
+								<div class="snav-mega-col">
+									<h3 class="snav-mega-heading">{col.heading}</h3>
+									<ul>
+										{col.links.map((link) => (
+											<li>
+												<a role="menuitem" href={link.href}>
+													{link.label}
+												</a>
+											</li>
+										))}
+									</ul>
+								</div>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+	<!-- Mobile menu (hamburger) -->
+	<div class="snav-mobile" id="snav-mobile" data-snav-mobile hidden>
+		<div class="snav-mobile-search">
+			<a href="/search" class="snav-mobile-searchlink">Search Sustainomics →</a>
+		</div>
+		<nav aria-label="Mobile sections">
+			<a href="/video" class="snav-mobile-toplink snav-mobile-live">
+				<span class="snav-live-dot" aria-hidden="true"></span>Live TV
+			</a>
+			{
+				PRIMARY_BAR.map((section) => (
+					<div class="snav-mobile-acc" data-snav-acc>
+						<div class="snav-mobile-row">
+							<a href={section.href} class="snav-mobile-seclink">
+								{section.label}
+							</a>
+							{section.subtabs.length > 0 && (
+								<button
+									type="button"
+									class="snav-mobile-toggle"
+									aria-label={`Toggle ${section.label}`}
+									aria-expanded="false"
+									data-snav-acc-toggle
+								>
+									<span class="snav-caret">▾</span>
+								</button>
+							)}
+						</div>
+						{section.subtabs.length > 0 && (
+							<ul class="snav-mobile-sub" hidden>
+								{section.subtabs.map((st) => (
+									<li>
+										<a
+											href={
+												section.kind === "category"
+													? `${section.href}?topic=${st.slug}`
+													: section.href
+											}
+										>
+											{st.label}
+										</a>
+									</li>
+								))}
+							</ul>
+						)}
+					</div>
+				))
+			}
+			<div class="snav-mobile-mega">
+				{
+					MEGA_COLUMNS.map((col) => (
+						<div class="snav-mobile-megacol">
+							<h3>{col.heading}</h3>
+							<ul>
+								{col.links.map((link) => (
+									<li>
+										<a href={link.href}>{link.label}</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					))
+				}
+			</div>
+			<div class="snav-mobile-actions">
+				<a href="/_emdash/admin" class="snav-signin"
+					>{isLoggedIn ? "Admin" : "Sign In"}</a
+				>
+				<a href="/pages/about" class="snav-subscribe">Subscribe</a>
+			</div>
+		</nav>
+	</div>
+</header>
+
+<style>
+	/* ---------- Shell ---------- */
+	.snav {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: #000;
+		color: #fff;
+		font-family: var(--font-sans);
+	}
+
+	.snav a {
+		text-decoration: none;
+	}
+
+	/* ---------- Utility strip ---------- */
+	.snav-utility {
+		background: #000;
+		border-bottom: 1px solid #1a1a1a;
+		display: none;
+	}
+	.snav-utility-inner {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: 6px var(--spacing-6);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--spacing-4);
+	}
+	.snav-utility-brand {
+		font-size: 11px;
+		letter-spacing: var(--tracking-wide);
+		text-transform: uppercase;
+		color: #9a9a9a;
+		font-weight: 600;
+	}
+	.snav-utility-links {
+		display: flex;
+		gap: var(--spacing-5);
+	}
+	.snav-utility-links a {
+		font-size: 11px;
+		color: #9a9a9a;
+		letter-spacing: var(--tracking-wide);
+		transition: color var(--transition-fast);
+	}
+	.snav-utility-links a:hover {
+		color: #fff;
+	}
+
+	/* ---------- Masthead ---------- */
+	.snav-masthead {
+		background: #000;
+		border-bottom: 1px solid #1f1f1f;
+	}
+	.snav-masthead-inner {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: var(--spacing-4) var(--spacing-6);
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-4);
+	}
+
+	.snav-wordmark {
+		font-family: var(--font-serif, Georgia, serif);
+		font-weight: 700;
+		font-size: 1.75rem;
+		line-height: 1;
+		color: #fff;
+		letter-spacing: -0.015em;
+		margin-right: auto;
+	}
+	.snav-wordmark:hover {
+		color: #fff;
+	}
+	.snav-logo-img {
+		height: 40px;
+		width: auto;
+		display: block;
+	}
+
+	.snav-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-5);
+		margin-left: auto;
+	}
+
+	.snav-signin {
+		font-size: var(--font-size-sm);
+		font-weight: 500;
+		color: #e6e6e6;
+		transition: color var(--transition-fast);
+		white-space: nowrap;
+	}
+	.snav-signin:hover {
+		color: #fff;
+	}
+
+	.snav-subscribe {
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		color: #000;
+		background: #fff;
+		padding: 7px 16px;
+		border-radius: 3px;
+		white-space: nowrap;
+		transition:
+			background var(--transition-fast),
+			color var(--transition-fast);
+	}
+	.snav-subscribe:hover {
+		background: var(--color-kicker, #c8102e);
+		color: #fff;
+	}
+
+	/* ---------- Search (EmDash LiveSearch) ---------- */
+	.snav-search {
+		position: relative;
+		width: 220px;
+	}
+	:global(.snav-search-input) {
+		width: 100%;
+		padding: 7px 12px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		border: 1px solid #333;
+		border-radius: 3px;
+		background: #141414;
+		color: #fff;
+		transition:
+			border-color var(--transition-fast),
+			box-shadow var(--transition-fast);
+	}
+	:global(.snav-search-input)::placeholder {
+		color: #888;
+	}
+	:global(.snav-search-input):focus,
+	:global(.snav-search-input):focus-visible {
+		outline: none;
+		border-color: #fff !important;
+		box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+	}
+	:global(.snav-search-results) {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		margin-top: var(--spacing-2);
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-dropdown);
+		max-height: 400px;
+		overflow-y: auto;
+		z-index: 1000;
+	}
+	:global(.snav-search-results .emdash-live-search-loading),
+	:global(.snav-search-results .emdash-live-search-no-results) {
+		padding: var(--spacing-4);
+		text-align: center;
+		color: var(--color-muted);
+		font-size: var(--font-size-sm);
+	}
+	:global(.snav-search-result) {
+		display: block;
+		padding: var(--spacing-3) var(--spacing-4);
+		text-decoration: none;
+		color: var(--color-text);
+		border-bottom: 1px solid var(--color-border-subtle);
+		transition: background var(--transition-fast);
+	}
+	:global(.snav-search-result):last-child {
+		border-bottom: none;
+	}
+	:global(.snav-search-result):hover,
+	:global(.snav-search-result):focus,
+	:global(.snav-search-result.focused) {
+		background: var(--color-surface);
+		outline: none;
+	}
+	:global(.snav-search-result .emdash-live-search-result-title) {
+		display: block;
+		font-weight: 500;
+		font-size: var(--font-size-sm);
+	}
+	:global(.snav-search-result .emdash-live-search-result-collection) {
+		display: block;
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		margin-top: 2px;
+	}
+	:global(.snav-search-result .emdash-live-search-result-snippet) {
+		display: block;
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+		margin-top: var(--spacing-1);
+		line-height: var(--leading-snug);
+	}
+	:global(.snav-search-result .emdash-live-search-result-snippet mark) {
+		font-weight: 600;
+		color: var(--color-text);
+	}
+
+	/* ---------- Category bar ---------- */
+	.snav-catbar {
+		background: #000;
+		border-bottom: 1px solid #1f1f1f;
+	}
+	.snav-catbar-inner {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: 0 var(--spacing-6);
+		display: flex;
+		align-items: stretch;
+		gap: 0;
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+	.snav-catbar-inner::-webkit-scrollbar {
+		display: none;
+	}
+
+	.snav-cat-wrap {
+		position: relative;
+		display: flex;
+		align-items: stretch;
+	}
+
+	.snav-cat {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 11px 13px;
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: #e6e6e6;
+		white-space: nowrap;
+		background: transparent;
+		border: none;
+		border-bottom: 2px solid transparent;
+		cursor: pointer;
+		font-family: var(--font-sans);
+		transition:
+			color var(--transition-fast),
+			border-color var(--transition-fast);
+	}
+	.snav-cat:hover,
+	.snav-cat:focus-visible {
+		color: #fff;
+		border-bottom-color: var(--color-kicker, #c8102e);
+		outline: none;
+	}
+	.snav-cat-wrap:hover > .snav-cat,
+	.snav-cat-wrap:focus-within > .snav-cat {
+		color: #fff;
+		border-bottom-color: var(--color-kicker, #c8102e);
+	}
+
+	.snav-caret {
+		font-size: 9px;
+		opacity: 0.7;
+		transition: transform var(--transition-fast);
+	}
+	.snav-cat-wrap:hover .snav-caret,
+	.snav-cat-wrap:focus-within .snav-caret,
+	.snav-cat[aria-expanded="true"] .snav-caret {
+		transform: rotate(180deg);
+	}
+
+	.snav-live {
+		color: #fff;
+		font-weight: 700;
+	}
+	.snav-live-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: var(--color-kicker, #c8102e);
+		display: inline-block;
+		margin-right: 6px;
+		box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.6);
+		animation: snav-pulse 2s infinite;
+	}
+	@keyframes snav-pulse {
+		0% {
+			box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.5);
+		}
+		70% {
+			box-shadow: 0 0 0 5px rgba(200, 16, 46, 0);
+		}
+		100% {
+			box-shadow: 0 0 0 0 rgba(200, 16, 46, 0);
+		}
+	}
+
+	/* ---------- Per-section dropdown ---------- */
+	.snav-dropdown {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		min-width: 300px;
+		max-width: 360px;
+		background: var(--color-bg);
+		color: var(--color-text);
+		border: 1px solid var(--color-border);
+		border-top: 2px solid var(--color-kicker, #c8102e);
+		box-shadow: var(--shadow-dropdown);
+		padding: var(--spacing-4);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(6px);
+		transition:
+			opacity var(--transition-fast),
+			transform var(--transition-fast),
+			visibility var(--transition-fast);
+		z-index: 120;
+	}
+	.snav-cat-wrap:hover > .snav-dropdown,
+	.snav-cat-wrap:focus-within > .snav-dropdown,
+	.snav-dropdown.is-open {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+	.snav-dropdown-blurb {
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+		line-height: var(--leading-snug);
+		padding-bottom: var(--spacing-3);
+		margin-bottom: var(--spacing-2);
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+	.snav-dropdown-list {
+		list-style: none;
+		display: grid;
+		gap: 1px;
+	}
+	.snav-dropdown-list a {
+		display: block;
+		padding: 7px 8px;
+		border-radius: var(--radius);
+		color: var(--color-text);
+		transition: background var(--transition-fast);
+	}
+	.snav-dropdown-list a:hover,
+	.snav-dropdown-list a:focus-visible {
+		background: var(--color-surface);
+		outline: none;
+	}
+	.snav-dd-label {
+		display: block;
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+	}
+	.snav-dd-desc {
+		display: block;
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+		line-height: var(--leading-snug);
+		margin-top: 1px;
+	}
+
+	/* ---------- Mega panel ---------- */
+	.snav-more-wrap {
+		margin-left: auto;
+	}
+	.snav-mega {
+		position: absolute;
+		top: 100%;
+		right: 0;
+		width: min(880px, calc(100vw - var(--spacing-8)));
+		background: var(--color-bg);
+		color: var(--color-text);
+		border: 1px solid var(--color-border);
+		border-top: 2px solid var(--color-kicker, #c8102e);
+		box-shadow: var(--shadow-dropdown);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(6px);
+		transition:
+			opacity var(--transition-fast),
+			transform var(--transition-fast),
+			visibility var(--transition-fast);
+		z-index: 120;
+	}
+	.snav-more-wrap:hover > .snav-mega,
+	.snav-more-wrap:focus-within > .snav-mega,
+	.snav-mega.is-open {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+	.snav-mega-inner {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+		gap: var(--spacing-6);
+		padding: var(--spacing-6);
+	}
+	.snav-mega-heading {
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-muted);
+		margin-bottom: var(--spacing-3);
+		padding-bottom: var(--spacing-2);
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+	.snav-mega-col ul {
+		list-style: none;
+	}
+	.snav-mega-col li {
+		margin-bottom: 2px;
+	}
+	.snav-mega-col a {
+		display: block;
+		padding: 5px 0;
+		font-size: var(--font-size-sm);
+		color: var(--color-text-secondary);
+		transition: color var(--transition-fast);
+	}
+	.snav-mega-col a:hover,
+	.snav-mega-col a:focus-visible {
+		color: var(--color-text);
+		outline: none;
+	}
+
+	/* ---------- Burger ---------- */
+	.snav-burger {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		gap: 4px;
+		width: 36px;
+		height: 36px;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 6px;
+	}
+	.snav-burger span {
+		display: block;
+		height: 2px;
+		width: 100%;
+		background: #fff;
+		border-radius: 2px;
+		transition: transform var(--transition-fast), opacity var(--transition-fast);
+	}
+	.snav-burger[aria-expanded="true"] span:nth-child(1) {
+		transform: translateY(6px) rotate(45deg);
+	}
+	.snav-burger[aria-expanded="true"] span:nth-child(2) {
+		opacity: 0;
+	}
+	.snav-burger[aria-expanded="true"] span:nth-child(3) {
+		transform: translateY(-6px) rotate(-45deg);
+	}
+
+	/* ---------- Mobile menu ---------- */
+	.snav-mobile {
+		background: var(--color-bg);
+		color: var(--color-text);
+		border-top: 1px solid var(--color-border);
+		max-height: calc(100vh - 64px);
+		overflow-y: auto;
+		padding: var(--spacing-4) var(--spacing-5) var(--spacing-8);
+	}
+	.snav-mobile[hidden] {
+		display: none;
+	}
+	.snav-mobile-search {
+		padding-bottom: var(--spacing-3);
+		margin-bottom: var(--spacing-3);
+		border-bottom: 1px solid var(--color-border);
+	}
+	.snav-mobile-searchlink {
+		display: block;
+		padding: 10px 12px;
+		background: var(--color-surface);
+		border-radius: var(--radius);
+		color: var(--color-text);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+	}
+	.snav-mobile-toplink {
+		display: flex;
+		align-items: center;
+		padding: 12px 4px;
+		font-weight: 700;
+		color: var(--color-text);
+		font-size: var(--font-size-base);
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+	.snav-mobile-acc {
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+	.snav-mobile-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.snav-mobile-seclink {
+		flex: 1;
+		padding: 12px 4px;
+		font-weight: 700;
+		color: var(--color-text);
+		font-size: var(--font-size-base);
+	}
+	.snav-mobile-toggle {
+		background: transparent;
+		border: none;
+		color: var(--color-text-secondary);
+		padding: 12px;
+		cursor: pointer;
+		font-size: 12px;
+	}
+	.snav-mobile-toggle[aria-expanded="true"] .snav-caret {
+		display: inline-block;
+		transform: rotate(180deg);
+	}
+	.snav-mobile-sub {
+		list-style: none;
+		padding: 0 0 var(--spacing-3) var(--spacing-3);
+		display: grid;
+		gap: 2px;
+	}
+	.snav-mobile-sub[hidden] {
+		display: none;
+	}
+	.snav-mobile-sub a {
+		display: block;
+		padding: 7px 8px;
+		font-size: var(--font-size-sm);
+		color: var(--color-text-secondary);
+		border-radius: var(--radius);
+	}
+	.snav-mobile-sub a:hover {
+		background: var(--color-surface);
+		color: var(--color-text);
+	}
+	.snav-mobile-mega {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--spacing-5);
+		padding: var(--spacing-5) 0;
+		margin-top: var(--spacing-3);
+		border-top: 1px solid var(--color-border);
+	}
+	.snav-mobile-megacol h3 {
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-muted);
+		margin-bottom: var(--spacing-2);
+	}
+	.snav-mobile-megacol ul {
+		list-style: none;
+	}
+	.snav-mobile-megacol a {
+		display: block;
+		padding: 5px 0;
+		font-size: var(--font-size-sm);
+		color: var(--color-text-secondary);
+	}
+	.snav-mobile-megacol a:hover {
+		color: var(--color-text);
+	}
+	.snav-mobile-actions {
+		display: flex;
+		gap: var(--spacing-4);
+		align-items: center;
+		padding-top: var(--spacing-4);
+		border-top: 1px solid var(--color-border);
+	}
+	.snav-mobile-actions .snav-signin {
+		color: var(--color-text);
+	}
+	.snav-mobile-actions .snav-subscribe {
+		color: #fff;
+		background: var(--color-kicker, #c8102e);
+	}
+
+	/* ---------- Responsive ---------- */
+	@media (min-width: 901px) {
+		.snav-utility {
+			display: block;
+		}
+		.snav-mobile {
+			display: none !important;
+		}
+	}
+
+	@media (max-width: 900px) {
+		.snav-burger {
+			display: flex;
+		}
+		.snav-wordmark {
+			font-size: 1.4rem;
+			margin-right: 0;
+		}
+		.snav-masthead-inner {
+			gap: var(--spacing-3);
+		}
+		.snav-search {
+			display: none;
+		}
+		.snav-signin {
+			display: none;
+		}
+		.snav-catbar {
+			display: none;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.snav-mobile-mega {
+			grid-template-columns: 1fr;
+		}
+		.snav-subscribe {
+			padding: 6px 12px;
+		}
+	}
+</style>
+
+<script>
+	(function () {
+		const root = document.querySelector<HTMLElement>("[data-snav]");
+		if (!root) return;
+
+		const isDesktop = () => window.matchMedia("(min-width: 901px)").matches;
+
+		/* ---- Desktop dropdown / mega panel toggle (click + keyboard) ---- */
+		const items = Array.from(
+			root.querySelectorAll<HTMLElement>("[data-snav-item]")
+		);
+
+		function closeAll(except?: HTMLElement) {
+			items.forEach((item) => {
+				if (item === except) return;
+				const trigger = item.querySelector<HTMLElement>("[data-snav-trigger]");
+				const panel = item.querySelector<HTMLElement>("[data-snav-panel]");
+				trigger?.setAttribute("aria-expanded", "false");
+				panel?.classList.remove("is-open");
+			});
+		}
+
+		items.forEach((item) => {
+			const trigger = item.querySelector<HTMLElement>("[data-snav-trigger]");
+			const panel = item.querySelector<HTMLElement>("[data-snav-panel]");
+			if (!trigger || !panel) return;
+
+			// For <a> triggers, click should still toggle the panel on desktop
+			// (the section landing page remains reachable via the row link on
+			// mobile / via middle-click). Buttons just toggle.
+			trigger.addEventListener("click", (e) => {
+				if (!isDesktop()) return;
+				const open = panel.classList.contains("is-open");
+				if (trigger.tagName === "A" && !open) {
+					// First click opens the dropdown; let a second click navigate.
+					e.preventDefault();
+				}
+				closeAll(item);
+				panel.classList.toggle("is-open", !open);
+				trigger.setAttribute("aria-expanded", String(!open));
+			});
+
+			// Arrow-down opens & focuses first link
+			trigger.addEventListener("keydown", (e) => {
+				if (e.key === "ArrowDown") {
+					e.preventDefault();
+					closeAll(item);
+					panel.classList.add("is-open");
+					trigger.setAttribute("aria-expanded", "true");
+					panel.querySelector<HTMLElement>("a")?.focus();
+				} else if (e.key === "Escape") {
+					panel.classList.remove("is-open");
+					trigger.setAttribute("aria-expanded", "false");
+				}
+			});
+
+			panel.addEventListener("keydown", (e) => {
+				if (e.key === "Escape") {
+					panel.classList.remove("is-open");
+					trigger.setAttribute("aria-expanded", "false");
+					trigger.focus();
+				}
+			});
+		});
+
+		// Click outside closes panels
+		document.addEventListener("click", (e) => {
+			if (!root.contains(e.target as Node)) closeAll();
+		});
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") closeAll();
+		});
+
+		/* ---- Mobile burger ---- */
+		const burger = root.querySelector<HTMLElement>("[data-snav-burger]");
+		const mobile = root.querySelector<HTMLElement>("[data-snav-mobile]");
+		if (burger && mobile) {
+			burger.addEventListener("click", () => {
+				const open = burger.getAttribute("aria-expanded") === "true";
+				burger.setAttribute("aria-expanded", String(!open));
+				burger.setAttribute("aria-label", open ? "Open menu" : "Close menu");
+				mobile.hidden = open;
+				document.body.style.overflow = open ? "" : "hidden";
+			});
+		}
+
+		/* ---- Mobile accordion ---- */
+		root.querySelectorAll<HTMLElement>("[data-snav-acc-toggle]").forEach((btn) => {
+			btn.addEventListener("click", () => {
+				const acc = btn.closest("[data-snav-acc]");
+				const sub = acc?.querySelector<HTMLElement>(".snav-mobile-sub");
+				if (!sub) return;
+				const open = btn.getAttribute("aria-expanded") === "true";
+				btn.setAttribute("aria-expanded", String(!open));
+				sub.hidden = open;
+			});
+		});
+
+		// Reset mobile state when resizing up to desktop
+		window.addEventListener("resize", () => {
+			if (isDesktop() && mobile && !mobile.hidden) {
+				mobile.hidden = true;
+				burger?.setAttribute("aria-expanded", "false");
+				document.body.style.overflow = "";
+			}
+		});
+	})();
+</script>

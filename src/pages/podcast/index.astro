@@ -1,0 +1,287 @@
+---
+import { getEmDashCollection } from "emdash";
+import { Image } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+
+const { entries: eps, cacheHint } = await getEmDashCollection("podcasts");
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+const sorted = eps.toSorted((a, b) => {
+	const da = a.data.episode_date?.getTime?.() ?? a.data.createdAt?.getTime?.() ?? 0;
+	const db = b.data.episode_date?.getTime?.() ?? b.data.createdAt?.getTime?.() ?? 0;
+	return db - da;
+});
+
+function ytId(u?: string | null) {
+	if (!u) return null;
+	const m = u.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([\w-]{11})/);
+	return m ? m[1] : null;
+}
+const isVideo = (e: (typeof sorted)[number]) => !!e.data.video_url;
+const videos = sorted.filter(isVideo);
+const audios = sorted.filter((e) => !isVideo(e));
+---
+
+<Base title="Podcast" description="Video and audio from the Sustainomics team.">
+	<div class="wrap">
+		<header class="sec-head">
+			<h1 class="sec-name">Podcast</h1>
+			<p class="sec-sub">Conversations and documentaries on the climate transition.</p>
+		</header>
+
+		{
+			sorted.length === 0 ? (
+				<section class="empty">
+					<h2>No episodes yet</h2>
+					<p>Add a video (YouTube/Vimeo) or audio episode in the admin.</p>
+					<a class="btn" href="/_emdash/admin/content/podcasts/new">
+						Add an episode
+					</a>
+				</section>
+			) : (
+				<>
+					{videos.length > 0 && (
+						<section class="band">
+							<div class="band-head">
+								<h2 class="band-name">Sustainomics Originals</h2>
+							</div>
+							<div class="vid-grid">
+								{videos.map((e) => (
+									<a class="vid-card" href={`/podcast/${e.id}`}>
+										<div class="vid-thumb">
+											{e.data.cover ? (
+												<Image image={e.data.cover} />
+											) : ytId(e.data.video_url) ? (
+												<img
+													src={`https://i.ytimg.com/vi/${ytId(e.data.video_url)}/hqdefault.jpg`}
+													alt={e.data.title}
+												/>
+											) : (
+												<div class="noimg" />
+											)}
+											<span class="play" aria-hidden="true">▶</span>
+											{e.data.duration && <span class="dur">{e.data.duration}</span>}
+										</div>
+										<h3 class="vid-title">{e.data.title}</h3>
+									</a>
+								))}
+							</div>
+						</section>
+					)}
+
+					{audios.length > 0 && (
+						<section class="band">
+							<div class="band-head">
+								<h2 class="band-name">Audio Episodes</h2>
+							</div>
+							<div class="aud-list">
+								{audios.map((e) => (
+									<a class="aud-card" href={`/podcast/${e.id}`}>
+										{e.data.cover && (
+											<div class="aud-cover">
+												<Image image={e.data.cover} />
+											</div>
+										)}
+										<div class="aud-body">
+											<h3 class="aud-title">{e.data.title}</h3>
+											{e.data.excerpt && <p class="aud-dek">{e.data.excerpt}</p>}
+											<span class="listen">
+												🎧 Listen{e.data.duration ? ` · ${e.data.duration}` : ""}
+											</span>
+										</div>
+									</a>
+								))}
+							</div>
+						</section>
+					)}
+				</>
+			)
+		}
+	</div>
+</Base>
+
+<style>
+	.wrap {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
+	}
+	.sec-head {
+		border-top: 2px solid var(--color-ink);
+		padding-top: var(--spacing-3);
+		margin-bottom: var(--spacing-8);
+	}
+	.sec-name {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-3xl);
+		font-weight: 700;
+	}
+	.sec-sub {
+		margin-top: var(--spacing-1);
+		color: var(--color-muted);
+	}
+	.band {
+		margin-bottom: var(--spacing-12);
+	}
+	.band-head {
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--spacing-3);
+		margin-bottom: var(--spacing-6);
+	}
+	.band-name {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+	}
+	.vid-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--spacing-6) var(--spacing-5);
+	}
+	.vid-card {
+		text-decoration: none;
+		color: inherit;
+	}
+	.vid-thumb {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		background: var(--color-surface);
+	}
+	.vid-thumb :global(img),
+	.vid-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.vid-thumb .noimg {
+		width: 100%;
+		height: 100%;
+		background: var(--color-border);
+	}
+	.play {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: rgba(0, 0, 0, 0.55);
+		color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+		padding-left: 3px;
+	}
+	.vid-card:hover .play {
+		background: var(--color-kicker);
+	}
+	.dur {
+		position: absolute;
+		bottom: var(--spacing-2);
+		right: var(--spacing-2);
+		background: rgba(0, 0, 0, 0.8);
+		color: #fff;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-variant-numeric: tabular-nums;
+		padding: 1px 6px;
+		border-radius: 2px;
+	}
+	.vid-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-base);
+		font-weight: 700;
+		line-height: 1.25;
+		margin-top: var(--spacing-3);
+	}
+	.vid-card:hover .vid-title {
+		color: var(--color-accent);
+	}
+	.aud-list {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--spacing-6) var(--spacing-8);
+	}
+	.aud-card {
+		display: flex;
+		gap: var(--spacing-4);
+		text-decoration: none;
+		color: inherit;
+		padding-bottom: var(--spacing-5);
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+	.aud-cover {
+		flex: none;
+		width: 96px;
+		height: 96px;
+		overflow: hidden;
+		background: var(--color-surface);
+	}
+	.aud-cover :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.aud-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-lg);
+		font-weight: 700;
+		line-height: 1.2;
+	}
+	.aud-card:hover .aud-title {
+		color: var(--color-accent);
+	}
+	.aud-dek {
+		font-size: var(--font-size-sm);
+		color: var(--color-text-secondary);
+		line-height: 1.45;
+		margin: var(--spacing-1) 0 var(--spacing-2);
+	}
+	.listen {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 600;
+		color: var(--color-text-secondary);
+	}
+	.empty {
+		text-align: center;
+		padding: var(--spacing-20) var(--spacing-6);
+	}
+	.empty h2 {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-2xl);
+	}
+	.empty p {
+		color: var(--color-muted);
+		margin-top: var(--spacing-2);
+	}
+	.btn {
+		display: inline-block;
+		margin-top: var(--spacing-4);
+		padding: var(--spacing-3) var(--spacing-6);
+		background: var(--color-ink);
+		color: #fff;
+		text-decoration: none;
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		border-radius: var(--radius);
+	}
+	@media (max-width: 900px) {
+		.vid-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.aud-list {
+			grid-template-columns: 1fr;
+		}
+	}
+	@media (max-width: 560px) {
+		.vid-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

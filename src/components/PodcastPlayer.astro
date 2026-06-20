@@ -1,0 +1,118 @@
+---
+import { Image } from "emdash/ui";
+
+interface Props {
+	videoUrl?: string | null;
+	spotifyUrl?: string | null;
+	audioUrl?: string | null;
+	cover?: unknown;
+	title?: string;
+}
+const { videoUrl, spotifyUrl, audioUrl, cover, title } = Astro.props;
+
+function youtubeId(u: string) {
+	const m = u.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([\w-]{11})/);
+	return m ? m[1] : null;
+}
+function vimeoId(u: string) {
+	const m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+	return m ? m[1] : null;
+}
+
+let videoEmbed: string | null = null;
+if (videoUrl) {
+	const yt = youtubeId(videoUrl);
+	const vm = vimeoId(videoUrl);
+	if (yt) videoEmbed = `https://www.youtube.com/embed/${yt}`;
+	else if (vm) videoEmbed = `https://player.vimeo.com/video/${vm}`;
+}
+
+let spotifyEmbed: string | null = null;
+if (spotifyUrl) {
+	spotifyEmbed = spotifyUrl.includes("/embed/")
+		? spotifyUrl
+		: spotifyUrl.replace("open.spotify.com/", "open.spotify.com/embed/");
+}
+---
+
+{
+	videoEmbed ? (
+		<div class="player-video">
+			<iframe
+				src={videoEmbed}
+				title={title}
+				loading="lazy"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				allowfullscreen
+			/>
+		</div>
+	) : spotifyEmbed ? (
+		<iframe
+			class="player-spotify"
+			src={spotifyEmbed}
+			loading="lazy"
+			allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+			title={title}
+		/>
+	) : audioUrl ? (
+		<div class="player-audio">
+			{cover && (
+				<div class="player-audio-cover">
+					<Image image={cover} />
+				</div>
+			)}
+			<audio controls preload="none" src={audioUrl} class="player-audio-el" />
+		</div>
+	) : (
+		<p class="player-empty">No media has been added for this episode yet.</p>
+	)
+}
+
+<style>
+	.player-video {
+		position: relative;
+		width: 100%;
+		padding-top: 56.25%;
+		background: #000;
+	}
+	.player-video iframe {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+	.player-spotify {
+		width: 100%;
+		height: 232px;
+		border: 0;
+		border-radius: 12px;
+	}
+	.player-audio {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-5);
+		padding: var(--spacing-5);
+		background: var(--color-bg-subtle);
+		border: 1px solid var(--color-border-subtle);
+	}
+	.player-audio-cover {
+		flex: none;
+		width: 120px;
+		height: 120px;
+		overflow: hidden;
+		background: var(--color-surface);
+	}
+	.player-audio-cover :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.player-audio-el {
+		flex: 1;
+		min-width: 0;
+	}
+	.player-empty {
+		color: var(--color-muted);
+	}
+</style>

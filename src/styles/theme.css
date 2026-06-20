@@ -1,0 +1,198 @@
+/*
+  theme.css -- Sustainomics brand overrides (Bloomberg-classic direction).
+
+  This is the only file for global visual changes. Values here are unlayered,
+  so they override Base.astro's @layer base defaults without specificity tricks.
+  Dark mode colors live in Base.astro; the brand tokens below also apply there.
+*/
+
+:root {
+	/* --- Bloomberg-classic palette: light, dense, financial --- */
+	--color-bg: #ffffff;
+	--color-bg-subtle: #f4f5f6;
+	--color-text: #111418;
+	--color-text-secondary: #3d4248;
+	--color-muted: #6b7177;
+	--color-border: #d9dde1;
+	--color-border-subtle: #ececef;
+	--color-surface: #f4f5f6;
+	--color-accent: #0a4ea3; /* serious blue for links */
+	--color-accent-hover: #073b7d;
+	--color-on-accent: #ffffff;
+	--color-accent-ring: color-mix(in srgb, var(--color-accent) 25%, transparent);
+
+	/* --- Custom news brand tokens (used by the homepage + masthead) --- */
+	--color-ink: #111418; /* heavy rules under section heads / masthead */
+	--color-kicker: #c8102e; /* red section kicker above headlines */
+	--color-up: #0a7d33; /* ticker gains */
+	--color-down: #c8102e; /* ticker losses */
+
+	/* --- Sharper, denser, newspaper feel --- */
+	--radius: 2px;
+	--radius-lg: 2px;
+
+	/* --- Slightly wider container for a busier grid --- */
+	--wide-width: 1280px;
+}
+
+/* Serif headlines in the content area — Bloomberg-style. */
+main :is(h1, h2, h3, h4) {
+	font-family: var(--font-serif, Georgia, "Times New Roman", serif);
+	letter-spacing: -0.01em;
+}
+
+/* ===== Homepage: Sustainomics Originals (video row) ===== */
+.band-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: var(--spacing-6);
+}
+.band-name {
+	font-family: var(--font-sans);
+	font-size: var(--font-size-sm);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: var(--tracking-wider);
+	color: var(--color-text);
+}
+.band-link {
+	font-family: var(--font-sans);
+	font-size: var(--font-size-sm);
+	font-weight: 600;
+	color: var(--color-accent);
+	text-decoration: none;
+}
+.orig-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: var(--spacing-6) var(--spacing-5);
+}
+.orig-card {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+}
+.orig-thumb {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	background: var(--color-surface);
+}
+.orig-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.orig-thumb .noimg {
+	width: 100%;
+	height: 100%;
+	background: var(--color-border);
+}
+.orig-thumb .play {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.55);
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 16px;
+	padding-left: 3px;
+}
+.orig-card:hover .play {
+	background: var(--color-kicker);
+}
+.orig-thumb .dur {
+	position: absolute;
+	bottom: var(--spacing-2);
+	right: var(--spacing-2);
+	background: rgba(0, 0, 0, 0.8);
+	color: #fff;
+	font-family: var(--font-sans);
+	font-size: var(--font-size-xs);
+	font-variant-numeric: tabular-nums;
+	padding: 1px 6px;
+	border-radius: 2px;
+}
+.orig-title {
+	font-family: var(--font-serif, Georgia, serif);
+	font-size: var(--font-size-base);
+	font-weight: 700;
+	line-height: 1.25;
+	margin-top: var(--spacing-3);
+	color: var(--color-ink);
+}
+.orig-card:hover .orig-title {
+	color: var(--color-accent);
+}
+
+/* ===== Homepage: Magazine teaser ===== */
+.mag-teaser {
+	display: grid;
+	grid-template-columns: 260px 1fr;
+	gap: var(--spacing-8);
+	align-items: center;
+}
+.mag-teaser-cover {
+	display: block;
+	aspect-ratio: 3 / 4;
+	overflow: hidden;
+	background: var(--color-surface);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.mag-teaser-cover img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.mag-teaser-fallback {
+	width: 100%;
+	height: 100%;
+	background: #0f2a1e;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding: var(--spacing-5);
+	gap: var(--spacing-2);
+}
+.mtf-kicker {
+	font-family: var(--font-sans);
+	font-size: var(--font-size-xs);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: var(--tracking-wider);
+	color: #7ddf9f;
+}
+.mtf-title {
+	font-family: var(--font-serif, Georgia, serif);
+	font-size: var(--font-size-xl);
+	font-weight: 700;
+	line-height: 1.15;
+}
+.mag-cta {
+	display: inline-block;
+	margin-top: var(--spacing-3);
+	font-family: var(--font-sans);
+	font-size: var(--font-size-sm);
+	font-weight: 600;
+	color: var(--color-accent);
+	text-decoration: none;
+}
+@media (max-width: 760px) {
+	.orig-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.mag-teaser {
+		grid-template-columns: 1fr;
+	}
+	.mag-teaser-cover {
+		max-width: 240px;
+	}
+}

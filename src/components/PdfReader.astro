@@ -1,0 +1,355 @@
+---
+import Flipbook from "./Flipbook.astro";
+
+interface Props {
+	pdfUrl: string | null;
+	title?: string;
+}
+const { pdfUrl, title = "Issue" } = Astro.props;
+---
+
+<div class="pdf-reader" data-pdf-reader>
+	{
+		pdfUrl ? (
+			<div class="pdf-actions">
+				<button type="button" class="pdf-btn pdf-btn--primary" data-open-reader>
+					<span class="pdf-btn-ico" aria-hidden="true">▣</span>
+					Read the PDF
+				</button>
+				<button type="button" class="pdf-btn pdf-btn--ghost" data-open-flip>
+					<span class="pdf-btn-ico" aria-hidden="true">❧</span>
+					Flip through
+				</button>
+				<a class="pdf-btn pdf-btn--ghost" href={pdfUrl} download>
+					Download
+				</a>
+			</div>
+		) : (
+			<p class="pdf-none">No PDF has been uploaded for this issue yet.</p>
+		)
+	}
+
+	{
+		pdfUrl && (
+			<div class="pdf-overlay" data-overlay hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label={`${title} — reader`}>
+				<header class="pdf-bar">
+					<div class="pdf-bar-title">
+						<span class="pdf-bar-kick">Reading</span>
+						<span class="pdf-bar-name">{title}</span>
+					</div>
+					<div class="pdf-bar-toggle" role="tablist">
+						<button type="button" class="pdf-tab is-active" data-view-reader role="tab" aria-selected="true">
+							Reader
+						</button>
+						<button type="button" class="pdf-tab" data-view-flip role="tab" aria-selected="false">
+							Flip
+						</button>
+					</div>
+					<div class="pdf-bar-links">
+						<a class="pdf-bar-link" href={pdfUrl} target="_blank" rel="noopener">Open in new tab</a>
+						<a class="pdf-bar-link" href={pdfUrl} download>Download</a>
+						<button type="button" class="pdf-close" data-close aria-label="Close reader">✕</button>
+					</div>
+				</header>
+
+				<div class="pdf-stage">
+					<div class="pdf-pane pdf-pane--reader" data-pane-reader>
+						<iframe
+							class="pdf-frame"
+							title={`${title} (PDF)`}
+							data-src={`${pdfUrl}#view=FitH`}
+						/>
+						<div class="pdf-fallback">
+							<p>Your browser can't display the PDF inline.</p>
+							<a href={pdfUrl} target="_blank" rel="noopener">Open the PDF in a new tab</a>
+						</div>
+					</div>
+					<div class="pdf-pane pdf-pane--flip" data-pane-flip hidden>
+						<div class="pdf-flip-inner" data-flip-mount data-pdf={pdfUrl}>
+							<Flipbook pdfUrl={pdfUrl} />
+						</div>
+					</div>
+				</div>
+			</div>
+		)
+	}
+</div>
+
+<script is:inline>
+	(() => {
+		document.querySelectorAll("[data-pdf-reader]").forEach((root) => {
+			const overlay = root.querySelector("[data-overlay]");
+			if (!overlay) return;
+			const frame = overlay.querySelector(".pdf-frame");
+			const paneReader = overlay.querySelector("[data-pane-reader]");
+			const paneFlip = overlay.querySelector("[data-pane-flip]");
+			const tabReader = overlay.querySelector("[data-view-reader]");
+			const tabFlip = overlay.querySelector("[data-view-flip]");
+			const flipMount = overlay.querySelector("[data-flip-mount]");
+			let frameLoaded = false;
+			let lastFocus = null;
+
+			const loadFrame = () => {
+				if (frame && !frameLoaded && frame.dataset.src) {
+					frame.src = frame.dataset.src;
+					frameLoaded = true;
+				}
+			};
+
+			const open = (view) => {
+				lastFocus = document.activeElement;
+				overlay.hidden = false;
+				overlay.setAttribute("aria-hidden", "false");
+				document.body.style.overflow = "hidden";
+				setView(view || "reader");
+				const close = overlay.querySelector("[data-close]");
+				if (close) close.focus();
+			};
+
+			const close = () => {
+				overlay.hidden = true;
+				overlay.setAttribute("aria-hidden", "true");
+				document.body.style.overflow = "";
+				if (lastFocus && lastFocus.focus) lastFocus.focus();
+			};
+
+			const setView = (view) => {
+				const isReader = view === "reader";
+				if (isReader) loadFrame();
+				paneReader.hidden = !isReader;
+				paneFlip.hidden = isReader;
+				tabReader.classList.toggle("is-active", isReader);
+				tabFlip.classList.toggle("is-active", !isReader);
+				tabReader.setAttribute("aria-selected", String(isReader));
+				tabFlip.setAttribute("aria-selected", String(!isReader));
+				// Lazily mount the flipbook script the first time Flip is shown.
+				if (!isReader && flipMount && !flipMount.dataset.flipInit) {
+					flipMount.dataset.flipInit = "1";
+					if (window.__initFlipbook) window.__initFlipbook(flipMount);
+				}
+			};
+
+			root.querySelector("[data-open-reader]")?.addEventListener("click", () => open("reader"));
+			root.querySelector("[data-open-flip]")?.addEventListener("click", () => open("flip"));
+			overlay.querySelector("[data-close]")?.addEventListener("click", close);
+			tabReader?.addEventListener("click", () => setView("reader"));
+			tabFlip?.addEventListener("click", () => setView("flip"));
+			document.addEventListener("keydown", (e) => {
+				if (e.key === "Escape" && !overlay.hidden) close();
+			});
+		});
+	})();
+</script>
+
+<style>
+	.pdf-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-3);
+		align-items: center;
+	}
+	.pdf-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--spacing-2);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		padding: var(--spacing-3) var(--spacing-5);
+		border-radius: var(--radius);
+		text-decoration: none;
+		cursor: pointer;
+		border: 1px solid var(--color-border);
+		transition:
+			transform 0.12s ease,
+			background 0.15s ease,
+			color 0.15s ease;
+	}
+	.pdf-btn:hover {
+		transform: translateY(-1px);
+	}
+	.pdf-btn--primary {
+		background: var(--color-ink, var(--color-text));
+		color: var(--color-bg);
+		border-color: var(--color-ink, var(--color-text));
+	}
+	.pdf-btn--ghost {
+		background: transparent;
+		color: var(--color-text);
+	}
+	.pdf-btn--ghost:hover {
+		background: var(--color-surface);
+	}
+	.pdf-btn-ico {
+		font-size: 1em;
+		line-height: 1;
+	}
+	.pdf-none {
+		color: var(--color-muted);
+		font-size: var(--font-size-sm);
+		font-style: italic;
+	}
+
+	/* Full-screen overlay */
+	.pdf-overlay {
+		position: fixed;
+		inset: 0;
+		z-index: 9999;
+		display: flex;
+		flex-direction: column;
+		background: #14140f;
+		background: color-mix(in srgb, var(--color-ink, #111) 96%, #000);
+	}
+	.pdf-overlay[hidden] {
+		display: none;
+	}
+	.pdf-bar {
+		flex: 0 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--spacing-4);
+		padding: var(--spacing-3) var(--spacing-5);
+		background: rgba(0, 0, 0, 0.6);
+		color: #fff;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+	}
+	.pdf-bar-title {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+	.pdf-bar-kick {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		opacity: 0.65;
+	}
+	.pdf-bar-name {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-base);
+		font-weight: 700;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 40vw;
+	}
+	.pdf-bar-toggle {
+		display: inline-flex;
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 999px;
+		padding: 3px;
+	}
+	.pdf-tab {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.7);
+		background: transparent;
+		border: none;
+		padding: var(--spacing-2) var(--spacing-4);
+		border-radius: 999px;
+		cursor: pointer;
+	}
+	.pdf-tab.is-active {
+		background: #fff;
+		color: #111;
+	}
+	.pdf-bar-links {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-4);
+	}
+	.pdf-bar-link {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.85);
+		text-decoration: none;
+		white-space: nowrap;
+	}
+	.pdf-bar-link:hover {
+		color: #fff;
+		text-decoration: underline;
+	}
+	.pdf-close {
+		font-size: 1.2rem;
+		line-height: 1;
+		color: #fff;
+		background: rgba(255, 255, 255, 0.12);
+		border: none;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: 999px;
+		cursor: pointer;
+	}
+	.pdf-close:hover {
+		background: rgba(255, 255, 255, 0.25);
+	}
+
+	.pdf-stage {
+		flex: 1 1 auto;
+		min-height: 0;
+		position: relative;
+	}
+	.pdf-pane {
+		position: absolute;
+		inset: 0;
+	}
+	.pdf-pane[hidden] {
+		display: none;
+	}
+	.pdf-pane--reader {
+		display: grid;
+	}
+	.pdf-frame {
+		width: 100%;
+		height: 100%;
+		border: 0;
+		background: #fff;
+	}
+	.pdf-fallback {
+		display: none;
+		place-items: center;
+		text-align: center;
+		color: #fff;
+		gap: var(--spacing-2);
+		padding: var(--spacing-8);
+	}
+	.pdf-fallback a {
+		color: #fff;
+		font-weight: 600;
+	}
+	.pdf-pane--flip {
+		overflow: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #1b1b16;
+	}
+	.pdf-flip-inner {
+		width: 100%;
+		max-width: 1100px;
+		margin: 0 auto;
+		color: #fff;
+	}
+	.pdf-flip-inner :global(.flip-empty),
+	.pdf-flip-inner :global(.flip-loading) {
+		color: rgba(255, 255, 255, 0.75);
+		text-align: center;
+	}
+
+	@media (max-width: 700px) {
+		.pdf-bar {
+			flex-wrap: wrap;
+			gap: var(--spacing-2) var(--spacing-3);
+		}
+		.pdf-bar-name {
+			max-width: 60vw;
+		}
+		.pdf-bar-link {
+			font-size: var(--font-size-xs);
+		}
+	}
+</style>

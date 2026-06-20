@@ -1,0 +1,450 @@
+---
+import { getEmDashEntry, getEmDashCollection } from "emdash";
+import { Image } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import PdfReader from "../../components/PdfReader.astro";
+import { getSection } from "../../config/site-nav.ts";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+
+const { entry: mag, cacheHint } = await getEmDashEntry("magazines", slug);
+if (!mag) return Astro.redirect("/404");
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+function mediaUrl(v: any): string | null {
+	if (!v) return null;
+	if (typeof v === "string") return v;
+	if (v.src) return v.src;
+	if (v.url) return v.url;
+	if (v.meta?.storageKey) return `/_emdash/api/media/file/${v.meta.storageKey}`;
+	if (v.id) return `/_emdash/api/media/file/${v.id}`;
+	return null;
+}
+const pdfUrl = mediaUrl(mag.data.pdf);
+const pdfStorageKey = (mag.data.pdf as any)?.meta?.storageKey ?? null;
+const pdfInline = pdfStorageKey ? `/issue-pdf/${pdfStorageKey}` : pdfUrl;
+
+const fmt = (d: Date | string | null | undefined) => {
+	if (!d) return null;
+	const date = d instanceof Date ? d : new Date(d);
+	return isNaN(date.getTime())
+		? null
+		: date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+};
+
+// --- Articles for this issue, grouped by mag_section ---
+const { entries: allArticles } = await getEmDashCollection("articles").catch(
+	() => ({ entries: [] as any[] }),
+);
+
+const issueArticles = (allArticles ?? []).filter((a: any) => {
+	const ref = a?.data?.issue;
+	return ref === mag.data.id || ref === mag.id;
+});
+
+// Canonical section order from the Magazine nav subtabs.
+const magSection = getSection("magazine");
+const sectionOrder = (magSection?.subtabs ?? []).map((s) => s.label);
+
+const byline = (a: any): string | null => {
+	const b = a?.data?.bylines?.[0]?.byline?.displayName;
+	if (b) return b;
+	if (Array.isArray(a?.data?.bylines) && a.data.bylines.length) {
+		return a.data.bylines.map((c: any) => c?.byline?.displayName).filter(Boolean).join(", ");
+	}
+	return null;
+};
+
+// Group + order sections (known order first, unknown sections last alphabetically).
+const groups = new Map<string, any[]>();
+for (const a of issueArticles) {
+	const sec = (a?.data?.mag_section || "Other").trim() || "Other";
+	if (!groups.has(sec)) groups.set(sec, []);
+	groups.get(sec)!.push(a);
+}
+const orderedSections = [...groups.keys()].sort((x, y) => {
+	const ix = sectionOrder.indexOf(x);
+	const iy = sectionOrder.indexOf(y);
+	if (ix === -1 && iy === -1) return x.localeCompare(y);
+	if (ix === -1) return 1;
+	if (iy === -1) return -1;
+	return ix - iy;
+});
+const toc = orderedSections.map((sec) => ({ section: sec, items: groups.get(sec)! }));
+const hasArticles = issueArticles.length > 0;
+---
+
+<Base title={mag.data.title} description={mag.data.excerpt} type="article">
+	<div class="wrap">
+		<a href="/magazine" class="back">‹ Magazine</a>
+
+		<header class="hero">
+			<div class="hero-cover">
+				{
+					mag.data.cover ? (
+						<Image image={mag.data.cover} />
+					) : (
+						<div class="hero-noimg">PDF</div>
+					)
+				}
+			</div>
+			<div class="hero-body">
+				<span class="kick">Issue</span>
+				<h1 class="hero-h1">{mag.data.title}</h1>
+				{fmt(mag.data.issue_date) && <p class="hero-date">{fmt(mag.data.issue_date)}</p>}
+				{mag.data.excerpt && <p class="hero-dek">{mag.data.excerpt}</p>}
+
+				<div class="chooser">
+					<a class="choice choice--articles" href="#contents">
+						<span class="choice-kick">Mode 1</span>
+						<span class="choice-name">Read as Articles</span>
+						<span class="choice-sub">Browse the issue, section by section</span>
+					</a>
+					<div class="choice choice--pdf">
+						<span class="choice-kick">Mode 2</span>
+						<span class="choice-name">Read the PDF</span>
+						<span class="choice-sub">Full-screen, full quality — or flip through</span>
+						<div class="choice-reader">
+							<PdfReader pdfUrl={pdfInline} title={mag.data.title} />
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<section id="contents" class="toc">
+			<div class="toc-head">
+				<h2 class="toc-title">Inside this issue</h2>
+				<p class="toc-sub">Table of contents</p>
+			</div>
+
+			{
+				hasArticles ? (
+					toc.map(({ section, items }) => (
+						<div class="toc-section">
+							<h3 class="toc-section-name">{section}</h3>
+							<ul class="toc-list">
+								{items.map((a: any) => (
+									<li class="toc-row">
+										<a class="toc-link" href={`/articles/${a.id}`}>
+											<div class="toc-thumb">
+												{a.data.featured_image ? (
+													<Image image={a.data.featured_image} />
+												) : (
+													<div class="toc-thumb-empty" />
+												)}
+											</div>
+											<div class="toc-text">
+												<span class="toc-headline">{a.data.title}</span>
+												<span class="toc-meta">
+													{byline(a) && <span class="toc-byline">{byline(a)}</span>}
+													{byline(a) && a.data.read_time && <span class="toc-dot" />}
+													{a.data.read_time && <span>{a.data.read_time}</span>}
+												</span>
+												{a.data.excerpt && <span class="toc-dek">{a.data.excerpt}</span>}
+											</div>
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					))
+				) : (
+					<div class="toc-empty">
+						<p class="toc-empty-head">Articles for this issue are being prepared.</p>
+						<p class="toc-empty-sub">
+							In the meantime, you can read the full issue as a PDF or flip through it above.
+						</p>
+					</div>
+				)
+			}
+		</section>
+	</div>
+</Base>
+
+<style>
+	.wrap {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
+	}
+	.back {
+		display: inline-block;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		color: var(--color-muted);
+		text-decoration: none;
+		margin-bottom: var(--spacing-6);
+	}
+	.back:hover {
+		color: var(--color-text);
+	}
+
+	/* Hero */
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 360px) 1fr;
+		gap: var(--spacing-10);
+		align-items: start;
+		padding-bottom: var(--spacing-10);
+		border-bottom: 2px solid var(--color-ink, var(--color-text));
+	}
+	.hero-cover {
+		aspect-ratio: 3 / 4;
+		overflow: hidden;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border-subtle);
+		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+	}
+	.hero-cover :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.hero-noimg {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-muted);
+		font-family: var(--font-sans);
+		font-weight: 700;
+		letter-spacing: var(--tracking-wide);
+	}
+	.hero-body {
+		min-width: 0;
+	}
+	.kick {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-kicker, var(--color-accent));
+	}
+	.hero-h1 {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: clamp(2rem, 4vw, 3.2rem);
+		font-weight: 700;
+		line-height: 1.08;
+		margin: var(--spacing-2) 0 var(--spacing-3);
+	}
+	.hero-date {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+	}
+	.hero-dek {
+		font-size: var(--font-size-lg);
+		color: var(--color-text-secondary);
+		line-height: 1.55;
+		margin-top: var(--spacing-3);
+		max-width: 56ch;
+	}
+
+	/* Mode chooser */
+	.chooser {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--spacing-4);
+		margin-top: var(--spacing-8);
+	}
+	.choice {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-1);
+		padding: var(--spacing-5);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg, var(--radius));
+		text-decoration: none;
+		color: inherit;
+		background: var(--color-bg-subtle, var(--color-surface));
+		transition:
+			border-color 0.15s ease,
+			transform 0.12s ease;
+	}
+	.choice--articles:hover {
+		border-color: var(--color-ink, var(--color-text));
+		transform: translateY(-2px);
+	}
+	.choice-kick {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-kicker, var(--color-accent));
+	}
+	.choice-name {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-xl);
+		font-weight: 700;
+	}
+	.choice-sub {
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+	}
+	.choice-reader {
+		margin-top: var(--spacing-3);
+	}
+
+	/* Table of contents */
+	.toc {
+		margin-top: var(--spacing-12);
+		scroll-margin-top: calc(var(--nav-height, 64px) + var(--spacing-4));
+	}
+	.toc-head {
+		margin-bottom: var(--spacing-8);
+	}
+	.toc-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+	}
+	.toc-sub {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wider);
+		color: var(--color-muted);
+		margin-top: var(--spacing-1);
+	}
+	.toc-section {
+		margin-bottom: var(--spacing-10);
+	}
+	.toc-section-name {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-text);
+		padding-bottom: var(--spacing-2);
+		border-bottom: 1px solid var(--color-border);
+		margin-bottom: var(--spacing-4);
+	}
+	.toc-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: var(--spacing-2);
+	}
+	.toc-row {
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+	.toc-link {
+		display: grid;
+		grid-template-columns: 96px 1fr;
+		gap: var(--spacing-4);
+		align-items: start;
+		padding: var(--spacing-4) 0;
+		text-decoration: none;
+		color: inherit;
+	}
+	.toc-thumb {
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius);
+	}
+	.toc-thumb :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+	.toc-link:hover .toc-thumb :global(img) {
+		transform: scale(1.05);
+	}
+	.toc-thumb-empty {
+		width: 100%;
+		height: 100%;
+	}
+	.toc-text {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-1);
+		min-width: 0;
+	}
+	.toc-headline {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-lg);
+		font-weight: 700;
+		line-height: 1.2;
+	}
+	.toc-link:hover .toc-headline {
+		color: var(--color-accent);
+	}
+	.toc-meta {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--spacing-2);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+	}
+	.toc-byline {
+		font-weight: 600;
+		color: var(--color-text-secondary);
+	}
+	.toc-dot {
+		width: 3px;
+		height: 3px;
+		border-radius: 50%;
+		background: var(--color-muted);
+	}
+	.toc-dek {
+		font-size: var(--font-size-sm);
+		color: var(--color-text-secondary);
+		line-height: 1.45;
+		margin-top: 2px;
+	}
+
+	.toc-empty {
+		padding: var(--spacing-12) var(--spacing-6);
+		text-align: center;
+		border: 1px dashed var(--color-border);
+		border-radius: var(--radius-lg, var(--radius));
+		background: var(--color-bg-subtle, var(--color-surface));
+	}
+	.toc-empty-head {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-xl);
+		font-weight: 700;
+	}
+	.toc-empty-sub {
+		color: var(--color-muted);
+		margin-top: var(--spacing-2);
+	}
+
+	@media (max-width: 860px) {
+		.hero {
+			grid-template-columns: 1fr;
+			gap: var(--spacing-6);
+		}
+		.hero-cover {
+			max-width: 280px;
+		}
+	}
+	@media (max-width: 600px) {
+		.chooser {
+			grid-template-columns: 1fr;
+		}
+		.toc-link {
+			grid-template-columns: 72px 1fr;
+			gap: var(--spacing-3);
+		}
+		.toc-headline {
+			font-size: var(--font-size-base);
+		}
+	}
+</style>

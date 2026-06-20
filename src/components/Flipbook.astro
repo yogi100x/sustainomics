@@ -1,0 +1,315 @@
+---
+interface Props {
+	pdfUrl: string | null;
+}
+const { pdfUrl } = Astro.props;
+---
+
+{
+	pdfUrl ? (
+		<div class="flipbook-wrap" data-flipbook-root data-pdf={pdfUrl}>
+			<div class="fb-loading" data-fb-loading>Rendering pages…</div>
+			<div class="fb-stage" data-fb-stage hidden>
+				<div class="fb-book" data-fb-book>
+					<div class="fb-page fb-page--left" data-fb-left>
+						<img alt="" data-fb-left-img />
+					</div>
+					<div class="fb-page fb-page--right" data-fb-right>
+						<img alt="" data-fb-right-img />
+					</div>
+					<div class="fb-leaf" data-fb-leaf hidden>
+						<div class="fb-leaf-face fb-leaf-front"><img alt="" data-fb-leaf-front /></div>
+						<div class="fb-leaf-face fb-leaf-back"><img alt="" data-fb-leaf-back /></div>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="fb-nav fb-nav--prev" data-fb-prev aria-label="Previous page">‹</button>
+			<button type="button" class="fb-nav fb-nav--next" data-fb-next aria-label="Next page">›</button>
+			<div class="fb-counter"><span data-fb-page>…</span></div>
+		</div>
+		<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" />
+		<script is:inline>
+			(() => {
+				async function waitForPdfjs(ms) {
+					const t0 = Date.now();
+					while (Date.now() - t0 < ms) {
+						if (window.pdfjsLib) return true;
+						await new Promise((r) => setTimeout(r, 80));
+					}
+					return !!window.pdfjsLib;
+				}
+
+				// Called by the reader once the Flip pane is actually visible.
+				window.__initFlipbook = async function (mount) {
+					const root = (mount || document).querySelector("[data-flipbook-root]") || mount;
+					if (!root || root.dataset.fbReady) return;
+					root.dataset.fbReady = "1";
+					const q = (s) => root.querySelector(s);
+					const loading = q("[data-fb-loading]");
+					const stage = q("[data-fb-stage]");
+					const book = q("[data-fb-book]");
+					const leftImg = q("[data-fb-left-img]");
+					const rightImg = q("[data-fb-right-img]");
+					const leftPane = q("[data-fb-left]");
+					const rightPane = q("[data-fb-right]");
+					const leaf = q("[data-fb-leaf]");
+					const leafFront = q("[data-fb-leaf-front]");
+					const leafBack = q("[data-fb-leaf-back]");
+					const counter = q("[data-fb-page]");
+					const src =
+						(mount && mount.dataset && mount.dataset.pdf) ||
+						root.getAttribute("data-pdf") ||
+						(root.closest("[data-pdf]") && root.closest("[data-pdf]").dataset.pdf);
+
+					if (!(await waitForPdfjs(8000))) {
+						if (loading) loading.innerHTML =
+							'Flip view unavailable. <a style="color:#9cf" href="' + (src || "#") + '" target="_blank" rel="noopener">Open the PDF</a>.';
+						return;
+					}
+					if (!src) { if (loading) loading.textContent = "No PDF to display."; return; }
+
+					try {
+						const pdfjsLib = window.pdfjsLib;
+						pdfjsLib.GlobalWorkerOptions.workerSrc =
+							"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+						const pdf = await pdfjsLib.getDocument(src).promise;
+						const dpr = Math.min(3, window.devicePixelRatio || 1);
+
+						const images = [];
+						let ratio = 1.3;
+						for (let i = 1; i <= pdf.numPages; i++) {
+							const page = await pdf.getPage(i);
+							const base = page.getViewport({ scale: 1 });
+							if (i === 1) ratio = base.height / base.width;
+							const scale = Math.min(4, Math.max(1.6, (1000 * dpr) / base.width));
+							const vp = page.getViewport({ scale });
+							const canvas = document.createElement("canvas");
+							canvas.width = vp.width;
+							canvas.height = vp.height;
+							await page.render({ canvasContext: canvas.getContext("2d"), viewport: vp }).promise;
+							images.push(canvas.toDataURL("image/jpeg", 0.95));
+							if (loading) loading.textContent = "Rendering pages… " + i + "/" + pdf.numPages;
+						}
+
+						// Virtual page list: a leading blank so the cover sits on the RIGHT.
+						const V = [null].concat(images); // V[0]=blank, V[1]=cover, ...
+						const spreadCount = Math.ceil(V.length / 2);
+						const vAt = (k) => (k >= 0 && k < V.length ? V[k] : null);
+						let spread = 0;
+						let portrait = false;
+						let pageW = 0, bookH = 0;
+						let animating = false;
+
+						function setImg(el, dataUrl) {
+							if (!el) return;
+							if (dataUrl) { el.src = dataUrl; el.style.visibility = "visible"; }
+							else { el.removeAttribute("src"); el.style.visibility = "hidden"; }
+						}
+
+						function fit() {
+							const pane = root.closest(".pdf-pane--flip") || root.parentElement || document.body;
+							const availW = pane.clientWidth || window.innerWidth;
+							const availH = (pane.clientHeight || window.innerHeight) - 92;
+							portrait = availW < 760;
+							const cols = portrait ? 1 : 2;
+							let h = Math.min(availH, 1600);
+							let w = h / ratio;
+							if (w * cols > availW - 56) { w = (availW - 56) / cols; h = w * ratio; }
+							pageW = Math.max(180, Math.floor(w));
+							bookH = Math.max(240, Math.floor(h));
+							book.style.setProperty("--fb-pw", pageW + "px");
+							book.style.setProperty("--fb-bh", bookH + "px");
+							book.classList.toggle("is-portrait", portrait);
+						}
+
+						function render() {
+							if (portrait) {
+								// One page at a time; use the right slot.
+								leftPane.style.display = "none";
+								setImg(rightImg, vAt(spread + 1) || vAt(spread) || images[0]);
+							} else {
+								leftPane.style.display = "";
+								setImg(leftImg, vAt(spread * 2));
+								setImg(rightImg, vAt(spread * 2 + 1));
+							}
+							const total = portrait ? images.length : spreadCount;
+							const cur = portrait ? spread + 1 : spread + 1;
+							counter.textContent = cur + " / " + total;
+						}
+
+						function maxSpread() { return portrait ? images.length - 1 : spreadCount - 1; }
+
+						function go(dir) {
+							if (animating) return;
+							const target = spread + dir;
+							if (target < 0 || target > maxSpread()) return;
+							if (portrait) { spread = target; render(); return; }
+
+							animating = true;
+							leaf.style.height = bookH + "px";
+							leaf.style.width = pageW + "px";
+							if (dir > 0) {
+								// Fold the RIGHT page leftward over the spine.
+								leaf.classList.remove("fb-leaf--left");
+								leaf.classList.add("fb-leaf--right");
+								setImg(leafFront, vAt(spread * 2 + 1));      // current right
+								setImg(leafBack, vAt(target * 2));            // becomes new left
+								setImg(rightImg, vAt(target * 2 + 1));        // reveal new right underneath
+								// left stays current during the turn
+							} else {
+								// Fold the LEFT page rightward over the spine.
+								leaf.classList.remove("fb-leaf--right");
+								leaf.classList.add("fb-leaf--left");
+								setImg(leafFront, vAt(spread * 2));           // current left
+								setImg(leafBack, vAt(target * 2 + 1));        // becomes new right
+								setImg(leftImg, vAt(target * 2));             // reveal new left underneath
+							}
+							leaf.hidden = false;
+							// force reflow then animate
+							void leaf.offsetWidth;
+							leaf.classList.add("is-flipping");
+							const done = () => {
+								leaf.removeEventListener("transitionend", done);
+								leaf.classList.remove("is-flipping");
+								leaf.hidden = true;
+								spread = target;
+								animating = false;
+								render();
+							};
+							leaf.addEventListener("transitionend", done);
+							setTimeout(done, 800); // safety
+						}
+
+						fit();
+						render();
+						stage.hidden = false;
+						if (loading) loading.style.display = "none";
+
+						q("[data-fb-next]").addEventListener("click", () => go(1));
+						q("[data-fb-prev]").addEventListener("click", () => go(-1));
+						rightPane.addEventListener("click", () => go(1));
+						leftPane.addEventListener("click", () => go(-1));
+						root.tabIndex = 0;
+						root.addEventListener("keydown", (e) => {
+							if (e.key === "ArrowRight") go(1);
+							if (e.key === "ArrowLeft") go(-1);
+						});
+
+						let rt;
+						window.addEventListener("resize", () => {
+							clearTimeout(rt);
+							rt = setTimeout(() => { fit(); render(); }, 200);
+						});
+					} catch (e) {
+						console.error("flipbook", e);
+						if (loading) loading.innerHTML =
+							'Could not render the flip view. <a style="color:#9cf" href="' + (src || "#") + '" target="_blank" rel="noopener">Open the PDF</a>.';
+					}
+				};
+			})();
+		</script>
+	) : (
+		<p class="flip-empty">No PDF has been uploaded for this issue yet.</p>
+	)
+}
+
+<style>
+	.flipbook-wrap {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		min-height: 60vh;
+		padding: var(--spacing-5) 0 var(--spacing-10);
+		outline: none;
+	}
+	.fb-stage { display: flex; align-items: center; justify-content: center; }
+	.fb-book {
+		--fb-pw: 420px;
+		--fb-bh: 560px;
+		position: relative;
+		display: flex;
+		height: var(--fb-bh);
+		perspective: 2600px;
+	}
+	.fb-book.is-portrait .fb-page--left { display: none; }
+	.fb-page {
+		position: relative;
+		width: var(--fb-pw);
+		height: var(--fb-bh);
+		background: #fff;
+		overflow: hidden;
+		cursor: pointer;
+	}
+	.fb-page img { display: block; width: 100%; height: 100%; object-fit: fill; }
+	.fb-page--left  { box-shadow: 0 14px 40px rgba(0,0,0,.45), inset -10px 0 22px -10px rgba(0,0,0,.4); border-radius: 3px 0 0 3px; }
+	.fb-page--right { box-shadow: 0 14px 40px rgba(0,0,0,.45), inset 10px 0 22px -10px rgba(0,0,0,.4); border-radius: 0 3px 3px 0; }
+	.fb-book.is-portrait .fb-page--right { border-radius: 3px; }
+
+	/* turning leaf */
+	.fb-leaf {
+		position: absolute;
+		top: 0;
+		width: var(--fb-pw);
+		height: var(--fb-bh);
+		transform-style: preserve-3d;
+		transition: transform .62s cubic-bezier(.3,.1,.2,1);
+		z-index: 6;
+	}
+	.fb-leaf--right { right: 0; transform-origin: left center; transform: rotateY(0deg); }
+	.fb-leaf--right.is-flipping { transform: rotateY(-178deg); }
+	.fb-leaf--left  { left: 0;  transform-origin: right center; transform: rotateY(0deg); }
+	.fb-leaf--left.is-flipping  { transform: rotateY(178deg); }
+	.fb-leaf-face {
+		position: absolute;
+		inset: 0;
+		backface-visibility: hidden;
+		overflow: hidden;
+		background: #fff;
+		box-shadow: 0 14px 40px rgba(0,0,0,.4);
+	}
+	.fb-leaf-face img { width: 100%; height: 100%; object-fit: fill; }
+	.fb-leaf-back { transform: rotateY(180deg); }
+
+	.fb-nav {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 50px; height: 50px;
+		border-radius: 50%;
+		border: 1px solid rgba(255,255,255,.25);
+		background: rgba(0,0,0,.5);
+		color: #fff;
+		font-size: 1.7rem; line-height: 1;
+		cursor: pointer;
+		display: flex; align-items: center; justify-content: center;
+		transition: background .15s ease;
+		z-index: 8;
+	}
+	.fb-nav:hover { background: rgba(0,0,0,.82); }
+	.fb-nav--prev { left: 16px; }
+	.fb-nav--next { right: 16px; }
+	.fb-counter {
+		position: absolute;
+		bottom: 12px; left: 50%;
+		transform: translateX(-50%);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs); font-weight: 600;
+		letter-spacing: var(--tracking-wide);
+		color: #fff; background: rgba(0,0,0,.6);
+		padding: 6px 14px; border-radius: 999px;
+		font-variant-numeric: tabular-nums;
+		z-index: 8;
+	}
+	.fb-loading {
+		color: rgba(255,255,255,.8);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+	}
+	.flip-empty { color: var(--color-muted); padding: var(--spacing-8) 0; text-align: center; }
+	@media (max-width: 760px) {
+		.fb-nav { width: 40px; height: 40px; font-size: 1.3rem; }
+		.fb-nav--prev { left: 8px; } .fb-nav--next { right: 8px; }
+	}
+</style>

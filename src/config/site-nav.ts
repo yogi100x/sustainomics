@@ -1,0 +1,228 @@
+// Single source of truth for the Sustainomics information architecture.
+// Mirrors "The Sustainomics" 9-section menu document. Drives the top nav,
+// the per-section dropdowns, the category sub-tab rows, and the "More" mega panel.
+
+export interface SubTab {
+	label: string;
+	slug: string;
+	desc?: string;
+}
+
+export interface Section {
+	label: string;
+	slug: string;
+	href: string;
+	/** "category" sections render a Bloomberg-style /category/<slug> page driven by the
+	 *  `category` taxonomy. "media" sections own a dedicated collection/route. */
+	kind: "category" | "media";
+	blurb: string;
+	subtabs: SubTab[];
+}
+
+const slugify = (s: string): string =>
+	s
+		.toLowerCase()
+		.replace(/&/g, " and ")
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/(^-|-$)/g, "");
+
+const sub = (label: string, desc: string): SubTab => ({ label, slug: slugify(label), desc });
+
+export const SECTIONS: Section[] = [
+	{
+		label: "Markets",
+		slug: "markets",
+		href: "/category/markets",
+		kind: "category",
+		blurb: "Capital flows, valuations, and the instruments financing the transition.",
+		subtabs: [
+			sub("M&A", "Mergers, corporate restructuring, and global buyouts"),
+			sub("Investment", "Private equity, venture funding, and asset allocation"),
+			sub("Public Equities", "Global indices, ticker tracking, and market valuations"),
+			sub("Commodities", "Energy, materials, and sustainable resource trading"),
+			sub("Fixed Income", "Green bonds, sovereign debt, and climate financing"),
+			sub("Crypto & Digital Assets", "Web3 finance, tokenomics, and decentralized markets"),
+			sub("Emerging Markets", "High-growth corridors and frontier economic flows"),
+		],
+	},
+	{
+		label: "Finance",
+		slug: "finance",
+		href: "/category/finance",
+		kind: "category",
+		blurb: "Banking, capital raising, and the plumbing of corporate money.",
+		subtabs: [
+			sub("Enterprise", "Corporate banking, treasury management, and fiscal risk"),
+			sub("MSME", "Micro, Small & Medium Enterprise financing and lines of credit"),
+			sub("Startups", "Early-stage funding, valuations, and seed capital"),
+			sub("Fintech", "Digital banking ecosystems, payment gateways, and tech infrastructure"),
+			sub("Deals & Underwriting", "IPO tracking, capital raises, and league tables"),
+			sub("Venture Capital", "Institutional backing, growth equity, and LP/GP strategies"),
+			sub("Central Banking", "Monetary policy, liquidity injections, and currency stabilization"),
+		],
+	},
+	{
+		label: "Economics",
+		slug: "economics",
+		href: "/category/economics",
+		kind: "category",
+		blurb: "Trade, labor, and the macro forces shaping the global economy.",
+		subtabs: [
+			sub("International Trade", "Global freight, tariffs, corridors, and supply logistics"),
+			sub("Diaspora", "Remittance flows, cross-border talent networks, and brain-gain capital"),
+			sub("Policy & Regulation", "Sovereign laws, tax mandates, and international compliance"),
+			sub("Labor & Employment", "Human capital indices, future of work, and labor economics"),
+			sub("Macro Indicators", "Global GDP forecasts, inflation tracking, and yield curves"),
+			sub("Development Economics", "Infrastructure loans, multilateral banks, and poverty metrics"),
+			sub("Trade Alliances", "Bilateral treaties, economic unions, and protectionism trends"),
+		],
+	},
+	{
+		label: "Industries",
+		slug: "industries",
+		href: "/category/industries",
+		kind: "category",
+		blurb: "The real economy — from farms and factories to logistics and health.",
+		subtabs: [
+			sub("Agriculture & Food", "AgTech, vertical farming, global food security, and supply networks"),
+			sub("Fashion", "Sustainable textiles, retail supply chains, and circular economy"),
+			sub("Energy & Utilities", "Grid transitions, renewables, and oil/gas decarbonization"),
+			sub("Supply Chain & Logistics", "Global manufacturing, shipping routes, and inventory data"),
+			sub("Real Estate", "Smart urban spaces, sustainable commercial property, and construction"),
+			sub("Healthcare & Biotech", "Pharmaceutical pipelines, digital health, and life sciences"),
+			sub("Consumer Goods", "Retail markets, consumer behavior shifts, and packaging trends"),
+		],
+	},
+	{
+		label: "Tech",
+		slug: "tech",
+		href: "/category/tech",
+		kind: "category",
+		blurb: "Innovation, AI, and the engineering of the climate-tech frontier.",
+		subtabs: [
+			sub("Innovation", "R&D pipelines, emerging patent databases, and industrial shifts"),
+			sub("Artificial Intelligence", "Generative models, predictive analytics, and automated work"),
+			sub("CleanTech", "Climate tech engineering, carbon capture, and battery storage"),
+			sub("Cybersecurity", "Data compliance, enterprise threat matrices, and secure architecture"),
+			sub("SaaS & Cloud", "Software ecosystems, enterprise cloud data, and storage"),
+			sub("Frontier Tech", "Quantum computing, robotics, and aerospace tech ecosystems"),
+			sub("Tech Policy", "Data privacy legislation, antitrust cases, and AI safety boards"),
+		],
+	},
+	{
+		label: "ESG",
+		slug: "esg",
+		href: "/category/esg",
+		kind: "category",
+		blurb: "Environmental, social, and governance benchmarks that move markets.",
+		subtabs: [
+			sub("DE&I", "Diversity tracking, corporate social policies, and workplace mobility"),
+			sub("Womenomics", "Gender wage gap data, female boardroom metrics, and economic parity"),
+			sub("Climate & Net Zero", "Carbon mapping, industrial compliance, and carbon markets"),
+			sub("Governance", "Board composition, shareholder activism, and ethical accounting"),
+			sub("Green Standards", "Global sustainability taxonomies and corporate disclosures"),
+			sub("Social Impact", "Human rights due diligence, community investment, and labor welfare"),
+			sub("Circular Economy", "Waste management benchmarks, recycling laws, and product life"),
+		],
+	},
+	{
+		label: "Magazine",
+		slug: "magazine",
+		href: "/magazine",
+		kind: "media",
+		blurb: "Long-form journalism — read every issue as articles or as the full PDF.",
+		subtabs: [
+			sub("Partnership", "Long-form analysis of cross-industry and public-private alliances"),
+			sub("Profiles", "In-depth professional journeys of CEOs and economic visionaries"),
+			sub("Features", "Narrative, investigative pieces on macroeconomic pivots"),
+			sub("Special Reports", "Quarterly trend forecast dossiers and deep thematic reports"),
+			sub("The Brief", "Fast-read breakdowns of the week's critical market updates"),
+			sub("Pursuits", "Luxury sustainable living, executive lifestyle, and travel infrastructure"),
+			sub("Innovators List", "Annual ranking of businesses disrupting traditional industries"),
+		],
+	},
+	{
+		label: "Podcast",
+		slug: "podcast",
+		href: "/podcast",
+		kind: "media",
+		blurb: "Conversations on markets, founders, and the people driving the transition.",
+		subtabs: [
+			sub("The Sustainomics Show", "Flagship analysis covering markets, economics, and ESG"),
+			sub("Founder Stories", "Conversations detailing the scale journey of Startups & MSMEs"),
+			sub("Global Alliances", "Deep dives into International Trade, Partnerships, and Diaspora"),
+			sub("Women in Lead", "Audio spotlights on executive parity and Womenomics strategies"),
+			sub("Market Daily", "A brief daily rundown of international opening bells and trends"),
+			sub("Tech Horizons", "Weekly episodes detailing the frontier of Innovation and AI"),
+		],
+	},
+	{
+		label: "Video",
+		slug: "video",
+		href: "/video",
+		kind: "media",
+		blurb: "Live broadcasts, explainers, and studio interviews from the Sustainomics desk.",
+		subtabs: [
+			sub("Live Broadcast", "Streaming coverage of economic forums and live trading updates"),
+			sub("Explaining Innovation", "Visually rich animations unpacking complex Tech and Agriculture"),
+			sub("Dealflow", "Fast-paced updates on major M&A announcements and funding rounds"),
+			sub("B-Side Docuseries", "Mini-documentaries showing the real-world impact of global policies"),
+			sub("Executive Suite", "C-suite studio interviews highlighting leadership priorities"),
+			sub("Quick Take", "Short-form visual explainers on breaking global financial news"),
+		],
+	},
+];
+
+export const getSection = (slug: string): Section | undefined =>
+	SECTIONS.find((s) => s.slug === slug);
+
+// Columns for the "More" mega-menu panel (mirrors the Bloomberg multi-column layout).
+export interface MegaLink {
+	label: string;
+	href: string;
+}
+export interface MegaColumn {
+	heading: string;
+	links: MegaLink[];
+}
+
+export const MEGA_COLUMNS: MegaColumn[] = [
+	{
+		heading: "News",
+		links: SECTIONS.filter((s) => s.kind === "category").map((s) => ({
+			label: s.label,
+			href: s.href,
+		})),
+	},
+	{
+		heading: "Media",
+		links: [
+			{ label: "Magazine", href: "/magazine" },
+			{ label: "Podcast", href: "/podcast" },
+			{ label: "Video", href: "/video" },
+			{ label: "Live TV", href: "/video" },
+		],
+	},
+	{
+		heading: "Explore",
+		links: [
+			{ label: "Special Reports", href: "/category/economics?topic=macro-indicators" },
+			{ label: "Innovators List", href: "/magazine" },
+			{ label: "The Brief", href: "/magazine" },
+			{ label: "Newsletters", href: "/pages/about" },
+			{ label: "Search", href: "/search" },
+		],
+	},
+	{
+		heading: "Company",
+		links: [
+			{ label: "About", href: "/pages/about" },
+			{ label: "Submit a Tip", href: "/pages/about" },
+			{ label: "Advertise", href: "/pages/about" },
+			{ label: "RSS Feed", href: "/rss.xml" },
+		],
+	},
+];
+
+// Sections shown directly in the top category bar (the rest live under "More").
+export const PRIMARY_BAR: Section[] = SECTIONS;

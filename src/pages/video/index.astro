@@ -1,0 +1,46 @@
+---
+import { getEmDashCollection, getTermsForEntries } from "emdash";
+import Base from "../../layouts/Base.astro";
+import CategoryFeed from "../../components/CategoryFeed.astro";
+import type { FeedPost } from "../../components/CategoryFeed.astro";
+import { getSection } from "../../config/site-nav";
+
+const section = getSection("video")!;
+const topic = Astro.url.searchParams.get("topic");
+
+// No dedicated video collection — source the section from the latest posts so the
+// layout reads as a real, populated video desk rather than an empty placeholder.
+const { entries: posts, cacheHint } = await getEmDashCollection("posts", {
+	orderBy: { published_at: "desc" },
+	limit: 24,
+});
+
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+const ids = posts.map((p) => p.data.id);
+const catsByEntry = await getTermsForEntries("posts", ids, "category");
+
+const feed: FeedPost[] = posts.map((post) => {
+	const c = catsByEntry.get(post.data.id)?.[0];
+	return {
+		post,
+		tags: [],
+		category: c ? { slug: c.slug, label: c.label } : null,
+	};
+});
+
+// Prefer podcasts that have a video_url for the sidebar strip.
+const { entries: allPods } = await getEmDashCollection("podcasts", { limit: 12 });
+const videoPods = allPods.filter((p) => p.data.video_url);
+const podcasts = (videoPods.length > 0 ? videoPods : allPods).slice(0, 6);
+---
+
+<Base title="Video — Sustainomics" description={section.blurb}>
+	<CategoryFeed
+		section={section}
+		posts={feed}
+		topic={topic}
+		podcasts={podcasts}
+		basePath="/video"
+	/>
+</Base>

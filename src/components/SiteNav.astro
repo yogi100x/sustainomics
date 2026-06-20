@@ -899,11 +899,11 @@ const UTILITY_LINKS = [
 			// mobile / via middle-click). Buttons just toggle.
 			trigger.addEventListener("click", (e) => {
 				if (!isDesktop()) return;
+				// <a> triggers navigate immediately on click; dropdown is shown via CSS hover.
+				// Only <button> triggers (e.g. More) toggle the panel.
+				if (trigger.tagName === "A") return;
+				e.preventDefault();
 				const open = panel.classList.contains("is-open");
-				if (trigger.tagName === "A" && !open) {
-					// First click opens the dropdown; let a second click navigate.
-					e.preventDefault();
-				}
 				closeAll(item);
 				panel.classList.toggle("is-open", !open);
 				trigger.setAttribute("aria-expanded", String(!open));

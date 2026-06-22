@@ -11,6 +11,41 @@
 	},
 	"collections": [
 		{
+			"slug": "advertisements",
+			"label": "Advertisements",
+			"labelSingular": "Advertisement",
+			"description": "Manage ad creatives and placements. Publish to activate, set to Draft to pause.",
+			"supports": ["drafts"],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Ad Name (internal)",
+					"type": "string",
+					"required": true
+				},
+				{
+					"slug": "image",
+					"label": "Ad Image",
+					"type": "image"
+				},
+				{
+					"slug": "link_url",
+					"label": "Click URL",
+					"type": "url"
+				},
+				{
+					"slug": "placement",
+					"label": "Placement: sidebar | leaderboard | homepage | article",
+					"type": "string"
+				},
+				{
+					"slug": "sponsor_label",
+					"label": "Sponsor Label (e.g. 'Sponsored by Acme')",
+					"type": "string"
+				}
+			]
+		},
+		{
 			"slug": "articles",
 			"label": "Articles",
 			"labelSingular": "Articles",

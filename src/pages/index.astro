@@ -8,6 +8,7 @@ import { Image } from "emdash/ui";
 import Base from "../layouts/Base.astro";
 import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import AdBlock from "../components/AdBlock.astro";
 
 const POSTS_LIMIT = 16;
 
@@ -389,7 +390,9 @@ function ytId(u?: string | null) {
 							<a href="/posts" class="see-all">See all coverage →</a>
 						</section>
 
-						<section class="signup">
+						<AdBlock placement="sidebar" />
+
+					<section class="signup">
 							<h3 class="signup-head">The transition, in your inbox</h3>
 							<p class="signup-dek">
 								A weekly brief on the markets, policy, and technology driving

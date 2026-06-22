@@ -715,10 +715,10 @@
 				"slug": "greentech-summit-2026",
 				"status": "published",
 				"data": {
-					"title": "GreenTech Summit 2026",
+					"title": "Where Capital Meets Climate. Register Now.",
 					"link_url": "https://example.com/greentech-summit",
 					"placement": "sidebar",
-					"sponsor_label": "Sponsored by GreenTech Events"
+					"sponsor_label": "Sponsored by GreenTech Summit 2026"
 				}
 			},
 			{
@@ -726,7 +726,7 @@
 				"slug": "carbon-markets-report",
 				"status": "published",
 				"data": {
-					"title": "Carbon Markets 2026 Report",
+					"title": "The Definitive Guide to Carbon Pricing in 2026",
 					"link_url": "https://example.com/carbon-report",
 					"placement": "article",
 					"sponsor_label": "Sponsored by BlueCarbon Analytics"
@@ -737,7 +737,7 @@
 				"slug": "net-zero-index-fund",
 				"status": "published",
 				"data": {
-					"title": "Net Zero Index Fund",
+					"title": "Invest in the Transition. Net Zero Index Fund.",
 					"link_url": "https://example.com/nz-index",
 					"placement": "sidebar",
 					"sponsor_label": "Sponsored by Veridian Capital"

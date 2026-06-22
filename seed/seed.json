@@ -711,6 +711,39 @@
 	"content": {
 		"advertisements": [
 			{
+				"id": "advertisements:sustainomics-pro",
+				"slug": "sustainomics-pro",
+				"status": "published",
+				"data": {
+					"title": "Sustainomics Pro — Deeper Data. Faster Insight.",
+					"link_url": "https://example.com/pro",
+					"placement": "leaderboard",
+					"sponsor_label": "Sustainomics Pro"
+				}
+			},
+			{
+				"id": "advertisements:climate-bond-initiative",
+				"slug": "climate-bond-initiative",
+				"status": "published",
+				"data": {
+					"title": "Financing the Net Zero Economy. Join 500+ Issuers.",
+					"link_url": "https://example.com/climate-bonds",
+					"placement": "mid-page",
+					"sponsor_label": "Sponsored by Climate Bond Initiative"
+				}
+			},
+			{
+				"id": "advertisements:msci-esg",
+				"slug": "msci-esg",
+				"status": "published",
+				"data": {
+					"title": "ESG Ratings Trusted by 10,000+ Investors Worldwide.",
+					"link_url": "https://example.com/msci",
+					"placement": "mid-page",
+					"sponsor_label": "Sponsored by MSCI ESG"
+				}
+			},
+			{
 				"id": "advertisements:greentech-summit-2026",
 				"slug": "greentech-summit-2026",
 				"status": "published",

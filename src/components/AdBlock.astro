@@ -28,16 +28,17 @@ function mediaUrl(img: any): string | null {
 		{ads.map((ad) => {
 			const imgUrl = mediaUrl(ad.data.image);
 			const label = ad.data.sponsor_label || "Advertisement";
+			const inner = imgUrl
+				? <img src={imgUrl} alt={ad.data.title} class="ad-img" loading="lazy" />
+				: <div class="ad-placeholder"><span class="ad-placeholder-text">{ad.data.title}</span></div>;
 			return (
 				<div class="ad-block">
 					<p class="ad-label">{label}</p>
 					{ad.data.link_url ? (
 						<a href={ad.data.link_url} target="_blank" rel="noopener sponsored" class="ad-link">
-							{imgUrl && <img src={imgUrl} alt={ad.data.title} class="ad-img" loading="lazy" />}
+							{inner}
 						</a>
-					) : (
-						imgUrl && <img src={imgUrl} alt={ad.data.title} class="ad-img" loading="lazy" />
-					)}
+					) : inner}
 				</div>
 			);
 		})}
@@ -81,5 +82,23 @@ function mediaUrl(img: any): string | null {
 		width: 100%;
 		height: auto;
 		display: block;
+	}
+
+	.ad-placeholder {
+		width: 100%;
+		min-height: 120px;
+		background: var(--color-surface, #f3f4f6);
+		border: 1px dashed var(--color-border, #d1d5db);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+	}
+
+	.ad-placeholder-text {
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--color-muted, #9ca3af);
+		text-align: center;
 	}
 </style>

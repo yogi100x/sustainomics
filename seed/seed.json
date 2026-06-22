@@ -707,6 +707,41 @@
 		}
 	],
 	"content": {
+		"advertisements": [
+			{
+				"id": "advertisements:greentech-summit-2026",
+				"slug": "greentech-summit-2026",
+				"status": "published",
+				"data": {
+					"title": "GreenTech Summit 2026",
+					"link_url": "https://example.com/greentech-summit",
+					"placement": "sidebar",
+					"sponsor_label": "Sponsored by GreenTech Events"
+				}
+			},
+			{
+				"id": "advertisements:carbon-markets-report",
+				"slug": "carbon-markets-report",
+				"status": "published",
+				"data": {
+					"title": "Carbon Markets 2026 Report",
+					"link_url": "https://example.com/carbon-report",
+					"placement": "article",
+					"sponsor_label": "Sponsored by BlueCarbon Analytics"
+				}
+			},
+			{
+				"id": "advertisements:net-zero-index-fund",
+				"slug": "net-zero-index-fund",
+				"status": "published",
+				"data": {
+					"title": "Net Zero Index Fund",
+					"link_url": "https://example.com/nz-index",
+					"placement": "sidebar",
+					"sponsor_label": "Sponsored by Veridian Capital"
+				}
+			}
+		],
 		"articles": [
 			{
 				"id": "articles:innovators-list-10-companies-rewiring-heavy-industry",

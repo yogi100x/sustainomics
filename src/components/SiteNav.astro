@@ -539,8 +539,8 @@ const UTILITY_LINKS = [
 
 	/* ---------- Per-section dropdown ---------- */
 	.snav-dropdown {
-		position: absolute;
-		top: 100%;
+		position: fixed;
+		top: 0;
 		left: 0;
 		min-width: 300px;
 		max-width: 360px;
@@ -550,10 +550,9 @@ const UTILITY_LINKS = [
 		border-top: 2px solid var(--color-kicker, #c8102e);
 		box-shadow: var(--shadow-dropdown);
 		padding: var(--spacing-4);
-		padding-top: calc(var(--spacing-4) + 6px);
-		margin-top: -6px;
 		opacity: 0;
 		visibility: hidden;
+		pointer-events: none;
 		transition:
 			opacity 0.15s ease,
 			visibility 0.15s ease;
@@ -562,6 +561,7 @@ const UTILITY_LINKS = [
 	.snav-dropdown.is-open {
 		opacity: 1;
 		visibility: visible;
+		pointer-events: auto;
 	}
 	.snav-dropdown-blurb {
 		font-size: var(--font-size-xs);
@@ -891,11 +891,14 @@ const UTILITY_LINKS = [
 			const panel = item.querySelector<HTMLElement>("[data-snav-panel]");
 			if (!trigger || !panel) return;
 
-			// Hover: show dropdown with a delay on hide to bridge the gap
+			// Hover: position dropdown via fixed coords (bypasses overflow:auto clipping)
 			let hideTimer: ReturnType<typeof setTimeout>;
 			function showPanel() {
 				if (!isDesktop()) return;
 				clearTimeout(hideTimer);
+				const rect = item.getBoundingClientRect();
+				panel.style.top = rect.bottom + 'px';
+				panel.style.left = rect.left + 'px';
 				closeAll(item);
 				panel.classList.add("is-open");
 				trigger.setAttribute("aria-expanded", "true");
@@ -904,7 +907,7 @@ const UTILITY_LINKS = [
 				hideTimer = setTimeout(() => {
 					panel.classList.remove("is-open");
 					trigger.setAttribute("aria-expanded", "false");
-				}, 150);
+				}, 200);
 			}
 			item.addEventListener("mouseenter", showPanel);
 			item.addEventListener("mouseleave", hidePanel);

@@ -15,7 +15,9 @@
 			"label": "Advertisements",
 			"labelSingular": "Advertisement",
 			"description": "Manage ad creatives and placements. Publish to activate, set to Draft to pause.",
-			"supports": ["drafts"],
+			"supports": [
+				"drafts"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -757,9 +759,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "Wind turbines on a ridge",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "Our annual ranking of the firms disrupting the hardest sectors.",
 					"content": [
@@ -839,9 +839,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "City skyline of glass towers",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "Where the climate-conscious wealthy are putting their time and money.",
 					"content": [
@@ -921,9 +919,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "Sunlight through a forest canopy",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "Trade policy is becoming climate policy by another name.",
 					"content": [
@@ -1003,9 +999,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "A trading screen showing financial charts",
-						"meta": {
-							"storageKey": "01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "Prices, volumes, and the credibility crunch — at a glance.",
 					"content": [
@@ -1085,9 +1079,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "High-voltage transmission towers at dusk",
-						"meta": {
-							"storageKey": "01KV6H2TS6SQ9N5MT4V1M1615A.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "The founder turning grid instability into an export business.",
 					"content": [
@@ -1167,9 +1159,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "Sunlight filtering through a dense green forest",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "One financier's contrarian wager on low-carbon materials.",
 					"content": [
@@ -1249,9 +1239,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "Glass corporate office towers seen from below",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "Development banks are rewriting their mandates for a hotter world.",
 					"content": [
@@ -1331,9 +1319,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "Wind turbines on a ridge under a wide sky",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "From novelty to benchmark in under a decade.",
 					"content": [
@@ -1413,9 +1399,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "Solar panels stretching toward the horizon at sunset",
-						"meta": {
-							"storageKey": "01KV6H2TMNTN8K80GHM4BCDGXR.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "Industrial heat is the transition's stubborn, underfunded frontier.",
 					"content": [
@@ -1495,9 +1479,7 @@
 						"width": 1200,
 						"height": 800,
 						"alt": "Molten steel pouring in an industrial mill",
-						"meta": {
-							"storageKey": "01KV6H2TJE47QT14ZHTXKNDM5P.jpg"
-						}
+						"meta": {}
 					},
 					"excerpt": "Executives are quietly repricing climate risk — and their own incentives.",
 					"content": [
@@ -1583,12 +1565,7 @@
 						"filename": "sustainomics-quarterly-q2-2026.pdf",
 						"mimeType": "application/pdf",
 						"alt": "Sustainomics Quarterly Q2 2026",
-						"meta": {
-							"storageKey": "01KV6HDPZXGX53YTB2P4H8KX1X.pdf",
-							"caption": null,
-							"blurhash": null,
-							"dominantColor": null
-						}
+						"meta": {}
 					},
 					"issue_date": "2026-06-01T00:00:00Z",
 					"excerpt": "Our Q2 2026 issue examines how sovereign wealth funds are reshaping grid infrastructure investment, the maturation of carbon markets, and the pragmatic new era of ESG finance."
@@ -1644,12 +1621,7 @@
 						"provider": "local",
 						"filename": "podcast-sample-15s.mp3",
 						"mimeType": "audio/mpeg",
-						"meta": {
-							"storageKey": "01KV6HC3RCWW10HF72PWP4QW99.mp3",
-							"caption": null,
-							"blurhash": null,
-							"dominantColor": null
-						}
+						"meta": {}
 					},
 					"episode_date": "2026-06-01T00:00:00Z",
 					"duration": "0:15"
@@ -12896,9 +12868,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "swf-grid.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TVKKGDKBSFBXYHP9Q08.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -12969,9 +12939,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "swf-grid.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TVKKGDKBSFBXYHP9Q08.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13036,9 +13004,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "swf-grid.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TVKKGDKBSFBXYHP9Q08.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13103,9 +13069,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "swf-grid.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TVKKGDKBSFBXYHP9Q08.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13170,9 +13134,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "swf-grid.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TVKKGDKBSFBXYHP9Q08.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13237,9 +13199,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13311,9 +13271,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13378,9 +13336,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13445,9 +13401,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13512,9 +13466,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13579,9 +13531,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13652,9 +13602,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13719,9 +13667,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13786,9 +13732,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -13853,9 +13797,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -14366,9 +14308,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -14441,9 +14381,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -14508,9 +14446,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -14575,9 +14511,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -14642,9 +14576,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -14732,9 +14664,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "esg-pragmatic.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -14818,9 +14748,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "esg-pragmatic.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -14897,9 +14825,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "esg-pragmatic.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -14976,9 +14902,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "esg-pragmatic.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15055,9 +14979,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "esg-pragmatic.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TTBAT8AZ3X7WYWFJKPP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15134,9 +15056,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "grid-bottlenecks.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TS6SQ9N5MT4V1M1615A.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15220,9 +15140,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "grid-bottlenecks.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TS6SQ9N5MT4V1M1615A.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15299,9 +15217,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "grid-bottlenecks.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TS6SQ9N5MT4V1M1615A.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15378,9 +15294,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "grid-bottlenecks.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TS6SQ9N5MT4V1M1615A.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15457,9 +15371,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "grid-bottlenecks.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TS6SQ9N5MT4V1M1615A.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15536,9 +15448,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15622,9 +15532,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15701,9 +15609,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15780,9 +15686,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15859,9 +15763,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "biodiversity-credits.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TR3KJPC7EGR5AX4JMJM.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -15938,9 +15840,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16025,9 +15925,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16104,9 +16002,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16183,9 +16079,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16262,9 +16156,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "net-zero-reckoning.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TPR8C30SF6E19EE98KP.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16341,9 +16233,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16428,9 +16318,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16507,9 +16395,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16586,9 +16472,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16665,9 +16549,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "green-hydrogen.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TNQJVQ6ZE7Y5VX5NQ11.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16744,9 +16626,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "clean-energy-investment.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TMNTN8K80GHM4BCDGXR.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16830,9 +16710,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "clean-energy-investment.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TMNTN8K80GHM4BCDGXR.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16909,9 +16787,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "clean-energy-investment.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TMNTN8K80GHM4BCDGXR.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -16988,9 +16864,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "clean-energy-investment.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TMNTN8K80GHM4BCDGXR.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -17067,9 +16941,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "clean-energy-investment.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TMNTN8K80GHM4BCDGXR.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -17146,9 +17018,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "cbam-steel.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TJE47QT14ZHTXKNDM5P.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -17232,9 +17102,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "cbam-steel.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TJE47QT14ZHTXKNDM5P.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -17311,9 +17179,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "cbam-steel.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TJE47QT14ZHTXKNDM5P.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -17390,9 +17256,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "cbam-steel.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TJE47QT14ZHTXKNDM5P.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{
@@ -17469,9 +17333,7 @@
 						"height": 800,
 						"mimeType": "image/jpeg",
 						"filename": "cbam-steel.jpg",
-						"meta": {
-							"storageKey": "01KV6H2TJE47QT14ZHTXKNDM5P.jpg"
-						}
+						"meta": {}
 					},
 					"content": [
 						{

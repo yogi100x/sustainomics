@@ -91,16 +91,6 @@ function ytId(u?: string | null) {
 	return m ? m[1] : null;
 }
 
-// Indicative climate-markets data. SAMPLE — wire to a real feed or remove.
-const ticker = [
-	{ label: "EU CARBON", value: "€82.40", change: "+1.2%", dir: "up" },
-	{ label: "BRENT", value: "$79.10", change: "-0.6%", dir: "down" },
-	{ label: "NAT GAS", value: "$2.84", change: "+0.4%", dir: "up" },
-	{ label: "LITHIUM", value: "$14,250", change: "-2.1%", dir: "down" },
-	{ label: "COPPER", value: "$9,640", change: "+0.8%", dir: "up" },
-	{ label: "TAN SOLAR", value: "$41.20", change: "+1.5%", dir: "up" },
-	{ label: "GREEN BOND IDX", value: "104.7", change: "+0.2%", dir: "up" },
-];
 ---
 
 <Base title={siteTitle} description={siteTagline}>
@@ -115,20 +105,6 @@ const ticker = [
 			</section>
 		) : (
 			<>
-				{/* Segmented markets bar (sample data) */}
-				<div class="ticker" aria-label="Indicative climate-market data (sample)">
-					<div class="ticker-inner">
-						<span class="tk tk--head">MARKETS</span>
-						{ticker.map((t) => (
-							<span class="tk">
-								<span class="tk-label">{t.label}</span>
-								<span class="tk-val">{t.value}</span>
-								<span class={`tk-chg ${t.dir}`}>{t.change}</span>
-							</span>
-						))}
-					</div>
-				</div>
-
 				<div class="page">
 					<div class="content">
 						{/* ===== HERO ===== */}
@@ -432,66 +408,6 @@ const ticker = [
 </Base>
 
 <style>
-	/* ===== Markets bar (segmented cells) ===== */
-	.ticker {
-		border-top: 1px solid var(--color-border);
-		border-bottom: 1px solid var(--color-border);
-		background: var(--color-bg);
-	}
-
-	.ticker-inner {
-		display: flex;
-		align-items: stretch;
-		max-width: var(--wide-width);
-		margin: 0 auto;
-		overflow-x: auto;
-		scrollbar-width: none;
-	}
-
-	.ticker-inner::-webkit-scrollbar {
-		display: none;
-	}
-
-	.tk {
-		display: inline-flex;
-		align-items: baseline;
-		gap: var(--spacing-2);
-		padding: var(--spacing-2) var(--spacing-4);
-		border-right: 1px solid var(--color-border-subtle);
-		font-size: var(--font-size-xs);
-		white-space: nowrap;
-	}
-
-	.tk--head {
-		font-weight: 700;
-		letter-spacing: var(--tracking-wide);
-		color: var(--color-text);
-		background: var(--color-bg-subtle);
-	}
-
-	.tk-label {
-		font-weight: 600;
-		color: var(--color-text);
-	}
-
-	.tk-val {
-		color: var(--color-text-secondary);
-		font-variant-numeric: tabular-nums;
-	}
-
-	.tk-chg {
-		font-variant-numeric: tabular-nums;
-		font-weight: 600;
-	}
-
-	.tk-chg.up {
-		color: var(--color-up);
-	}
-
-	.tk-chg.down {
-		color: var(--color-down);
-	}
-
 	/* ===== Page grid ===== */
 	.page {
 		max-width: var(--wide-width);

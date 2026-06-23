@@ -19,4 +19,9 @@ jobs:
             git pull origin main
             pnpm install --frozen-lockfile
             pnpm build
+            # Seed on first deploy (data.db missing) or when explicitly requested
+            if [ ! -f data.db ]; then
+              npx emdash seed seed/seed.json --on-conflict=update
+              node scripts/setup-magazines.mjs
+            fi
             pm2 restart sustainomics

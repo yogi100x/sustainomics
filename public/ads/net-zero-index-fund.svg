@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 250">
+  <rect width="300" height="250" fill="#ffffff"/>
+  <rect width="300" height="48" fill="#1a6b3c"/>
+  <text x="150" y="22" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="rgba(255,255,255,0.65)" text-anchor="middle" letter-spacing="2">SPONSORED BY</text>
+  <text x="150" y="40" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">VERIDIAN CAPITAL</text>
+  <text x="150" y="84" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#1a6b3c" text-anchor="middle" letter-spacing="2" font-weight="700">VCNZ · NYSE LISTED</text>
+  <text x="150" y="116" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#111111" text-anchor="middle">Invest in</text>
+  <text x="150" y="141" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#111111" text-anchor="middle">the Transition.</text>
+  <text x="150" y="168" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#1a6b3c" text-anchor="middle">Net Zero Index Fund</text>
+  <text x="150" y="184" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#8b8b8b" text-anchor="middle">200+ climate leaders. Diversified exposure.</text>
+  <rect x="50" y="198" width="200" height="36" rx="2" fill="#1a6b3c"/>
+  <text x="150" y="221" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">View Fund →</text>
+</svg>

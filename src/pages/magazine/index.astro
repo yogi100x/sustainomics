@@ -2,6 +2,7 @@
 import { getEmDashCollection } from "emdash";
 import { Image } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
+import AdBlock from "../../components/AdBlock.astro";
 
 const { entries: issues, cacheHint } = await getEmDashCollection("magazines");
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
@@ -43,7 +44,8 @@ const fmt = (d: Date | string | null | undefined) => {
 					</a>
 				</section>
 			) : (
-				<div class="mag-grid">
+				<AdBlock placement="mid-page" />
+		<div class="mag-grid">
 					{sorted.map((m) => (
 						<a class="mag-card" href={`/magazine/${m.id}`}>
 							<div class="mag-cover">

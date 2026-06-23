@@ -6,6 +6,7 @@ import {
 	decodeSlug,
 } from "emdash";
 import Base from "../../layouts/Base.astro";
+import AdBlock from "../../components/AdBlock.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getReadingTime } from "../../utils/reading-time";
 
@@ -54,6 +55,8 @@ const filteredPosts = posts.map((post) => ({
 			filteredPosts.length === 0 ? (
 				<p class="no-posts">No posts with this tag yet.</p>
 			) : (
+			<>
+				<AdBlock placement="mid-page" />
 				<div class="posts-grid">
 					{filteredPosts.map(({ post, tags }) => (
 						<PostCard
@@ -67,6 +70,7 @@ const filteredPosts = posts.map((post) => ({
 						/>
 					))}
 				</div>
+			</>
 			)
 		}
 	</section>

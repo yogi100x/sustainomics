@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 250">
+  <rect width="300" height="250" fill="#ffffff"/>
+  <rect width="300" height="48" fill="#b45309"/>
+  <text x="150" y="22" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="rgba(255,255,255,0.65)" text-anchor="middle" letter-spacing="2">SPONSORED CONTENT</text>
+  <text x="150" y="40" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">CARBON MARKET ANALYTICS</text>
+  <text x="150" y="82" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#b45309" text-anchor="middle" letter-spacing="2" font-weight="700">NEW REPORT · 2026</text>
+  <text x="150" y="113" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#111111" text-anchor="middle">The Definitive Guide</text>
+  <text x="150" y="136" font-family="Georgia,serif" font-size="17" font-weight="700" fill="#111111" text-anchor="middle">to Carbon Pricing</text>
+  <text x="150" y="158" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#b45309" text-anchor="middle">in 2026</text>
+  <text x="150" y="180" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#525252" text-anchor="middle">120 pages · Free download</text>
+  <rect x="50" y="198" width="200" height="36" rx="2" fill="#b45309"/>
+  <text x="150" y="221" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Download Free →</text>
+</svg>

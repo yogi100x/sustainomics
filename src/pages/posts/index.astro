@@ -1,6 +1,7 @@
 ---
 import { getEmDashCollection, getTermsForEntries } from "emdash";
 import Base from "../../layouts/Base.astro";
+import AdBlock from "../../components/AdBlock.astro";
 import { getReadingTime } from "../../utils/reading-time";
 
 // Sort in the database rather than in JS — lets the DB use its index on
@@ -48,7 +49,8 @@ const formatDate = (date: Date) =>
 			posts.length === 0 ? (
 				<p class="empty">No posts yet.</p>
 			) : (
-				<div class="posts-list">
+				<AdBlock placement="mid-page" />
+		<div class="posts-list">
 					{postsWithTags.map(({ post, tags, bylines }) => (
 						<article class="post-item">
 							<a href={`/posts/${post.id}`} class="post-link">

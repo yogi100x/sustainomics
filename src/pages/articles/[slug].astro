@@ -2,6 +2,7 @@
 import { getEmDashEntry, getEmDashCollection, decodeSlug } from "emdash";
 import { Image, PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
+import AdBlock from "../../components/AdBlock.astro";
 
 const slug = decodeSlug(Astro.params.slug);
 if (!slug) return Astro.redirect("/404");
@@ -80,6 +81,7 @@ const section = article.data.mag_section || "Magazine";
 				</div>
 			</header>
 
+			<AdBlock placement="mid-page" />
 			<div class="article-content">
 				<PortableText value={article.data.content} />
 			</div>

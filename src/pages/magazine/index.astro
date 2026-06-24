@@ -3,8 +3,15 @@ import { getEmDashCollection } from "emdash";
 import { Image } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
 import AdBlock from "../../components/AdBlock.astro";
+import { SECTIONS } from "../../config/site-nav";
 
-const { entries: issues, cacheHint } = await getEmDashCollection("magazines");
+const magSection = SECTIONS.find((s) => s.slug === "magazine")!;
+const MAG_SUBTABS = magSection.subtabs;
+
+const [{ entries: issues, cacheHint }, { entries: articles }] = await Promise.all([
+	getEmDashCollection("magazines"),
+	getEmDashCollection("articles", { limit: 80 }),
+]);
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
 const toMs = (d: Date | string | null | undefined): number => {
@@ -20,48 +27,134 @@ const sorted = issues.toSorted((a, b) => {
 	return db - da;
 });
 
+const latestIssue = sorted[0];
+const olderIssues = sorted.slice(1);
+
 const fmt = (d: Date | string | null | undefined) => {
 	if (!d) return null;
 	const date = d instanceof Date ? d : new Date(d as string);
-	return isNaN(date.getTime()) ? null : date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+	return isNaN(date.getTime())
+		? null
+		: date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 };
+
+// Group articles by mag_section, top 3 per section
+const articlesBySection: Record<string, typeof articles> = {};
+for (const article of articles) {
+	const sec = article.data.mag_section as string | null;
+	if (!sec) continue;
+	if (!articlesBySection[sec]) articlesBySection[sec] = [];
+	if (articlesBySection[sec].length < 3) articlesBySection[sec].push(article);
+}
 ---
 
-<Base title="Magazine" description="The Sustainomics magazine — read every issue as a flipbook.">
+<Base title="Magazine" description="Long-form journalism — read every issue as articles or the full PDF.">
 	<div class="wrap">
+
+		{/* ===== MASTHEAD ===== */}
 		<header class="sec-head">
 			<h1 class="sec-name">Magazine</h1>
-			<p class="sec-sub">In-depth quarterly issues — read each one as a flipbook.</p>
+			<p class="sec-sub">In-depth journalism on markets, sustainability, and the people driving the transition.</p>
 		</header>
 
-		{
-			sorted.length === 0 ? (
-				<section class="empty">
-					<h2>No issues yet</h2>
-					<p>Upload a magazine PDF in the admin to publish your first issue.</p>
-					<a class="btn" href="/_emdash/admin/content/magazines/new">
-						Add an issue
-					</a>
-				</section>
-			) : (
-				<AdBlock placement="mid-page" />
-		<div class="mag-grid">
-					{sorted.map((m) => (
-						<a class="mag-card" href={`/magazine/${m.id}`}>
-							<div class="mag-cover">
-								{m.data.cover ? (
-									<Image image={m.data.cover} />
-								) : (
-									<div class="mag-noimg">PDF</div>
-								)}
-							</div>
-							<h2 class="mag-title">{m.data.title}</h2>
-							{fmt(m.data.issue_date) && <p class="mag-date">{fmt(m.data.issue_date)}</p>}
+		{issues.length === 0 ? (
+			<section class="empty">
+				<h2>No issues yet</h2>
+				<p>Upload a magazine PDF in the admin to publish your first issue.</p>
+				<a class="btn" href="/_emdash/admin/content/magazines/new">Add an issue</a>
+			</section>
+		) : (
+			<>
+				{/* ===== LATEST ISSUE HERO ===== */}
+				{latestIssue && (
+					<section class="hero-issue">
+						<a href={`/magazine/${latestIssue.id}`} class="hero-cover">
+							{latestIssue.data.cover ? (
+								<Image image={latestIssue.data.cover} />
+							) : (
+								<div class="hero-noimg">
+									<span class="hn-kicker">Sustainomics</span>
+									<span class="hn-title">{latestIssue.data.title}</span>
+								</div>
+							)}
 						</a>
-					))}
-				</div>
-			)
-		}
+						<div class="hero-body">
+							<span class="hero-eyebrow">Current Issue</span>
+							{fmt(latestIssue.data.issue_date) && (
+								<span class="hero-date">{fmt(latestIssue.data.issue_date)}</span>
+							)}
+							<a href={`/magazine/${latestIssue.id}`} class="hero-title-link">
+								<h2 class="hero-title">{latestIssue.data.title}</h2>
+							</a>
+							{latestIssue.data.excerpt && (
+								<p class="hero-dek">{latestIssue.data.excerpt}</p>
+							)}
+							<div class="hero-ctas">
+								<a href={`/magazine/${latestIssue.id}`} class="cta-primary">Read the Issue →</a>
+								<a href={`/magazine/${latestIssue.id}?mode=pdf`} class="cta-secondary">View PDF</a>
+							</div>
+						</div>
+					</section>
+				)}
+
+				<AdBlock placement="mid-page" />
+
+				{/* ===== PAST ISSUES GRID ===== */}
+				{olderIssues.length > 0 && (
+					<section class="past-issues">
+						<div class="band-head">
+							<h2 class="band-name">Past Issues</h2>
+						</div>
+						<div class="mag-grid">
+							{olderIssues.map((m) => (
+								<a class="mag-card" href={`/magazine/${m.id}`}>
+									<div class="mag-cover">
+										{m.data.cover ? (
+											<Image image={m.data.cover} />
+										) : (
+											<div class="mag-noimg">PDF</div>
+										)}
+									</div>
+									<h3 class="mag-title">{m.data.title}</h3>
+									{fmt(m.data.issue_date) && <p class="mag-date">{fmt(m.data.issue_date)}</p>}
+								</a>
+							))}
+						</div>
+					</section>
+				)}
+
+				{/* ===== SUB-SECTION BANDS ===== */}
+				{MAG_SUBTABS.map((subtab) => {
+					const bandArticles = articlesBySection[subtab.label] ?? [];
+					if (bandArticles.length === 0) return null;
+					return (
+						<section class="sub-band">
+							<div class="band-head">
+								<h2 class="band-name">{subtab.label}</h2>
+								{subtab.desc && <p class="band-desc">{subtab.desc}</p>}
+							</div>
+							<div class="sub-grid">
+								{bandArticles.map((article) => (
+									<article class="sub-card">
+										{article.data.featured_image && (
+											<a href={`/articles/${article.id}`} class="sub-media">
+												<Image image={article.data.featured_image} />
+											</a>
+										)}
+										<a href={`/articles/${article.id}`} class="sub-title-link">
+											<h3 class="sub-title">{article.data.title}</h3>
+										</a>
+										{article.data.excerpt && (
+											<p class="sub-dek">{article.data.excerpt}</p>
+										)}
+									</article>
+								))}
+							</div>
+						</section>
+					);
+				})}
+			</>
+		)}
 	</div>
 </Base>
 
@@ -71,6 +164,8 @@ const fmt = (d: Date | string | null | undefined) => {
 		margin: 0 auto;
 		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
 	}
+
+	/* Masthead */
 	.sec-head {
 		border-top: 2px solid var(--color-ink);
 		padding-top: var(--spacing-3);
@@ -78,60 +173,191 @@ const fmt = (d: Date | string | null | undefined) => {
 	}
 	.sec-name {
 		font-family: var(--font-serif, Georgia, serif);
-		font-size: var(--font-size-3xl);
+		font-size: clamp(2rem, 4vw, 3rem);
 		font-weight: 700;
+		color: var(--color-ink);
 	}
 	.sec-sub {
 		margin-top: var(--spacing-1);
 		color: var(--color-muted);
-		font-size: var(--font-size-base);
+		max-width: 56ch;
 	}
+
+	/* Latest issue hero */
+	.hero-issue {
+		display: grid;
+		grid-template-columns: 280px 1fr;
+		gap: var(--spacing-10);
+		align-items: start;
+		margin-bottom: var(--spacing-10);
+		padding-bottom: var(--spacing-10);
+		border-bottom: 1px solid var(--color-border);
+	}
+	.hero-cover {
+		display: block;
+		aspect-ratio: 3 / 4;
+		overflow: hidden;
+		box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+		border: 1px solid var(--color-border-subtle);
+	}
+	.hero-cover :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.4s ease;
+	}
+	.hero-cover:hover :global(img) { transform: scale(1.02); }
+	.hero-noimg {
+		width: 100%;
+		height: 100%;
+		background: var(--color-ink);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--spacing-3);
+		padding: var(--spacing-6);
+	}
+	.hn-kicker {
+		font-family: var(--font-sans);
+		font-size: 0.65rem;
+		font-weight: 700;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		color: #888;
+	}
+	.hn-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: #fff;
+		text-align: center;
+		line-height: 1.3;
+	}
+	.hero-body {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-3);
+		padding-top: var(--spacing-4);
+	}
+	.hero-eyebrow {
+		font-family: var(--font-sans);
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-kicker);
+	}
+	.hero-date {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+	.hero-title-link { text-decoration: none; color: inherit; }
+	.hero-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+		font-weight: 700;
+		line-height: 1.15;
+		color: var(--color-ink);
+		margin: 0;
+	}
+	.hero-title-link:hover .hero-title { color: var(--color-accent); }
+	.hero-dek {
+		font-size: 1rem;
+		line-height: 1.55;
+		color: var(--color-text-secondary);
+		max-width: 52ch;
+		margin: 0;
+	}
+	.hero-ctas {
+		display: flex;
+		gap: var(--spacing-3);
+		margin-top: var(--spacing-2);
+		flex-wrap: wrap;
+	}
+	.cta-primary {
+		display: inline-block;
+		padding: var(--spacing-3) var(--spacing-5);
+		background: var(--color-ink);
+		color: #fff;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		text-decoration: none;
+		letters-spacing: 0.02em;
+		transition: background var(--transition-fast);
+	}
+	.cta-primary:hover { background: var(--color-accent); }
+	.cta-secondary {
+		display: inline-block;
+		padding: var(--spacing-3) var(--spacing-5);
+		border: 1.5px solid var(--color-border);
+		color: var(--color-text-secondary);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		text-decoration: none;
+		transition: border-color var(--transition-fast), color var(--transition-fast);
+	}
+	.cta-secondary:hover { border-color: var(--color-ink); color: var(--color-ink); }
+
+	/* Band header (shared) */
+	.band-head {
+		border-top: 2px solid var(--color-ink);
+		padding-top: var(--spacing-3);
+		margin-bottom: var(--spacing-6);
+	}
+	.band-name {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-ink);
+		margin: 0;
+	}
+	.band-desc {
+		font-size: var(--font-size-sm);
+		color: var(--color-muted);
+		margin: var(--spacing-1) 0 0;
+	}
+
+	/* Past issues grid */
+	.past-issues { margin-bottom: var(--spacing-10); }
 	.mag-grid {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
-		gap: var(--spacing-8) var(--spacing-6);
+		gap: var(--spacing-6);
 	}
-	.mag-card {
-		text-decoration: none;
-		color: inherit;
-	}
+	.mag-card { text-decoration: none; color: inherit; }
 	.mag-cover {
 		aspect-ratio: 3 / 4;
 		overflow: hidden;
 		background: var(--color-surface);
 		border: 1px solid var(--color-border-subtle);
-		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 	}
 	.mag-cover :global(img) {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
+		width: 100%; height: 100%; object-fit: cover;
 		transition: transform 0.3s ease;
 	}
-	.mag-card:hover .mag-cover :global(img) {
-		transform: scale(1.03);
-	}
+	.mag-card:hover .mag-cover :global(img) { transform: scale(1.03); }
 	.mag-noimg {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--color-muted);
-		font-family: var(--font-sans);
-		font-weight: 700;
-		letter-spacing: var(--tracking-wide);
+		width: 100%; height: 100%;
+		display: flex; align-items: center; justify-content: center;
+		color: var(--color-muted); font-weight: 700;
 	}
 	.mag-title {
 		font-family: var(--font-serif, Georgia, serif);
-		font-size: var(--font-size-lg);
+		font-size: var(--font-size-base);
 		font-weight: 700;
 		line-height: 1.2;
 		margin-top: var(--spacing-3);
 	}
-	.mag-card:hover .mag-title {
-		color: var(--color-accent);
-	}
+	.mag-card:hover .mag-title { color: var(--color-accent); }
 	.mag-date {
 		margin-top: var(--spacing-1);
 		font-size: var(--font-size-xs);
@@ -139,18 +365,58 @@ const fmt = (d: Date | string | null | undefined) => {
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-wide);
 	}
-	.empty {
-		text-align: center;
-		padding: var(--spacing-20) var(--spacing-6);
+
+	/* Sub-section bands */
+	.sub-band {
+		margin-bottom: var(--spacing-10);
 	}
-	.empty h2 {
+	.sub-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--spacing-6);
+	}
+	.sub-card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-2);
+	}
+	.sub-media {
+		display: block;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		background: var(--color-surface);
+		margin-bottom: var(--spacing-2);
+	}
+	.sub-media :global(img) {
+		width: 100%; height: 100%; object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+	.sub-media:hover :global(img) { transform: scale(1.03); }
+	.sub-title-link { text-decoration: none; color: inherit; }
+	.sub-title {
 		font-family: var(--font-serif, Georgia, serif);
-		font-size: var(--font-size-2xl);
+		font-size: var(--font-size-lg);
+		font-weight: 700;
+		line-height: 1.25;
+		color: var(--color-ink);
+		margin: 0;
 	}
-	.empty p {
-		color: var(--color-muted);
-		margin-top: var(--spacing-2);
+	.sub-title-link:hover .sub-title { color: var(--color-accent); }
+	.sub-dek {
+		font-size: var(--font-size-sm);
+		line-height: 1.5;
+		color: var(--color-text-secondary);
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
+
+	/* Empty state */
+	.empty { text-align: center; padding: var(--spacing-20) var(--spacing-6); }
+	.empty h2 { font-family: var(--font-serif, Georgia, serif); font-size: var(--font-size-2xl); }
+	.empty p { color: var(--color-muted); margin-top: var(--spacing-2); }
 	.btn {
 		display: inline-block;
 		margin-top: var(--spacing-4);
@@ -160,17 +426,17 @@ const fmt = (d: Date | string | null | undefined) => {
 		text-decoration: none;
 		font-size: var(--font-size-sm);
 		font-weight: 600;
-		border-radius: var(--radius);
 	}
+
 	@media (max-width: 900px) {
-		.mag-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
+		.hero-issue { grid-template-columns: 200px 1fr; gap: var(--spacing-6); }
+		.mag-grid { grid-template-columns: repeat(3, 1fr); }
+		.sub-grid { grid-template-columns: repeat(2, 1fr); }
 	}
-	@media (max-width: 560px) {
-		.mag-grid {
-			grid-template-columns: 1fr 1fr;
-			gap: var(--spacing-6) var(--spacing-4);
-		}
+	@media (max-width: 600px) {
+		.hero-issue { grid-template-columns: 1fr; }
+		.hero-cover { max-width: 240px; }
+		.mag-grid { grid-template-columns: repeat(2, 1fr); }
+		.sub-grid { grid-template-columns: 1fr; }
 	}
 </style>

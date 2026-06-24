@@ -48,8 +48,7 @@ const BRAND_COLORS = ["#1a6b3c", "#0f4c81", "#8b1a1a", "#5c3d8f", "#b45309"];
 			);
 
 				return (
-				<div class="ad-block" data-slide={placement === 'leaderboard' ? String(i) : undefined}
-					style={placement === 'leaderboard' && i > 0 ? 'display:none' : undefined}>
+				<div class="ad-block" data-slide={placement === 'leaderboard' ? String(i) : undefined}>
 					<p class="ad-label">{label}</p>
 					{ad.data.link_url ? (
 						<a href={ad.data.link_url} target="_blank" rel="noopener sponsored" class="ad-link">
@@ -67,10 +66,11 @@ const BRAND_COLORS = ["#1a6b3c", "#0f4c81", "#8b1a1a", "#5c3d8f", "#b45309"];
 		const slides = Array.from(zone.querySelectorAll<HTMLElement>('[data-slide]'));
 		if (slides.length < 2) return;
 		let current = 0;
+		slides.forEach((s, i) => s.classList.toggle('ad-slide-hidden', i !== 0));
 		setInterval(() => {
-			slides[current].style.display = 'none';
+			slides[current].classList.add('ad-slide-hidden');
 			current = (current + 1) % slides.length;
-			slides[current].style.display = '';
+			slides[current].classList.remove('ad-slide-hidden');
 		}, 5000);
 	});
 </script>
@@ -83,6 +83,18 @@ const BRAND_COLORS = ["#1a6b3c", "#0f4c81", "#8b1a1a", "#5c3d8f", "#b45309"];
 		margin-top: var(--spacing-6);
 		padding-top: var(--spacing-6);
 		border-top: 1px solid var(--color-border);
+	}
+
+	.ad-zone--rotating {
+		display: grid;
+	}
+	.ad-zone--rotating .ad-block {
+		grid-area: 1 / 1;
+		transition: opacity 0.7s ease;
+	}
+	.ad-zone--rotating .ad-block.ad-slide-hidden {
+		opacity: 0;
+		pointer-events: none;
 	}
 
 	.ad-zone--leaderboard,

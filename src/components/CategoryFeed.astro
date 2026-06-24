@@ -332,6 +332,9 @@ const podStrip = podcasts.slice(0, 4);
 						</form>
 					</section>
 
+					{/* 3-video carousel */}
+					<VideoWidget />
+
 					{/* Latest headlines */}
 					<section class="rail-latest">
 						<h3 class="rail-latest-head">Latest</h3>
@@ -345,9 +348,6 @@ const podStrip = podcasts.slice(0, 4);
 						</ol>
 						<a href={base} class="see-all">More {section.label} →</a>
 					</section>
-
-					{/* 3-video carousel */}
-					<VideoWidget />
 
 					<AdBlock placement="sidebar" />
 

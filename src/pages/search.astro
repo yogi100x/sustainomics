@@ -2,181 +2,296 @@
 export const prerender = false;
 
 import { search } from "emdash";
+import { Image } from "emdash/ui";
 import Base from "../layouts/Base.astro";
 
 const query = Astro.url.searchParams.get("q")?.trim() || "";
 
-// Use the FTS-backed search() API instead of loading every post and
-// filtering in JS. FTS scales as the post count grows, returns ranked
-// results, and handles tokenization/stemming. Templates that grep all
-// post bodies in JS quickly become unusable past a few hundred posts.
 const { items: results } = query
 	? await search(query, { collections: ["posts"], limit: 30 })
 	: { items: [] };
+
+const fmt = (d: Date | string | null | undefined) => {
+	if (!d) return null;
+	const date = d instanceof Date ? d : new Date(d as string);
+	return isNaN(date.getTime())
+		? null
+		: date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+};
 ---
 
 <Base
-	title={query ? `Search: ${query}` : "Search"}
-	description="Search blog posts"
+	title={query ? `"${query}" — Search` : "Search — Sustainomics"}
+	description="Search Sustainomics news, analysis, and reports."
 >
-	<section class="search-page">
-		<h1 class="search-title">Search</h1>
+	<div class="srch-wrap">
 
-		<form method="get" action="/search" class="search-form">
-			<input
-				type="search"
-				name="q"
-				value={query}
-				placeholder="Search posts..."
-				class="search-input"
-				autofocus
-			/>
-			<button type="submit" class="search-button">Search</button>
-		</form>
+		{/* ===== HEADER ===== */}
+		<header class="srch-head">
+			<p class="srch-eyebrow">Sustainomics Search</p>
+			<form method="get" action="/search" class="srch-form" role="search">
+				<div class="srch-field-wrap">
+					<svg class="srch-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+						<circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+					</svg>
+					<input
+						type="search"
+						name="q"
+						value={query}
+						placeholder="Search markets, economics, ESG…"
+						class="srch-input"
+						autofocus
+						aria-label="Search query"
+					/>
+					{query && (
+						<a href="/search" class="srch-clear" aria-label="Clear search">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+						</a>
+					)}
+				</div>
+				<button type="submit" class="srch-btn">Search</button>
+			</form>
+		</header>
 
-		{
-			query && (
-				<p class="search-summary">
-					{results.length === 0
-						? `No results for "${query}"`
-						: `${results.length} result${results.length === 1 ? "" : "s"} for "${query}"`}
-				</p>
-			)
-		}
+		{query && (
+			<p class="srch-summary">
+				{results.length === 0
+					? `No results for "${query}"`
+					: `${results.length} result${results.length === 1 ? "" : "s"} for "${query}"`
+				}
+			</p>
+		)}
 
-		{
-			results.length > 0 && (
-				<ol class="search-results">
-					{results.map((result) => (
-						<li class="search-result">
-							<a
-								href={`/posts/${result.slug ?? result.id}`}
-								class="result-link"
-							>
-								<h2 class="result-title">
-									{result.title ?? "Untitled"}
-								</h2>
+		{results.length > 0 ? (
+			<ol class="srch-results">
+				{results.map((result) => (
+					<li class="srch-result">
+						<a href={`/posts/${result.slug ?? result.id}`} class="sr-link">
+							{result.featured_image && (
+								<div class="sr-thumb">
+									<Image image={result.featured_image} />
+								</div>
+							)}
+							<div class="sr-body">
+								<div class="sr-meta">
+									{result.collection && <span class="sr-coll">{result.collection}</span>}
+									{fmt((result as any).publishedAt) && (
+										<span class="sr-date">{fmt((result as any).publishedAt)}</span>
+									)}
+								</div>
+								<h2 class="sr-title">{result.title ?? "Untitled"}</h2>
 								{result.snippet && (
-									<p class="result-snippet" set:html={result.snippet} />
+									<p class="sr-snippet" set:html={result.snippet} />
 								)}
-							</a>
-						</li>
+							</div>
+						</a>
+					</li>
+				))}
+			</ol>
+		) : !query ? (
+			<div class="srch-hint">
+				<p>Search across Sustainomics news, markets data, ESG reports, and analysis.</p>
+				<ul class="srch-topics">
+					{["Carbon markets", "ESG investing", "Green bonds", "Net zero", "Climate finance", "Supply chain"].map((t) => (
+						<li><a href={`/search?q=${encodeURIComponent(t)}`}>{t}</a></li>
 					))}
-				</ol>
-			)
-		}
-
-		{!query && <p class="search-hint">Enter a search term to find posts.</p>}
-	</section>
+				</ul>
+			</div>
+		) : null}
+	</div>
 </Base>
 
 <style>
-	.search-page {
-		max-width: var(--max-width);
+	.srch-wrap {
+		max-width: 860px;
 		margin: 0 auto;
-		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
+		padding: var(--spacing-10) var(--spacing-6) var(--spacing-20);
 	}
 
-	.search-title {
-		font-size: var(--font-size-2xl);
-		margin-bottom: var(--spacing-6);
-	}
-
-	.search-form {
-		display: flex;
-		gap: var(--spacing-2);
+	/* Header */
+	.srch-head {
 		margin-bottom: var(--spacing-8);
+		padding-bottom: var(--spacing-8);
+		border-bottom: 1px solid var(--color-border);
 	}
-
-	.search-input {
+	.srch-eyebrow {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-muted);
+		margin-bottom: var(--spacing-4);
+	}
+	.srch-form {
+		display: flex;
+		gap: var(--spacing-3);
+		align-items: center;
+	}
+	.srch-field-wrap {
+		position: relative;
 		flex: 1;
-		padding: var(--spacing-2) var(--spacing-4);
-		font-size: var(--font-size-base);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius);
+		display: flex;
+		align-items: center;
+	}
+	.srch-icon {
+		position: absolute;
+		left: var(--spacing-4);
+		width: 18px; height: 18px;
+		color: var(--color-muted);
+		pointer-events: none;
+	}
+	.srch-input {
+		width: 100%;
+		padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) 44px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-lg);
+		border: 2px solid var(--color-border);
 		background: var(--color-bg);
 		color: var(--color-text);
+		border-radius: 0;
+		appearance: none;
+		-webkit-appearance: none;
 	}
-
-	.search-input:focus {
+	.srch-input:focus {
 		outline: none;
-		border-color: var(--color-accent);
+		border-color: var(--color-ink);
 	}
-
-	.search-button {
-		padding: var(--spacing-2) var(--spacing-6);
-		font-size: var(--font-size-base);
-		background: var(--color-accent);
-		color: var(--color-on-accent);
+	.srch-input::placeholder { color: var(--color-muted); }
+	.srch-clear {
+		position: absolute;
+		right: var(--spacing-3);
+		width: 20px; height: 20px;
+		color: var(--color-muted);
+		display: flex; align-items: center; justify-content: center;
+	}
+	.srch-clear svg { width: 16px; height: 16px; }
+	.srch-btn {
+		padding: var(--spacing-4) var(--spacing-6);
+		background: var(--color-ink);
+		color: #fff;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
 		border: none;
-		border-radius: var(--radius);
+		border-radius: 0;
 		cursor: pointer;
-		font-weight: 500;
+		white-space: nowrap;
+		transition: background 0.15s;
 	}
+	.srch-btn:hover { background: var(--color-accent); }
 
-	.search-button:hover {
-		opacity: 0.9;
-	}
-
-	.search-summary {
+	/* Summary */
+	.srch-summary {
+		font-size: var(--font-size-sm);
 		color: var(--color-muted);
 		margin-bottom: var(--spacing-6);
 	}
 
-	.search-hint {
-		color: var(--color-muted);
-	}
-
-	.search-results {
+	/* Results */
+	.srch-results {
 		list-style: none;
-		padding: 0;
-		margin: 0;
+		padding: 0; margin: 0;
 		display: flex;
 		flex-direction: column;
 	}
-
-	.search-result {
-		padding: var(--spacing-6) 0;
+	.srch-result {
 		border-bottom: 1px solid var(--color-border-subtle);
 	}
-
-	.search-result:first-child {
-		padding-top: 0;
-	}
-
-	.search-result:last-child {
-		border-bottom: none;
-	}
-
-	.result-link {
-		display: block;
+	.sr-link {
+		display: grid;
+		grid-template-columns: 120px 1fr;
+		gap: var(--spacing-5);
+		align-items: start;
+		padding: var(--spacing-6) 0;
 		text-decoration: none;
 		color: inherit;
 	}
-
-	.result-title {
+	.sr-link:has(.sr-thumb) { }
+	.sr-link:not(:has(.sr-thumb)) {
+		grid-template-columns: 1fr;
+	}
+	.sr-thumb {
+		aspect-ratio: 4/3;
+		overflow: hidden;
+		background: var(--color-surface);
+		flex-shrink: 0;
+	}
+	.sr-thumb :global(img) {
+		width: 100%; height: 100%; object-fit: cover;
+		transition: transform 0.3s;
+	}
+	.sr-link:hover .sr-thumb :global(img) { transform: scale(1.04); }
+	.sr-body { display: flex; flex-direction: column; gap: var(--spacing-2); }
+	.sr-meta {
+		display: flex;
+		gap: var(--spacing-3);
+		align-items: center;
+	}
+	.sr-coll {
+		font-size: 0.65rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-kicker);
+	}
+	.sr-date {
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+	}
+	.sr-title {
+		font-family: var(--font-serif, Georgia, serif);
 		font-size: var(--font-size-xl);
-		font-weight: 600;
-		line-height: var(--leading-snug);
-		margin-bottom: var(--spacing-2);
-		transition: color var(--transition-fast);
+		font-weight: 700;
+		line-height: 1.25;
+		color: var(--color-ink);
+		margin: 0;
+		transition: color 0.15s;
+	}
+	.sr-link:hover .sr-title { color: var(--color-accent); }
+	.sr-snippet {
+		font-size: var(--font-size-sm);
+		line-height: 1.55;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+	.sr-snippet :global(mark) {
+		background: transparent;
+		color: var(--color-ink);
+		font-weight: 700;
 	}
 
-	.result-link:hover .result-title {
-		color: var(--color-accent);
-	}
-
-	.result-snippet {
-		font-size: var(--font-size-base);
-		line-height: var(--leading-relaxed);
+	/* Hint / topics */
+	.srch-hint {
+		padding: var(--spacing-10) 0;
 		color: var(--color-text-secondary);
 	}
+	.srch-hint p { margin-bottom: var(--spacing-5); }
+	.srch-topics {
+		list-style: none;
+		padding: 0; margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-2);
+	}
+	.srch-topics a {
+		display: inline-block;
+		padding: var(--spacing-2) var(--spacing-4);
+		border: 1px solid var(--color-border);
+		color: var(--color-text-secondary);
+		font-size: var(--font-size-sm);
+		font-weight: 500;
+		text-decoration: none;
+		transition: border-color 0.15s, color 0.15s;
+	}
+	.srch-topics a:hover {
+		border-color: var(--color-ink);
+		color: var(--color-ink);
+	}
 
-	/* FTS returns <mark> wrapping the matched terms */
-	.result-snippet :global(mark) {
-		background: var(--color-accent-ring, rgba(99, 102, 241, 0.2));
-		color: inherit;
-		padding: 0 0.1em;
-		border-radius: 2px;
+	@media (max-width: 600px) {
+		.srch-form { flex-direction: column; align-items: stretch; }
+		.srch-btn { width: 100%; text-align: center; }
+		.sr-link { grid-template-columns: 80px 1fr; gap: var(--spacing-3); }
 	}
 </style>

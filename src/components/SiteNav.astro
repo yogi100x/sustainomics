@@ -197,7 +197,7 @@ const UTILITY_LINKS = [
 						</div>
 						{section.subtabs.length > 0 && (
 							<ul class="snav-mobile-sub" hidden>
-								{section.subtabs.map((st) => (
+								{section.subtabs.slice(0, 8).map((st) => (
 									<li>
 										<a
 											href={
@@ -210,6 +210,11 @@ const UTILITY_LINKS = [
 										</a>
 									</li>
 								))}
+								{section.subtabs.length > 8 && (
+									<li class="snav-mobile-sub-more">
+										<a href={section.href}>View all {section.label} →</a>
+									</li>
+								)}
 							</ul>
 						)}
 					</div>
@@ -793,6 +798,10 @@ const UTILITY_LINKS = [
 	.snav-mobile-sub a:hover {
 		background: var(--color-surface);
 		color: var(--color-text);
+	}
+	.snav-mobile-sub-more a {
+		color: var(--color-accent) !important;
+		font-weight: 600;
 	}
 	.snav-mobile-mega {
 		display: grid;

@@ -1,0 +1,339 @@
+---
+import Base from "../layouts/Base.astro";
+
+const NEWSLETTERS = [
+	{
+		slug: "daily-brief",
+		name: "The Daily Brief",
+		freq: "Every weekday",
+		desc: "Your morning summary of the top stories in sustainable markets, ESG, and global economics — delivered before the opening bell.",
+		badge: "Most popular",
+	},
+	{
+		slug: "esg-watch",
+		name: "ESG Watch",
+		freq: "Every Wednesday",
+		desc: "In-depth coverage of ESG ratings, corporate disclosures, governance shifts, and the metrics that move institutional capital.",
+		badge: null,
+	},
+	{
+		slug: "climate-finance",
+		name: "Climate Finance",
+		freq: "Every Friday",
+		desc: "Green bonds, carbon credits, blended finance, and the flow of capital into decarbonisation — curated for investors and analysts.",
+		badge: null,
+	},
+	{
+		slug: "market-pulse",
+		name: "Market Pulse",
+		freq: "Every Monday",
+		desc: "A weekly snapshot of sustainability-linked equities, commodity prices, and macro indicators that define the week ahead.",
+		badge: null,
+	},
+	{
+		slug: "policy-decoded",
+		name: "Policy Decoded",
+		freq: "Bi-weekly",
+		desc: "Regulatory updates, trade agreements, and fiscal frameworks — unpacked for executives and policy professionals.",
+		badge: null,
+	},
+	{
+		slug: "innovators-digest",
+		name: "Innovators Digest",
+		freq: "Every Thursday",
+		desc: "Clean tech breakthroughs, AI in sustainability, and the startups building the infrastructure of the green economy.",
+		badge: null,
+	},
+];
+---
+
+<Base title="Newsletters — Sustainomics" description="Subscribe to Sustainomics newsletters for daily and weekly briefings on sustainable markets, ESG, climate finance, and global economics.">
+	<div class="nl-wrap">
+
+		{/* ===== HERO ===== */}
+		<header class="nl-hero">
+			<p class="nl-eyebrow">Sustainomics Newsletters</p>
+			<h1 class="nl-hero-title">Stay ahead of sustainable markets.</h1>
+			<p class="nl-hero-sub">Authoritative briefings on ESG, climate finance, and global economics — delivered to your inbox on your schedule.</p>
+			<form class="nl-hero-form" action="#" method="post">
+				<input
+					type="email"
+					name="email"
+					placeholder="Enter your email address"
+					class="nl-hero-email"
+					required
+					aria-label="Email address"
+				/>
+				<button type="submit" class="nl-hero-btn">Subscribe to all</button>
+			</form>
+			<p class="nl-hero-note">Free. Unsubscribe at any time. No spam.</p>
+		</header>
+
+		<hr class="nl-rule" />
+
+		{/* ===== NEWSLETTER CARDS ===== */}
+		<section class="nl-grid-section">
+			<h2 class="nl-section-head">Choose your briefings</h2>
+			<div class="nl-grid">
+				{NEWSLETTERS.map((nl) => (
+					<div class="nl-card">
+						<div class="nl-card-top">
+							<div class="nl-card-meta">
+								{nl.badge && <span class="nl-badge">{nl.badge}</span>}
+								<span class="nl-freq">{nl.freq}</span>
+							</div>
+							<h3 class="nl-card-name">{nl.name}</h3>
+							<p class="nl-card-desc">{nl.desc}</p>
+						</div>
+						<form class="nl-card-form" action="#" method="post">
+							<input type="hidden" name="list" value={nl.slug} />
+							<input
+								type="email"
+								name="email"
+								placeholder="Your email"
+								class="nl-card-email"
+								required
+							/>
+							<button type="submit" class="nl-card-btn">Subscribe</button>
+						</form>
+					</div>
+				))}
+			</div>
+		</section>
+
+		{/* ===== TRUST BAR ===== */}
+		<section class="nl-trust">
+			<div class="nl-trust-inner">
+				<div class="nl-trust-item">
+					<span class="nl-trust-num">6</span>
+					<span class="nl-trust-label">Newsletters</span>
+				</div>
+				<div class="nl-trust-divider" />
+				<div class="nl-trust-item">
+					<span class="nl-trust-num">Weekly</span>
+					<span class="nl-trust-label">to daily cadence</span>
+				</div>
+				<div class="nl-trust-divider" />
+				<div class="nl-trust-item">
+					<span class="nl-trust-num">Free</span>
+					<span class="nl-trust-label">always</span>
+				</div>
+			</div>
+		</section>
+
+	</div>
+</Base>
+
+<style>
+	.nl-wrap {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: var(--spacing-10) var(--spacing-6) var(--spacing-20);
+	}
+
+	/* Hero */
+	.nl-hero {
+		max-width: 640px;
+		margin-bottom: var(--spacing-10);
+	}
+	.nl-eyebrow {
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-kicker);
+		margin-bottom: var(--spacing-3);
+	}
+	.nl-hero-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: clamp(2rem, 4vw, 3rem);
+		font-weight: 700;
+		line-height: 1.15;
+		color: var(--color-ink);
+		margin-bottom: var(--spacing-4);
+	}
+	.nl-hero-sub {
+		font-size: var(--font-size-lg);
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin-bottom: var(--spacing-6);
+	}
+	.nl-hero-form {
+		display: flex;
+		gap: 0;
+		max-width: 520px;
+	}
+	.nl-hero-email {
+		flex: 1;
+		padding: var(--spacing-4) var(--spacing-4);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-base);
+		border: 2px solid var(--color-ink);
+		background: var(--color-bg);
+		color: var(--color-text);
+		border-right: none;
+		border-radius: 0;
+		outline: none;
+	}
+	.nl-hero-email:focus { border-color: var(--color-accent); }
+	.nl-hero-email::placeholder { color: var(--color-muted); }
+	.nl-hero-btn {
+		padding: var(--spacing-4) var(--spacing-6);
+		background: var(--color-ink);
+		color: #fff;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		border: 2px solid var(--color-ink);
+		border-radius: 0;
+		cursor: pointer;
+		white-space: nowrap;
+		transition: background 0.15s;
+	}
+	.nl-hero-btn:hover { background: var(--color-accent); border-color: var(--color-accent); }
+	.nl-hero-note {
+		margin-top: var(--spacing-2);
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+	}
+
+	.nl-rule {
+		border: none;
+		border-top: 1px solid var(--color-border);
+		margin: 0 0 var(--spacing-10);
+	}
+
+	/* Newsletter grid */
+	.nl-section-head {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-muted);
+		margin-bottom: var(--spacing-6);
+	}
+	.nl-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1px;
+		background: var(--color-border);
+		border: 1px solid var(--color-border);
+		margin-bottom: var(--spacing-12);
+	}
+	.nl-card {
+		background: var(--color-bg);
+		padding: var(--spacing-6);
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: var(--spacing-5);
+	}
+	.nl-card-top { display: flex; flex-direction: column; gap: var(--spacing-3); }
+	.nl-card-meta { display: flex; align-items: center; gap: var(--spacing-3); }
+	.nl-badge {
+		display: inline-block;
+		padding: 2px 8px;
+		background: var(--color-kicker);
+		color: #fff;
+		font-size: 0.6rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+	.nl-freq {
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+		font-weight: 600;
+	}
+	.nl-card-name {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-xl);
+		font-weight: 700;
+		color: var(--color-ink);
+		margin: 0;
+		line-height: 1.2;
+	}
+	.nl-card-desc {
+		font-size: var(--font-size-sm);
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+	.nl-card-form {
+		display: flex;
+		gap: 0;
+	}
+	.nl-card-email {
+		flex: 1;
+		min-width: 0;
+		padding: var(--spacing-3) var(--spacing-3);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		border: 1px solid var(--color-border);
+		border-right: none;
+		background: var(--color-bg);
+		color: var(--color-text);
+		border-radius: 0;
+		outline: none;
+	}
+	.nl-card-email:focus { border-color: var(--color-ink); }
+	.nl-card-email::placeholder { color: var(--color-muted); font-size: var(--font-size-xs); }
+	.nl-card-btn {
+		padding: var(--spacing-3) var(--spacing-4);
+		background: var(--color-ink);
+		color: #fff;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 700;
+		border: 1px solid var(--color-ink);
+		border-radius: 0;
+		cursor: pointer;
+		white-space: nowrap;
+		transition: background 0.15s;
+	}
+	.nl-card-btn:hover { background: var(--color-accent); border-color: var(--color-accent); }
+
+	/* Trust bar */
+	.nl-trust {
+		border-top: 2px solid var(--color-ink);
+		padding-top: var(--spacing-8);
+	}
+	.nl-trust-inner {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-8);
+	}
+	.nl-trust-item {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+	.nl-trust-num {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: var(--font-size-2xl);
+		font-weight: 700;
+		color: var(--color-ink);
+	}
+	.nl-trust-label {
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 600;
+	}
+	.nl-trust-divider {
+		width: 1px;
+		height: 40px;
+		background: var(--color-border);
+	}
+
+	@media (max-width: 900px) {
+		.nl-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+	@media (max-width: 580px) {
+		.nl-grid { grid-template-columns: 1fr; }
+		.nl-hero-form { flex-direction: column; }
+		.nl-hero-email { border-right: 2px solid var(--color-ink); border-bottom: none; }
+	}
+</style>

@@ -10,6 +10,7 @@ import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import AdBlock from "../components/AdBlock.astro";
 import VideoWidget from "../components/VideoWidget.astro";
+import { SECTIONS } from "../config/site-nav";
 
 const POSTS_LIMIT = 16;
 
@@ -77,10 +78,26 @@ const featureBy = feature ? bylineNames(feature) : [];
 const opLeadBy = opLead ? leadByline(opLead) : null;
 
 // Homepage modules pulling from the Podcast + Magazine collections.
-const [{ entries: pods }, { entries: mags }] = await Promise.all([
+const [{ entries: pods }, { entries: mags }, { entries: bandPostsRaw }] = await Promise.all([
 	getEmDashCollection("podcasts", { limit: 8 }),
 	getEmDashCollection("magazines", { limit: 6 }),
+	getEmDashCollection("posts", { orderBy: { published_at: "desc" }, limit: 80 }),
 ]);
+
+// Group top 3 posts per news section for category bands
+const NEWS_SECTIONS = SECTIONS.filter((s) => s.kind === "category");
+const bandIds = bandPostsRaw.map((p) => p.data.id);
+const bandCats = await getTermsForEntries("posts", bandIds, "category");
+const postsBySection: Record<string, typeof bandPostsRaw> = {};
+for (const post of bandPostsRaw) {
+	const cats = bandCats.get(post.data.id) ?? [];
+	for (const c of cats) {
+		if (!postsBySection[c.slug]) postsBySection[c.slug] = [];
+		if (postsBySection[c.slug].length < 3) {
+			postsBySection[c.slug].push(post);
+		}
+	}
+}
 const originals = pods.filter((p) => p.data.video_url).slice(0, 4);
 const latestIssue = mags.toSorted((a, b) => {
 	const da = a.data.issue_date ? new Date(a.data.issue_date).getTime() : 0;
@@ -376,6 +393,40 @@ function ytId(u?: string | null) {
 								</section>
 							</>
 						)}
+
+						{/* ===== CATEGORY BANDS ===== */}
+						{NEWS_SECTIONS.map((section) => {
+							const sectionPosts = postsBySection[section.slug] ?? [];
+							if (sectionPosts.length === 0) return null;
+							return (
+								<>
+									<hr class="rule" />
+									<section class="cat-band">
+										<div class="cat-band-head">
+											<a href={section.href} class="cat-band-name">{section.label}</a>
+											<a href={section.href} class="cat-band-more">More {section.label} →</a>
+										</div>
+										<div class="cat-band-grid">
+											{sectionPosts.map((post) => (
+												<article class="cat-band-card">
+													{post.data.featured_image && (
+														<a href={`/posts/${post.id}`} class="cat-band-media">
+															<Image image={post.data.featured_image} />
+														</a>
+													)}
+													<a href={`/posts/${post.id}`} class="hl-link">
+														<h3 class="hl hl--card">{post.data.title}</h3>
+													</a>
+													{post.data.excerpt && (
+														<p class="cat-band-dek">{post.data.excerpt}</p>
+													)}
+												</article>
+											))}
+										</div>
+									</section>
+								</>
+							);
+						})}
 					</div>
 
 					{/* ===== RIGHT RAIL ===== */}
@@ -605,6 +656,72 @@ function ytId(u?: string | null) {
 		height: auto;
 		aspect-ratio: 3 / 2;
 		object-fit: cover;
+	}
+
+	/* ===== Category bands ===== */
+	.cat-band {
+		margin-top: var(--spacing-6);
+	}
+	.cat-band-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		border-bottom: 2px solid var(--color-ink);
+		padding-bottom: var(--spacing-2);
+		margin-bottom: var(--spacing-6);
+	}
+	.cat-band-name {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-ink);
+		text-decoration: none;
+	}
+	.cat-band-name:hover { color: var(--color-accent); }
+	.cat-band-more {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-xs);
+		font-weight: 600;
+		color: var(--color-muted);
+		text-decoration: none;
+		white-space: nowrap;
+	}
+	.cat-band-more:hover { color: var(--color-accent); }
+	.cat-band-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--spacing-6);
+	}
+	.cat-band-card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-2);
+	}
+	.cat-band-media {
+		display: block;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		background: var(--color-surface);
+		margin-bottom: var(--spacing-2);
+	}
+	.cat-band-media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+	.cat-band-media:hover :global(img) { transform: scale(1.03); }
+	.cat-band-dek {
+		font-size: var(--font-size-sm);
+		line-height: 1.45;
+		color: var(--color-text-secondary);
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 
 	/* ===== Two-up ===== */

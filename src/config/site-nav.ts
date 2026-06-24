@@ -142,11 +142,11 @@ export const SECTIONS: Section[] = [
 		],
 	},
 	{
-		label: "Podcast",
+		label: "Opinion",
 		slug: "podcast",
 		href: "/podcast",
 		kind: "media",
-		blurb: "Conversations on markets, founders, and the people driving the transition.",
+		blurb: "Perspectives, commentary, and analysis from the Sustainomics editorial team and leading voices in sustainable economics.",
 		subtabs: [
 			sub("The Sustainomics Show", "Flagship analysis covering markets, economics, and ESG"),
 			sub("Founder Stories", "Conversations detailing the scale journey of Startups & MSMEs"),
@@ -154,6 +154,10 @@ export const SECTIONS: Section[] = [
 			sub("Women in Lead", "Audio spotlights on executive parity and Womenomics strategies"),
 			sub("Market Daily", "A brief daily rundown of international opening bells and trends"),
 			sub("Tech Horizons", "Weekly episodes detailing the frontier of Innovation and AI"),
+			sub("Green Economy", "Commentary on sustainability economics, circular models, and transition finance"),
+			sub("Policy Watch", "Opinion on regulation, governance, and the politics of decarbonisation"),
+			sub("Capital Chronicles", "Views on climate finance, ESG capital allocation, and investment strategy"),
+			sub("ESG Watch", "Critical takes on ESG ratings, disclosure standards, and corporate accountability"),
 		],
 	},
 	{
@@ -198,7 +202,7 @@ export const MEGA_COLUMNS: MegaColumn[] = [
 		heading: "Media",
 		links: [
 			{ label: "Magazine", href: "/magazine" },
-			{ label: "Podcast", href: "/podcast" },
+			{ label: "Opinion", href: "/podcast" },
 			{ label: "Video", href: "/video" },
 			{ label: "Live TV", href: "/video" },
 		],

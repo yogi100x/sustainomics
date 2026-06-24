@@ -723,6 +723,30 @@
 				}
 			},
 			{
+				"id": "advertisements:sustainomics-pro-2",
+				"slug": "sustainomics-pro-2",
+				"status": "published",
+				"data": {
+					"title": "Market Intelligence for the Climate Economy. Start your free trial.",
+					"image": { "url": "/ads/sustainomics-pro-2.svg" },
+					"link_url": "https://example.com/pro",
+					"placement": "leaderboard",
+					"sponsor_label": "Sustainomics Pro"
+				}
+			},
+			{
+				"id": "advertisements:sustainomics-pro-3",
+				"slug": "sustainomics-pro-3",
+				"status": "published",
+				"data": {
+					"title": "Trusted by 2,000+ Institutions. Join Free for 30 Days.",
+					"image": { "url": "/ads/sustainomics-pro-3.svg" },
+					"link_url": "https://example.com/pro",
+					"placement": "leaderboard",
+					"sponsor_label": "Sustainomics Pro"
+				}
+			},
+			{
 				"id": "advertisements:climate-bond-initiative",
 				"slug": "climate-bond-initiative",
 				"status": "published",

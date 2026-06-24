@@ -5,6 +5,22 @@
 
 import type { ContentBylineCredit, TaxonomyTerm, PortableTextBlock } from "emdash";
 
+export interface Advertisement {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  image?: { id: string; src?: string; alt?: string; width?: number; height?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> };
+  link_url?: string;
+  placement?: string;
+  sponsor_label?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
+}
+
 export interface Articles {
   id: string;
   slug: string | null;
@@ -89,6 +105,7 @@ export interface Post {
 
 declare module "emdash" {
   interface EmDashCollections {
+    advertisements: Advertisement;
     articles: Articles;
     magazines: Issue;
     pages: Page;

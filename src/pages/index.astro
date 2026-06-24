@@ -1064,3 +1064,23 @@ function ytId(u?: string | null) {
 		}
 	}
 </style>
+
+<!-- GREEN ACCENT TEST — swap the active line to try each shade -->
+<style is:global>
+	:root {
+		/* Option A: Forest green (Sustainomics brand) */
+		--color-accent: #1a6b3c;
+		--color-accent-hover: #145730;
+		--color-accent-ring: color-mix(in srgb, #1a6b3c 25%, transparent);
+
+		/* Option B: deeper financial green — uncomment to test
+		--color-accent: #006644;
+		--color-accent-hover: #004d33;
+		--color-accent-ring: color-mix(in srgb, #006644 25%, transparent); */
+
+		/* Option C: mid-tone clean green — uncomment to test
+		--color-accent: #1f7a4d;
+		--color-accent-hover: #196040;
+		--color-accent-ring: color-mix(in srgb, #1f7a4d 25%, transparent); */
+	}
+</style>

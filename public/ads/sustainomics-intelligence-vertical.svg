@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="600" viewBox="0 0 300 600">
+  <rect width="300" height="600" fill="#0a0a0a"/>
+  <!-- Top accent bar -->
+  <rect width="300" height="4" fill="#1a6b3c"/>
+  <!-- Brand block -->
+  <rect x="24" y="40" width="48" height="48" fill="#1a6b3c"/>
+  <text x="48" y="72" font-family="Georgia,serif" font-size="22" font-weight="700" fill="white" text-anchor="middle">S</text>
+  <text x="84" y="60" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#1a6b3c" letter-spacing="1">SUSTAINOMICS</text>
+  <text x="84" y="78" font-family="Arial,sans-serif" font-size="10" fill="#888" letter-spacing="2">INTELLIGENCE</text>
+  <!-- Divider -->
+  <line x1="24" y1="112" x2="276" y2="112" stroke="#222" stroke-width="1"/>
+  <!-- Hero headline -->
+  <text x="24" y="150" font-family="Georgia,serif" font-size="22" font-weight="700" fill="white">The Climate</text>
+  <text x="24" y="178" font-family="Georgia,serif" font-size="22" font-weight="700" fill="white">Economy's</text>
+  <text x="24" y="206" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#1a6b3c">Data Edge.</text>
+  <!-- Body copy -->
+  <text x="24" y="248" font-family="Arial,sans-serif" font-size="12" fill="#aaa">Real-time market signals,</text>
+  <text x="24" y="266" font-family="Arial,sans-serif" font-size="12" fill="#aaa">ESG benchmarks, and</text>
+  <text x="24" y="284" font-family="Arial,sans-serif" font-size="12" fill="#aaa">transition-economy analysis</text>
+  <text x="24" y="302" font-family="Arial,sans-serif" font-size="12" fill="#aaa">trusted by 50,000+</text>
+  <text x="24" y="320" font-family="Arial,sans-serif" font-size="12" fill="#aaa">professionals worldwide.</text>
+  <!-- Stats block -->
+  <rect x="24" y="348" width="76" height="64" fill="#111" rx="2"/>
+  <text x="62" y="374" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#1a6b3c" text-anchor="middle">50K+</text>
+  <text x="62" y="392" font-family="Arial,sans-serif" font-size="9" fill="#666" text-anchor="middle">SUBSCRIBERS</text>
+  <rect x="112" y="348" width="76" height="64" fill="#111" rx="2"/>
+  <text x="150" y="374" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#1a6b3c" text-anchor="middle">140+</text>
+  <text x="150" y="392" font-family="Arial,sans-serif" font-size="9" fill="#666" text-anchor="middle">COUNTRIES</text>
+  <rect x="200" y="348" width="76" height="64" fill="#111" rx="2"/>
+  <text x="238" y="374" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#1a6b3c" text-anchor="middle">Daily</text>
+  <text x="238" y="392" font-family="Arial,sans-serif" font-size="9" fill="#666" text-anchor="middle">BRIEFINGS</text>
+  <!-- Divider -->
+  <line x1="24" y1="436" x2="276" y2="436" stroke="#222" stroke-width="1"/>
+  <!-- Features list -->
+  <text x="34" y="462" font-family="Arial,sans-serif" font-size="11" fill="#888">&#x2713;</text>
+  <text x="50" y="462" font-family="Arial,sans-serif" font-size="11" fill="#ccc">Markets &amp; ESG Data</text>
+  <text x="34" y="482" font-family="Arial,sans-serif" font-size="11" fill="#888">&#x2713;</text>
+  <text x="50" y="482" font-family="Arial,sans-serif" font-size="11" fill="#ccc">Weekly Intelligence Reports</text>
+  <text x="34" y="502" font-family="Arial,sans-serif" font-size="11" fill="#888">&#x2713;</text>
+  <text x="50" y="502" font-family="Arial,sans-serif" font-size="11" fill="#ccc">Exclusive CEO Interviews</text>
+  <!-- CTA button -->
+  <rect x="24" y="528" width="252" height="44" fill="#1a6b3c" rx="2"/>
+  <text x="150" y="555" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="white" text-anchor="middle" letter-spacing="1">START FREE TRIAL</text>
+  <!-- Bottom tag -->
+  <text x="150" y="590" font-family="Arial,sans-serif" font-size="9" fill="#444" text-anchor="middle" letter-spacing="1">sustainomics.com</text>
+</svg>

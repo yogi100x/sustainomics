@@ -820,6 +820,30 @@
 					"placement": "sidebar",
 					"sponsor_label": "Sponsored by Veridian Capital"
 				}
+			},
+			{
+				"id": "advertisements:sustainomics-intelligence-vertical",
+				"slug": "sustainomics-intelligence-vertical",
+				"status": "published",
+				"data": {
+					"title": "Sustainomics Intelligence — The Climate Economy's Data Edge",
+					"image": { "url": "/ads/sustainomics-intelligence-vertical.svg" },
+					"link_url": "https://sustainomics.com",
+					"placement": "sidebar",
+					"sponsor_label": "Advertisement"
+				}
+			},
+			{
+				"id": "advertisements:wef-climate-summit-vertical",
+				"slug": "wef-climate-summit-vertical",
+				"status": "published",
+				"data": {
+					"title": "WEF Global Climate Finance Summit 2026",
+					"image": { "url": "/ads/wef-climate-summit-vertical.svg" },
+					"link_url": "https://wef.org",
+					"placement": "sidebar",
+					"sponsor_label": "Sponsored by World Economic Forum"
+				}
 			}
 		],
 		"articles": [

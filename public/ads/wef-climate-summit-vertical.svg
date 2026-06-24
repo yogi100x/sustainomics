@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="600" viewBox="0 0 300 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00264d"/>
+      <stop offset="100%" stop-color="#001a33"/>
+    </linearGradient>
+  </defs>
+  <rect width="300" height="600" fill="url(#bg)"/>
+  <!-- Top accent -->
+  <rect width="300" height="3" fill="#0077cc"/>
+  <!-- Globe graphic (simplified) -->
+  <circle cx="150" cy="130" r="80" fill="none" stroke="#0077cc" stroke-width="1" opacity="0.3"/>
+  <circle cx="150" cy="130" r="60" fill="none" stroke="#0077cc" stroke-width="1" opacity="0.5"/>
+  <circle cx="150" cy="130" r="40" fill="none" stroke="#0077cc" stroke-width="2"/>
+  <ellipse cx="150" cy="130" rx="40" ry="80" fill="none" stroke="#0077cc" stroke-width="1" opacity="0.4"/>
+  <line x1="70" y1="130" x2="230" y2="130" stroke="#0077cc" stroke-width="1" opacity="0.4"/>
+  <line x1="150" y1="50" x2="150" y2="210" stroke="#0077cc" stroke-width="1" opacity="0.4"/>
+  <!-- Organization tag -->
+  <text x="150" y="242" font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#0077cc" text-anchor="middle" letter-spacing="3">WORLD ECONOMIC FORUM</text>
+  <!-- Event title -->
+  <text x="150" y="278" font-family="Georgia,serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">Global Climate</text>
+  <text x="150" y="302" font-family="Georgia,serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">Finance Summit</text>
+  <!-- Year badge -->
+  <rect x="110" y="318" width="80" height="24" fill="#0077cc" rx="2"/>
+  <text x="150" y="334" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle" letter-spacing="2">2026</text>
+  <!-- Divider -->
+  <line x1="60" y1="362" x2="240" y2="362" stroke="#0a3060" stroke-width="1"/>
+  <!-- Date + Location -->
+  <text x="150" y="390" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="white" text-anchor="middle">September 15–17</text>
+  <text x="150" y="410" font-family="Arial,sans-serif" font-size="11" fill="#6699cc" text-anchor="middle">Geneva, Switzerland</text>
+  <!-- Details -->
+  <text x="150" y="444" font-family="Arial,sans-serif" font-size="11" fill="#aac4e0" text-anchor="middle">2,500+ Global Leaders</text>
+  <text x="150" y="462" font-family="Arial,sans-serif" font-size="11" fill="#aac4e0" text-anchor="middle">120 Countries · 300 Sessions</text>
+  <!-- CTA -->
+  <rect x="24" y="488" width="252" height="44" fill="none" stroke="#0077cc" stroke-width="1.5" rx="2"/>
+  <text x="150" y="515" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#0077cc" text-anchor="middle" letter-spacing="1">REGISTER NOW</text>
+  <!-- Sub-CTA -->
+  <text x="150" y="550" font-family="Arial,sans-serif" font-size="10" fill="#446688" text-anchor="middle">Early Bird closes Aug 1, 2026</text>
+  <!-- Bottom -->
+  <line x1="24" y1="566" x2="276" y2="566" stroke="#0a3060" stroke-width="1"/>
+  <text x="150" y="585" font-family="Arial,sans-serif" font-size="9" fill="#334455" text-anchor="middle" letter-spacing="1">wef.org/climate-summit-2026</text>
+</svg>

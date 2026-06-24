@@ -1,6 +1,7 @@
 ---
 import { Image } from "emdash/ui";
 import AdBlock from "./AdBlock.astro";
+import VideoWidget from "./VideoWidget.astro";
 import type { Section } from "../config/site-nav";
 import type { Post, Episode } from "../../emdash-env";
 
@@ -331,25 +332,22 @@ const podStrip = podcasts.slice(0, 4);
 						</form>
 					</section>
 
-					{/* Featured / video widget */}
-					<section class="widget-video">
-						<span class="widget-kicker">Featured</span>
-						<a class="vid-card" href="/video">
-							<div class="vid-thumb">
-								{lead?.data.featured_image ? (
-									<Image image={lead.data.featured_image} />
-								) : (
-									<div class="noimg" />
-								)}
-								<span class="play" aria-hidden="true">
-									▶
-								</span>
-							</div>
-							<h4 class="vid-title">
-								Watch: The {section.label} stories moving markets this week
-							</h4>
-						</a>
+					{/* Latest headlines */}
+					<section class="rail-latest">
+						<h3 class="rail-latest-head">Latest</h3>
+						<ol class="rail-latest-list">
+							{posts.slice(0, 7).map(({ post }) => (
+								<li class="rlt-item">
+									<a href={`/posts/${post.id}`} class="rlt-title">{post.data.title}</a>
+									{timeAgo(postDate(post)) && <span class="rlt-time">{timeAgo(postDate(post))}</span>}
+								</li>
+							))}
+						</ol>
+						<a href={base} class="see-all">More {section.label} →</a>
 					</section>
+
+					{/* 3-video carousel */}
+					<VideoWidget />
 
 					<AdBlock placement="sidebar" />
 
@@ -863,14 +861,54 @@ const podStrip = podcasts.slice(0, 4);
 		white-space: nowrap;
 	}
 
-	/* Video widget */
-	.vid-card {
+	/* Latest rail */
+	.rail-latest-head {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-kicker);
+		margin: 0 0 var(--spacing-3);
+		padding-bottom: var(--spacing-2);
+		border-bottom: 2px solid var(--color-ink);
+	}
+	.rail-latest-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+	}
+	.rlt-item {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: var(--spacing-3) 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+	.rlt-title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: 0.875rem;
+		font-weight: 700;
+		line-height: 1.3;
+		color: var(--color-ink);
+		text-decoration: none;
+	}
+	.rlt-title:hover { color: var(--color-accent); }
+	.rlt-time {
+		font-size: 0.7rem;
+		color: var(--color-muted);
+	}
+
+	/* Video widget (old single-card, replaced by VideoWidget component) */
+	.vid-card-UNUSED {
 		text-decoration: none;
 		color: inherit;
 		display: block;
 	}
 
-	.vid-thumb {
+	.vid-thumb-UNUSED {
 		position: relative;
 		aspect-ratio: 16 / 9;
 		overflow: hidden;

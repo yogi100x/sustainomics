@@ -9,6 +9,7 @@ import Base from "../layouts/Base.astro";
 import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import AdBlock from "../components/AdBlock.astro";
+import VideoWidget from "../components/VideoWidget.astro";
 
 const POSTS_LIMIT = 16;
 
@@ -393,6 +394,8 @@ function ytId(u?: string | null) {
 							</ol>
 							<a href="/posts" class="see-all">See all coverage →</a>
 						</section>
+
+						<VideoWidget />
 
 						<AdBlock placement="sidebar" />
 

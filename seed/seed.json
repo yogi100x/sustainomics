@@ -221,6 +221,21 @@
 			]
 		},
 		{
+			"slug": "videos",
+			"label": "Video",
+			"labelSingular": "Video",
+			"supports": ["drafts", "search", "seo"],
+			"fields": [
+				{"slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true},
+				{"slug": "thumbnail", "label": "Thumbnail", "type": "image"},
+				{"slug": "excerpt", "label": "Description", "type": "text", "searchable": true},
+				{"slug": "video_url", "label": "YouTube URL", "type": "url"},
+				{"slug": "category", "label": "Category", "type": "string"},
+				{"slug": "video_date", "label": "Published Date", "type": "datetime"},
+				{"slug": "duration", "label": "Duration (e.g. 8:42)", "type": "string"}
+			]
+		},
+		{
 			"slug": "posts",
 			"label": "Posts",
 			"labelSingular": "Post",
@@ -1671,6 +1686,47 @@
 							"_key": "k2"
 						}
 					]
+				}
+			}
+		],
+		"videos": [
+			{
+				"id": "videos:carbon-markets-the-price-of-pollution",
+				"slug": "carbon-markets-the-price-of-pollution",
+				"status": "published",
+				"data": {
+					"title": "Carbon Markets: How the Price of Pollution Is Reshaping Finance",
+					"excerpt": "A deep dive into how carbon trading schemes are forcing companies to rethink capital allocation and long-term strategy.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Markets",
+					"video_date": "2026-05-20T12:00:00Z",
+					"duration": "14:22"
+				}
+			},
+			{
+				"id": "videos:esg-investing-the-data-behind-sustainable-finance",
+				"slug": "esg-investing-the-data-behind-sustainable-finance",
+				"status": "published",
+				"data": {
+					"title": "ESG Investing: The Data Behind Sustainable Finance",
+					"excerpt": "How institutional investors are using ESG scores to screen portfolios and what the research actually shows about returns.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "ESG",
+					"video_date": "2026-05-10T12:00:00Z",
+					"duration": "18:05"
+				}
+			},
+			{
+				"id": "videos:net-zero-by-2050-what-it-actually-means-for-industry",
+				"slug": "net-zero-by-2050-what-it-actually-means-for-industry",
+				"status": "published",
+				"data": {
+					"title": "Net Zero by 2050: What It Actually Means for Industry",
+					"excerpt": "Breaking down the sectoral pathways, capital requirements, and policy levers needed to hit net zero across heavy industry.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Industries",
+					"video_date": "2026-04-28T12:00:00Z",
+					"duration": "21:47"
 				}
 			}
 		],

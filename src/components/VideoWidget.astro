@@ -2,16 +2,14 @@
 import { getEmDashCollection } from "emdash";
 import { Image } from "emdash/ui";
 
-const { entries: allPods } = await getEmDashCollection("podcasts", {
-	orderBy: { episode_date: "desc" },
-	limit: 10,
+const { entries: videos } = await getEmDashCollection("videos", {
+	orderBy: { video_date: "desc" },
+	limit: 3,
 });
-
-const videos = allPods.filter((ep) => ep.data.video_url).slice(0, 3);
 
 function ytId(u?: string | null) {
 	if (!u) return null;
-	const m = u.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)(\w[\w-]{10})/);
+	const m = u.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([-\w]{11})/);
 	return m ? m[1] : null;
 }
 ---
@@ -28,7 +26,7 @@ function ytId(u?: string | null) {
 				const vid = ytId(ep.data.video_url);
 				return (
 					<div class:list={["vid-slide", { "vid-slide--hidden": i !== 0 }]} data-vidslide={i}>
-						<a href={`/podcast/${ep.id}`} class="vid-link">
+						<a href={`/video/${ep.id}`} class="vid-link">
 							<div class="vid-thumb">
 								{ep.data.cover ? (
 									<Image image={ep.data.cover} />

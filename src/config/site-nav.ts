@@ -1,5 +1,5 @@
-// Single source of truth for the Sustainomics information architecture.
-// Mirrors "The Sustainomics" 9-section menu document. Drives the top nav,
+// Single source of truth for the THE SUSTAINOMICS information architecture.
+// Mirrors "THE SUSTAINOMICS" 9-section menu document. Drives the top nav,
 // the per-section dropdowns, the category sub-tab rows, and the "More" mega panel.
 
 export interface SubTab {
@@ -146,9 +146,9 @@ export const SECTIONS: Section[] = [
 		slug: "podcast",
 		href: "/podcast",
 		kind: "media",
-		blurb: "Perspectives, commentary, and analysis from the Sustainomics editorial team and leading voices in sustainable economics.",
+		blurb: "Perspectives, commentary, and analysis from the THE SUSTAINOMICS editorial team and leading voices in sustainable economics.",
 		subtabs: [
-			sub("The Sustainomics Show", "Flagship analysis covering markets, economics, and ESG"),
+			sub("THE SUSTAINOMICS Show", "Flagship analysis covering markets, economics, and ESG"),
 			sub("Founder Stories", "Conversations detailing the scale journey of Startups & MSMEs"),
 			sub("Global Alliances", "Deep dives into International Trade, Partnerships, and Diaspora"),
 			sub("Women in Lead", "Audio spotlights on executive parity and Womenomics strategies"),
@@ -165,7 +165,7 @@ export const SECTIONS: Section[] = [
 		slug: "video",
 		href: "/video",
 		kind: "media",
-		blurb: "Live broadcasts, explainers, and studio interviews from the Sustainomics desk.",
+		blurb: "Live broadcasts, explainers, and studio interviews from the THE SUSTAINOMICS desk.",
 		subtabs: [
 			sub("Live Broadcast", "Streaming coverage of economic forums and live trading updates"),
 			sub("Quick Take", "Short-form visual explainers on breaking global financial news"),

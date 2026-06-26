@@ -21,14 +21,14 @@ const fmt = (d: Date | string | null | undefined) => {
 ---
 
 <Base
-	title={query ? `"${query}" — Search` : "Search — Sustainomics"}
-	description="Search Sustainomics news, analysis, and reports."
+	title={query ? `"${query}" — Search` : "Search — THE SUSTAINOMICS"}
+	description="Search THE SUSTAINOMICS news, analysis, and reports."
 >
 	<div class="srch-wrap">
 
 		{/* ===== HEADER ===== */}
 		<header class="srch-head">
-			<p class="srch-eyebrow">Sustainomics Search</p>
+			<p class="srch-eyebrow">THE SUSTAINOMICS Search</p>
 			<form method="get" action="/search" class="srch-form" role="search">
 				<div class="srch-field-wrap">
 					<svg class="srch-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -90,7 +90,7 @@ const fmt = (d: Date | string | null | undefined) => {
 			</ol>
 		) : !query ? (
 			<div class="srch-hint">
-				<p>Search across Sustainomics news, markets data, ESG reports, and analysis.</p>
+				<p>Search across THE SUSTAINOMICS news, markets data, ESG reports, and analysis.</p>
 				<ul class="srch-topics">
 					{["Carbon markets", "ESG investing", "Green bonds", "Net zero", "Climate finance", "Supply chain"].map((t) => (
 						<li><a href={`/search?q=${encodeURIComponent(t)}`}>{t}</a></li>

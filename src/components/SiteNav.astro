@@ -96,11 +96,11 @@ const UTILITY_LINKS = [
 							data-snav-trigger
 						>
 							{section.label}
-							{section.subtabs.length > 0 && (
+							{section.subtabs.length > 0 && !section.noDropdown && (
 								<span class="snav-caret" aria-hidden="true">▾</span>
 							)}
 						</a>
-						{section.subtabs.length > 0 && (
+						{section.subtabs.length > 0 && !section.noDropdown && (
 							<div
 								class:list={["snav-dropdown", { "snav-dropdown--wide": section.subtabs.length > 6 }]}
 								data-snav-panel
@@ -183,7 +183,7 @@ const UTILITY_LINKS = [
 							<a href={section.href} class="snav-mobile-seclink">
 								{section.label}
 							</a>
-							{section.subtabs.length > 0 && (
+							{section.subtabs.length > 0 && !section.noDropdown && (
 								<button
 									type="button"
 									class="snav-mobile-toggle"
@@ -195,7 +195,7 @@ const UTILITY_LINKS = [
 								</button>
 							)}
 						</div>
-						{section.subtabs.length > 0 && (
+						{section.subtabs.length > 0 && !section.noDropdown && (
 							<ul class="snav-mobile-sub" hidden>
 								{section.subtabs.slice(0, 8).map((st) => (
 									<li>

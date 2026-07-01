@@ -17,6 +17,9 @@ export interface Section {
 	kind: "category" | "media";
 	blurb: string;
 	subtabs: SubTab[];
+	/** When true, the top nav shows no caret/dropdown for this section (subtabs still
+	 *  power that section's own in-page filter tabs, e.g. /video's tab row). */
+	noDropdown?: boolean;
 }
 
 const slugify = (s: string): string =>
@@ -166,22 +169,23 @@ export const SECTIONS: Section[] = [
 		href: "/video",
 		kind: "media",
 		blurb: "Live broadcasts, explainers, and studio interviews from the THE SUSTAINOMICS desk.",
+		noDropdown: true,
 		subtabs: [
-			sub("Live Broadcast", "Streaming coverage of economic forums and live trading updates"),
-			sub("Quick Take", "Short-form visual explainers on breaking global financial news"),
-			sub("Executive Suite", "C-suite studio interviews highlighting leadership priorities"),
-			sub("Explaining Innovation", "Visually rich animations unpacking complex Tech and Agriculture"),
-			sub("Dealflow", "Fast-paced updates on major M&A announcements and funding rounds"),
-			sub("B-Side Docuseries", "Mini-documentaries showing real-world impact of global policies"),
-			sub("Market Pulse", "Daily market data, price action, and macro indicators visualised"),
-			sub("ESG Spotlight", "Stories on environmental impact, social enterprise, and governance"),
-			sub("Climate Finance", "Capital allocation for decarbonisation and green infrastructure"),
-			sub("Tech Frontiers", "AI, clean tech, and the engineering of the sustainability stack"),
-			sub("Policy Decoded", "Breaking down regulation, trade agreements, and fiscal frameworks"),
-			sub("Founder Stories", "Founder-led conversations on building companies for the long term"),
-			sub("Trade & Supply Chain", "Global logistics, tariffs, and corridor-level commodity flows"),
-			sub("Future of Work", "Workforce transitions, remote economies, and labour-market data"),
-			sub("Green Economy", "Circular models, carbon markets, and the economics of transition"),
+			sub("The Sustainomics", ""),
+			sub("Global Business Services", ""),
+			sub("Global Founders", ""),
+			sub("Global SMBs", ""),
+			sub("Diaspora Affairs", ""),
+			sub("Global Alliances", ""),
+			sub("Women in Lead", ""),
+			sub("Tech Horizons", ""),
+			sub("Innovation Edge", ""),
+			sub("Executive Suite", ""),
+			sub("Aerospace, Defence & Deeptech", ""),
+			sub("HRM & Organizational Development", ""),
+			sub("Agriculture, Food & Nutrition", ""),
+			sub("Investment Insights", ""),
+			sub("Global Cooperative", ""),
 		],
 	},
 ];

@@ -6,7 +6,7 @@
 		"description": "Exported from existing EmDash database"
 	},
 	"settings": {
-		"title": "Sustainomics",
+		"title": "The Sustainomics",
 		"tagline": "The economics of a sustainable world — markets, policy, and the climate transition."
 	},
 	"collections": [
@@ -685,7 +685,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Sustainomics covers the economics of the climate transition — the markets, policies, and businesses shaping a sustainable world.",
+									"text": "The Sustainomics covers the economics of the climate transition — the markets, policies, and businesses shaping a sustainable world.",
 									"_key": "k1"
 								}
 							],
@@ -720,7 +720,7 @@
 		{
 			"id": "byline:sustainomics-desk",
 			"slug": "sustainomics-desk",
-			"displayName": "Sustainomics Desk"
+			"displayName": "The Sustainomics Desk"
 		}
 	],
 	"content": {
@@ -730,11 +730,11 @@
 				"slug": "sustainomics-pro",
 				"status": "published",
 				"data": {
-					"title": "Sustainomics Pro — Deeper Data. Faster Insight.",
+					"title": "The Sustainomics Pro — Deeper Data. Faster Insight.",
 					"image": { "url": "/ads/sustainomics-pro.svg" },
 					"link_url": "https://example.com/pro",
 					"placement": "leaderboard",
-					"sponsor_label": "Sustainomics Pro"
+					"sponsor_label": "The Sustainomics Pro"
 				}
 			},
 			{
@@ -746,7 +746,7 @@
 					"image": { "url": "/ads/sustainomics-pro-2.svg" },
 					"link_url": "https://example.com/pro",
 					"placement": "leaderboard",
-					"sponsor_label": "Sustainomics Pro"
+					"sponsor_label": "The Sustainomics Pro"
 				}
 			},
 			{
@@ -758,7 +758,7 @@
 					"image": { "url": "/ads/sustainomics-pro-3.svg" },
 					"link_url": "https://example.com/pro",
 					"placement": "leaderboard",
-					"sponsor_label": "Sustainomics Pro"
+					"sponsor_label": "The Sustainomics Pro"
 				}
 			},
 			{
@@ -826,7 +826,7 @@
 				"slug": "sustainomics-intelligence-vertical",
 				"status": "published",
 				"data": {
-					"title": "Sustainomics Intelligence — The Climate Economy's Data Edge",
+					"title": "The Sustainomics Intelligence — The Climate Economy's Data Edge",
 					"image": { "url": "/ads/sustainomics-intelligence-vertical.svg" },
 					"link_url": "https://sustainomics.com",
 					"placement": "sidebar",
@@ -1654,7 +1654,7 @@
 				"slug": "sustainomics-quarterly-q2-2026",
 				"status": "published",
 				"data": {
-					"title": "Sustainomics Quarterly — Q2 2026",
+					"title": "The Sustainomics Quarterly — Q2 2026",
 					"cover": {
 						"id": "01KVH7660S60AXBBRBX8GD1RWD",
 						"provider": "local",
@@ -1669,7 +1669,7 @@
 						"provider": "local",
 						"filename": "sustainomics-quarterly-q2-2026.pdf",
 						"mimeType": "application/pdf",
-						"alt": "Sustainomics Quarterly Q2 2026",
+						"alt": "The Sustainomics Quarterly Q2 2026",
 						"meta": {}
 					},
 					"issue_date": "2026-06-01T00:00:00Z",
@@ -1683,7 +1683,7 @@
 				"slug": "about",
 				"status": "published",
 				"data": {
-					"title": "About Sustainomics",
+					"title": "About The Sustainomics",
 					"content": [
 						{
 							"_type": "block",
@@ -1691,7 +1691,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Sustainomics is an independent newsroom covering the economics of the climate transition. We report on the carbon markets, energy systems, policy decisions, and corporate strategies that will determine whether the world meets its climate goals — and who pays for it.",
+									"text": "The Sustainomics is an independent newsroom covering the economics of the climate transition. We report on the carbon markets, energy systems, policy decisions, and corporate strategies that will determine whether the world meets its climate goals — and who pays for it.",
 									"_key": "k1"
 								}
 							],

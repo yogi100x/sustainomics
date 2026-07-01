@@ -1,4 +1,4 @@
-# Deploying Sustainomics to Azure VM
+# Deploying The Sustainomics to Azure VM
 
 ## Architecture
 

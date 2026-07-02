@@ -30,14 +30,34 @@ const bylineNames = (article: (typeof articles)[number]) =>
 		.filter(Boolean)
 		.join(", ");
 
+const opinionShows = opinionSection.subtabs;
 const featured = articles.slice(0, 3);
-const sectionLabels = Array.from(
-	new Set(articles.map((article) => article.data.mag_section || "Opinion")),
-);
+const sectionLabels = opinionShows.map((show) => show.label);
 const articlesBySection: Record<string, typeof articles> = {};
 for (const label of sectionLabels) articlesBySection[label] = [];
+
+function showForArticle(article: (typeof articles)[number]) {
+	const haystack = [
+		article.data.title,
+		article.data.excerpt,
+		article.data.mag_section,
+	]
+		.filter(Boolean)
+		.join(" ")
+		.toLowerCase();
+
+	return (
+		opinionShows.find((show) =>
+			show.slug
+				.split("-")
+				.filter((word) => word.length > 2)
+				.some((word) => haystack.includes(word))
+		) ?? opinionShows[0]
+	);
+}
+
 for (const article of articles) {
-	const key = article.data.mag_section || "Opinion";
+	const key = showForArticle(article).label;
 	if (articlesBySection[key].length < 3) articlesBySection[key].push(article);
 }
 ---
@@ -79,7 +99,7 @@ for (const article of articles) {
 									)}
 								</div>
 								<div class="feat-body">
-									<span class="feat-kicker">{article.data.mag_section || "Opinion"}</span>
+									<span class="feat-kicker">{showForArticle(article).label}</span>
 									<h2 class="feat-title">{article.data.title}</h2>
 									{article.data.excerpt && <p class="feat-dek">{article.data.excerpt}</p>}
 									<div class="feat-meta">
@@ -97,13 +117,14 @@ for (const article of articles) {
 				{/* ===== ARTICLE BANDS ===== */}
 				{sectionLabels.map((label) => {
 					const sectionArticles = articlesBySection[label] ?? [];
-					const slug = label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+					const show = opinionShows.find((item) => item.label === label);
+					const slug = show?.slug ?? label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 					return (
 						<section class="show-band" id={`section-${slug}`}>
 							<div class="show-head">
 								<div class="show-head-text">
 									<h2 class="show-name">{label}</h2>
-									<p class="show-desc">Latest written analysis and commentary.</p>
+									{show?.desc && <p class="show-desc">{show.desc}</p>}
 								</div>
 								<a href="/opinion" class="show-all">All articles →</a>
 							</div>

@@ -362,7 +362,7 @@ const podStrip = podcasts.slice(0, 4);
 											{ep.data.cover ? <Image image={ep.data.cover} /> : <div class="noimg" />}
 										</div>
 										<div class="pod-body">
-											<a href={`/podcast/${ep.id}`} class="pod-title">
+											<a href="/opinion" class="pod-title">
 												{ep.data.title}
 											</a>
 											<span class="pod-pill">▶ Listen {ep.data.duration ?? "32:00"}</span>
@@ -370,8 +370,8 @@ const podStrip = podcasts.slice(0, 4);
 									</li>
 								))}
 							</ul>
-							<a class="see-all" href="/podcast">
-								All episodes →
+							<a class="see-all" href="/opinion">
+								Opinion →
 							</a>
 						</section>
 					)}

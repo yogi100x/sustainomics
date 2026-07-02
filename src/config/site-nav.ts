@@ -146,8 +146,8 @@ export const SECTIONS: Section[] = [
 	},
 	{
 		label: "Opinion",
-		slug: "podcast",
-		href: "/podcast",
+		slug: "opinion",
+		href: "/opinion",
 		kind: "media",
 		blurb: "Perspectives, commentary, and analysis from the THE SUSTAINOMICS editorial team and leading voices in sustainable economics.",
 		subtabs: [
@@ -169,7 +169,6 @@ export const SECTIONS: Section[] = [
 		href: "/video",
 		kind: "media",
 		blurb: "Live broadcasts, explainers, and studio interviews from the THE SUSTAINOMICS desk.",
-		noDropdown: true,
 		subtabs: [
 			sub("The Sustainomics", ""),
 			sub("Global Business Services", ""),
@@ -215,7 +214,7 @@ export const MEGA_COLUMNS: MegaColumn[] = [
 		heading: "Media",
 		links: [
 			{ label: "Magazine", href: "/magazine" },
-			{ label: "Opinion", href: "/podcast" },
+			{ label: "Opinion", href: "/opinion" },
 			{ label: "Video", href: "/video" },
 			{ label: "Live TV", href: "/video" },
 		],

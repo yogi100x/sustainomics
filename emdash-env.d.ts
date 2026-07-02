@@ -103,6 +103,24 @@ export interface Post {
   terms?: Record<string, TaxonomyTerm[]>;
 }
 
+export interface Video {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  thumbnail?: { id: string; src?: string; alt?: string; width?: number; height?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> };
+  excerpt?: string;
+  video_url?: string;
+  category?: string;
+  video_date?: string;
+  duration?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
+}
+
 declare module "emdash" {
   interface EmDashCollections {
     advertisements: Advertisement;
@@ -111,5 +129,6 @@ declare module "emdash" {
     pages: Page;
     podcasts: Episode;
     posts: Post;
+    videos: Video;
   }
 }

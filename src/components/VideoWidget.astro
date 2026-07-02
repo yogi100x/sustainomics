@@ -24,12 +24,13 @@ function ytId(u?: string | null) {
 		<div class="vid-carousel">
 			{videos.map((ep, i) => {
 				const vid = ytId(ep.data.video_url);
+				const href = vid ? `https://www.youtube.com/watch?v=${vid}` : "/video";
 				return (
 					<div class:list={["vid-slide", { "vid-slide--hidden": i !== 0 }]} data-vidslide={i}>
-						<a href={`/video/${ep.id}`} class="vid-link">
+						<a href={href} class="vid-link" {...(vid ? { target: "_blank", rel: "noopener" } : {})}>
 							<div class="vid-thumb">
-								{ep.data.cover ? (
-									<Image image={ep.data.cover} />
+								{ep.data.thumbnail ? (
+									<Image image={ep.data.thumbnail} />
 								) : vid ? (
 									<img
 										src={`https://i.ytimg.com/vi/${vid}/hqdefault.jpg`}

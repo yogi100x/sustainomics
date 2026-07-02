@@ -5,35 +5,13 @@ import Base from "../../layouts/Base.astro";
 import AdBlock from "../../components/AdBlock.astro";
 import { getSection } from "../../config/site-nav";
 
-const section = getSection("video")!;
-const CATEGORIES = section.subtabs;
-const active = Astro.url.searchParams.get("cat") ?? "";
+const opinionSection = getSection("opinion")!;
 
-const { entries: videos, cacheHint } = await getEmDashCollection("videos", {
-	orderBy: { video_date: "desc" },
+const { entries: articles, cacheHint } = await getEmDashCollection("articles", {
+	orderBy: { published_at: "desc" },
 	limit: 80,
 });
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
-
-function ytId(u?: string | null) {
-	if (!u) return null;
-	const m = u.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([-\w]{11})/);
-	return m ? m[1] : null;
-}
-
-function ytUrl(id: string) {
-	return `https://www.youtube.com/watch?v=${id}`;
-}
-
-function hrefFor(video: (typeof videos)[number]) {
-	const vid = ytId(video.data.video_url);
-	return vid ? ytUrl(vid) : `/video/${video.id}`;
-}
-
-function thumb(video: (typeof videos)[number]) {
-	const vid = ytId(video.data.video_url);
-	return vid ? `https://i.ytimg.com/vi/${vid}/hqdefault.jpg` : null;
-}
 
 const fmt = (d: Date | string | null | undefined) => {
 	if (!d) return null;
@@ -43,79 +21,70 @@ const fmt = (d: Date | string | null | undefined) => {
 		: date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 };
 
-const filtered = active
-	? videos.filter((v) => (v.data.category ?? "").toLowerCase() === active.toLowerCase())
-	: videos;
-const featured = filtered.slice(0, 3);
+const publishedAt = (article: (typeof articles)[number]) =>
+	article.data.publishedAt ?? article.data.createdAt;
 
-const videosByCategory: Record<string, typeof videos> = {};
-for (const category of CATEGORIES) videosByCategory[category.label] = [];
-for (const video of videos) {
-	const key =
-		CATEGORIES.find((category) => category.label.toLowerCase() === (video.data.category ?? "").toLowerCase())
-			?.label ?? CATEGORIES[0].label;
-	if (videosByCategory[key].length < 3) videosByCategory[key].push(video);
+const bylineNames = (article: (typeof articles)[number]) =>
+	(article.data.bylines ?? [])
+		.map((credit: any) => credit?.byline?.displayName)
+		.filter(Boolean)
+		.join(", ");
+
+const featured = articles.slice(0, 3);
+const sectionLabels = Array.from(
+	new Set(articles.map((article) => article.data.mag_section || "Opinion")),
+);
+const articlesBySection: Record<string, typeof articles> = {};
+for (const label of sectionLabels) articlesBySection[label] = [];
+for (const article of articles) {
+	const key = article.data.mag_section || "Opinion";
+	if (articlesBySection[key].length < 3) articlesBySection[key].push(article);
 }
 ---
 
-<Base title="Video — THE SUSTAINOMICS" description={section.blurb}>
+<Base title="Opinion" description={opinionSection.blurb}>
 	<div class="wrap">
 
 		{/* ===== MASTHEAD ===== */}
 		<header class="sec-head">
-			<h1 class="sec-name">Video</h1>
-			<p class="sec-sub">{section.blurb}</p>
+			<h1 class="sec-name">Opinion</h1>
+			<p class="sec-sub">{opinionSection.blurb}</p>
 		</header>
 
-		{/* ===== VIDEO TABS NAV ===== */}
-		<nav class="show-tabs" aria-label="Video categories">
-			<a href="/video" class:list={["show-tab", { "show-tab--on": !active }]}>All</a>
-			{CATEGORIES.map((category) => (
-				<a
-					href={`/video?cat=${encodeURIComponent(category.label)}`}
-					class:list={["show-tab", { "show-tab--on": active === category.label }]}
-				>
-					{category.label}
-				</a>
+		{/* ===== SECTION TABS NAV ===== */}
+		<nav class="show-tabs" aria-label="Opinion shows">
+			{sectionLabels.map((label) => (
+				<a href={`#section-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`} class="show-tab">{label}</a>
 			))}
 		</nav>
 
-		{filtered.length === 0 ? (
+		{articles.length === 0 ? (
 			<section class="empty">
-				<h2>No videos in this category yet</h2>
-				<p>Publish a video or choose another category.</p>
-				<a class="btn" href="/video">All videos</a>
+				<h2>No articles yet</h2>
+				<p>Publish your first article in the admin panel.</p>
+				<a class="btn" href="/_emdash/admin/content/articles/new">Add an article</a>
 			</section>
 		) : (
 			<>
 				{/* ===== FEATURED STRIP (latest 3) ===== */}
 				<section class="featured-strip">
-					{featured.map((video, i) => {
-						const vid = ytId(video.data.video_url);
-						const t = thumb(video);
+					{featured.map((article, i) => {
 						return (
-							<a
-								href={hrefFor(video)}
-								{...(vid ? { target: "_blank", rel: "noopener" } : {})}
-								class:list={["feat-card", { "feat-card--lead": i === 0 }]}
-							>
+							<a href={`/articles/${article.id}`} class:list={["feat-card", { "feat-card--lead": i === 0 }]}>
 								<div class="feat-media">
-									{video.data.thumbnail ? (
-										<Image image={video.data.thumbnail} />
-									) : t ? (
-										<img src={t} alt={video.data.title} loading="lazy" />
+									{article.data.featured_image ? (
+										<Image image={article.data.featured_image} />
 									) : (
 										<div class="feat-noimg" />
 									)}
-									<span class="feat-play" aria-hidden="true">▶</span>
 								</div>
 								<div class="feat-body">
-									<span class="feat-kicker">{video.data.category || "Video"}</span>
-									<h2 class="feat-title">{video.data.title}</h2>
-									{video.data.excerpt && <p class="feat-dek">{video.data.excerpt}</p>}
+									<span class="feat-kicker">{article.data.mag_section || "Opinion"}</span>
+									<h2 class="feat-title">{article.data.title}</h2>
+									{article.data.excerpt && <p class="feat-dek">{article.data.excerpt}</p>}
 									<div class="feat-meta">
-										{video.data.duration && <span class="feat-dur">▶ {video.data.duration}</span>}
-										{fmt(video.data.video_date) && <span class="feat-date">{fmt(video.data.video_date)}</span>}
+										{bylineNames(article) && <span class="feat-dur">{bylineNames(article)}</span>}
+										{fmt(publishedAt(article)) && <span class="feat-date">{fmt(publishedAt(article))}</span>}
 									</div>
 								</div>
 							</a>
@@ -125,47 +94,39 @@ for (const video of videos) {
 
 				<AdBlock placement="mid-page" />
 
-				{/* ===== NAMED VIDEO BANDS ===== */}
-				{!active && CATEGORIES.map((category) => {
-					const categoryVideos = videosByCategory[category.label] ?? [];
+				{/* ===== ARTICLE BANDS ===== */}
+				{sectionLabels.map((label) => {
+					const sectionArticles = articlesBySection[label] ?? [];
+					const slug = label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 					return (
-						<section class="show-band" id={`show-${category.slug}`}>
+						<section class="show-band" id={`section-${slug}`}>
 							<div class="show-head">
 								<div class="show-head-text">
-									<h2 class="show-name">{category.label}</h2>
-									{category.desc && <p class="show-desc">{category.desc}</p>}
+									<h2 class="show-name">{label}</h2>
+									<p class="show-desc">Latest written analysis and commentary.</p>
 								</div>
-								<a href={`/video?cat=${encodeURIComponent(category.label)}`} class="show-all">All videos →</a>
+								<a href="/opinion" class="show-all">All articles →</a>
 							</div>
-							{categoryVideos.length === 0 ? (
-								<p class="show-empty">Videos coming soon.</p>
+							{sectionArticles.length === 0 ? (
+								<p class="show-empty">Articles coming soon.</p>
 							) : (
 								<div class="show-grid">
-									{categoryVideos.map((video) => {
-										const vid = ytId(video.data.video_url);
-										const t = thumb(video);
+									{sectionArticles.map((article) => {
 										return (
-											<a
-												href={hrefFor(video)}
-												{...(vid ? { target: "_blank", rel: "noopener" } : {})}
-												class="ep-card"
-											>
+											<a href={`/articles/${article.id}`} class="ep-card">
 												<div class="ep-media">
-													{video.data.thumbnail ? (
-														<Image image={video.data.thumbnail} />
-													) : t ? (
-														<img src={t} alt={video.data.title} loading="lazy" />
+													{article.data.featured_image ? (
+														<Image image={article.data.featured_image} />
 													) : (
 														<div class="ep-noimg" />
 													)}
-													<span class="ep-play" aria-hidden="true">▶</span>
 												</div>
 												<div class="ep-body">
-													<h3 class="ep-title">{video.data.title}</h3>
-													{video.data.excerpt && <p class="ep-dek">{video.data.excerpt}</p>}
+													<h3 class="ep-title">{article.data.title}</h3>
+													{article.data.excerpt && <p class="ep-dek">{article.data.excerpt}</p>}
 													<div class="ep-meta">
-														{video.data.duration && <span class="ep-dur">▶ {video.data.duration}</span>}
-														{fmt(video.data.video_date) && <span class="ep-date">{fmt(video.data.video_date)}</span>}
+														{bylineNames(article) && <span class="ep-dur">{bylineNames(article)}</span>}
+														{fmt(publishedAt(article)) && <span class="ep-date">{fmt(publishedAt(article))}</span>}
 													</div>
 												</div>
 											</a>
@@ -188,6 +149,7 @@ for (const video of videos) {
 		padding: var(--spacing-8) var(--spacing-6) var(--spacing-16);
 	}
 
+	/* Masthead */
 	.sec-head {
 		border-top: 2px solid var(--color-ink);
 		padding-top: var(--spacing-3);
@@ -205,6 +167,7 @@ for (const video of videos) {
 		max-width: 60ch;
 	}
 
+	/* Show tabs nav */
 	.show-tabs {
 		display: flex;
 		gap: var(--spacing-4);
@@ -228,12 +191,12 @@ for (const video of videos) {
 		margin-bottom: -1px;
 		transition: color var(--transition-fast), border-color var(--transition-fast);
 	}
-	.show-tab:hover,
-	.show-tab--on {
+	.show-tab:hover {
 		color: var(--color-ink);
 		border-bottom-color: var(--color-kicker);
 	}
 
+	/* Featured strip */
 	.featured-strip {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
@@ -249,7 +212,9 @@ for (const video of videos) {
 		flex-direction: column;
 		gap: var(--spacing-3);
 	}
-	.feat-card--lead { grid-column: span 1; }
+	.feat-card--lead {
+		grid-column: span 1;
+	}
 	.feat-media {
 		position: relative;
 		aspect-ratio: 16 / 9;
@@ -312,6 +277,7 @@ for (const video of videos) {
 		color: var(--color-muted);
 	}
 
+	/* Show bands */
 	.show-band {
 		margin-bottom: var(--spacing-12);
 		padding-top: var(--spacing-8);
@@ -358,6 +324,7 @@ for (const video of videos) {
 		gap: var(--spacing-6);
 	}
 
+	/* Episode card */
 	.ep-card {
 		text-decoration: none;
 		color: inherit;
@@ -411,6 +378,7 @@ for (const video of videos) {
 	.ep-meta { display: flex; gap: var(--spacing-3); align-items: center; }
 	.ep-dur, .ep-date { font-size: var(--font-size-xs); color: var(--color-muted); }
 
+	/* Empty */
 	.empty { text-align: center; padding: var(--spacing-20) var(--spacing-6); }
 	.empty h2 { font-family: var(--font-serif, Georgia, serif); font-size: var(--font-size-2xl); }
 	.empty p { color: var(--color-muted); margin-top: var(--spacing-2); }

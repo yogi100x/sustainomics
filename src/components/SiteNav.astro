@@ -115,6 +115,8 @@ const UTILITY_LINKS = [
 												href={
 													section.kind === "category"
 														? `${section.href}?topic=${st.slug}`
+														: section.slug === "video"
+															? `${section.href}?cat=${encodeURIComponent(st.label)}`
 														: section.href
 												}
 											>
@@ -203,6 +205,8 @@ const UTILITY_LINKS = [
 											href={
 												section.kind === "category"
 													? `${section.href}?topic=${st.slug}`
+													: section.slug === "video"
+														? `${section.href}?cat=${encodeURIComponent(st.label)}`
 													: section.href
 											}
 										>
@@ -914,6 +918,8 @@ const UTILITY_LINKS = [
 			const trigger = item.querySelector<HTMLElement>("[data-snav-trigger]");
 			const panel = item.querySelector<HTMLElement>("[data-snav-panel]");
 			if (!trigger || !panel) return;
+			const activeTrigger = trigger;
+			const activePanel = panel;
 
 			// Hover: position dropdown via fixed coords (bypasses overflow:auto clipping)
 			let hideTimer: ReturnType<typeof setTimeout>;
@@ -921,22 +927,22 @@ const UTILITY_LINKS = [
 				if (!isDesktop()) return;
 				clearTimeout(hideTimer);
 				const rect = item.getBoundingClientRect();
-				panel.style.top = rect.bottom + 'px';
-				panel.style.left = rect.left + 'px';
+				activePanel.style.top = rect.bottom + 'px';
+				activePanel.style.left = rect.left + 'px';
 				closeAll(item);
-				panel.classList.add("is-open");
-				trigger.setAttribute("aria-expanded", "true");
+				activePanel.classList.add("is-open");
+				activeTrigger.setAttribute("aria-expanded", "true");
 			}
 			function hidePanel() {
 				hideTimer = setTimeout(() => {
-					panel.classList.remove("is-open");
-					trigger.setAttribute("aria-expanded", "false");
+					activePanel.classList.remove("is-open");
+					activeTrigger.setAttribute("aria-expanded", "false");
 				}, 200);
 			}
 			item.addEventListener("mouseenter", showPanel);
 			item.addEventListener("mouseleave", hidePanel);
-			panel.addEventListener("mouseenter", () => clearTimeout(hideTimer));
-			panel.addEventListener("mouseleave", hidePanel);
+			activePanel.addEventListener("mouseenter", () => clearTimeout(hideTimer));
+			activePanel.addEventListener("mouseleave", hidePanel);
 
 			// Click: <a> triggers navigate; <button> triggers (More) toggle panel
 			trigger.addEventListener("click", (e) => {

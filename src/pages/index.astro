@@ -77,9 +77,9 @@ const featureCat = feature ? cat(feature) : null;
 const featureBy = feature ? bylineNames(feature) : [];
 const opLeadBy = opLead ? leadByline(opLead) : null;
 
-// Homepage modules pulling from the Podcast + Magazine collections.
-const [{ entries: pods }, { entries: mags }, { entries: bandPostsRaw }] = await Promise.all([
-	getEmDashCollection("podcasts", { limit: 8 }),
+// Homepage modules pulling from the Video + Magazine collections.
+const [{ entries: videos }, { entries: mags }, { entries: bandPostsRaw }] = await Promise.all([
+	getEmDashCollection("videos", { orderBy: { video_date: "desc" }, limit: 8 }),
 	getEmDashCollection("magazines", { limit: 6 }),
 	getEmDashCollection("posts", { orderBy: { published_at: "desc" }, limit: 80 }),
 ]);
@@ -98,7 +98,7 @@ for (const post of bandPostsRaw) {
 		}
 	}
 }
-const originals = pods.filter((p) => p.data.video_url).slice(0, 4);
+const originals = videos.filter((p) => p.data.video_url).slice(0, 4);
 const latestIssue = mags.toSorted((a, b) => {
 	const da = a.data.issue_date ? new Date(a.data.issue_date).getTime() : 0;
 	const db = b.data.issue_date ? new Date(b.data.issue_date).getTime() : 0;
@@ -335,14 +335,14 @@ function ytId(u?: string | null) {
 								<section class="originals">
 									<div class="band-head">
 										<h2 class="band-name">THE SUSTAINOMICS Originals</h2>
-										<a href="/podcast" class="band-link">All video &amp; audio →</a>
+										<a href="/video" class="band-link">All video →</a>
 									</div>
 									<div class="orig-grid">
 										{originals.map((e) => (
-											<a class="orig-card" href={`/podcast/${e.id}`}>
+											<a class="orig-card" href="/video">
 												<div class="orig-thumb">
-													{e.data.cover ? (
-														<Image image={e.data.cover} />
+													{e.data.thumbnail ? (
+														<Image image={e.data.thumbnail} />
 													) : ytId(e.data.video_url) ? (
 														<img
 															src={`https://i.ytimg.com/vi/${ytId(e.data.video_url)}/hqdefault.jpg`}

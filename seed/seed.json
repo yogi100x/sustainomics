@@ -1715,42 +1715,588 @@
 		],
 		"videos": [
 			{
+				"id": "videos:the-sustainomics-daily-transition-briefing",
+				"slug": "the-sustainomics-daily-transition-briefing",
+				"status": "published",
+				"data": {
+					"title": "The Sustainomics Daily Transition Briefing",
+					"excerpt": "A fast-moving desk briefing on markets, regulation, climate finance, and sustainable growth signals.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "The Sustainomics",
+					"video_date": "2026-06-30T12:00:00Z",
+					"duration": "12:14"
+				}
+			},
+			{
+				"id": "videos:inside-the-week-in-sustainable-economics",
+				"slug": "inside-the-week-in-sustainable-economics",
+				"status": "published",
+				"data": {
+					"title": "Inside the Week in Sustainable Economics",
+					"excerpt": "Editors break down the week’s most important economic shifts across climate, capital, and policy.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "The Sustainomics",
+					"video_date": "2026-06-29T12:00:00Z",
+					"duration": "16:40"
+				}
+			},
+			{
+				"id": "videos:five-charts-that-explain-the-transition-economy",
+				"slug": "five-charts-that-explain-the-transition-economy",
+				"status": "published",
+				"data": {
+					"title": "Five Charts That Explain the Transition Economy",
+					"excerpt": "A visual walk-through of energy demand, capital flows, emissions data, and policy momentum.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "The Sustainomics",
+					"video_date": "2026-06-28T12:00:00Z",
+					"duration": "09:58"
+				}
+			},
+			{
+				"id": "videos:enterprise-services-in-the-low-carbon-economy",
+				"slug": "enterprise-services-in-the-low-carbon-economy",
+				"status": "published",
+				"data": {
+					"title": "Enterprise Services in the Low-Carbon Economy",
+					"excerpt": "How advisory, compliance, and platform businesses are reorganising around climate mandates.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Global Business Services",
+					"video_date": "2026-06-27T12:00:00Z",
+					"duration": "18:22"
+				}
+			},
+			{
+				"id": "videos:the-outsourcing-shift-behind-esg-reporting",
+				"slug": "the-outsourcing-shift-behind-esg-reporting",
+				"status": "published",
+				"data": {
+					"title": "The Outsourcing Shift Behind ESG Reporting",
+					"excerpt": "Why audit, analytics, and managed-services teams are becoming central to sustainability disclosure.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Global Business Services",
+					"video_date": "2026-06-26T12:00:00Z",
+					"duration": "14:03"
+				}
+			},
+			{
+				"id": "videos:shared-services-and-the-new-compliance-stack",
+				"slug": "shared-services-and-the-new-compliance-stack",
+				"status": "published",
+				"data": {
+					"title": "Shared Services and the New Compliance Stack",
+					"excerpt": "A practical look at the operating models companies use to handle multi-jurisdictional rules.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Global Business Services",
+					"video_date": "2026-06-25T12:00:00Z",
+					"duration": "20:11"
+				}
+			},
+			{
+				"id": "videos:founder-playbook-for-climate-tech-scaleups",
+				"slug": "founder-playbook-for-climate-tech-scaleups",
+				"status": "published",
+				"data": {
+					"title": "Founder Playbook for Climate-Tech Scaleups",
+					"excerpt": "Operators discuss capital discipline, pilot customers, and the hard path from prototype to procurement.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Global Founders",
+					"video_date": "2026-06-24T12:00:00Z",
+					"duration": "26:48"
+				}
+			},
+			{
+				"id": "videos:how-founders-sell-to-industrial-buyers",
+				"slug": "how-founders-sell-to-industrial-buyers",
+				"status": "published",
+				"data": {
+					"title": "How Founders Sell to Industrial Buyers",
+					"excerpt": "A founder interview on long sales cycles, proof points, and translating sustainability into ROI.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Global Founders",
+					"video_date": "2026-06-23T12:00:00Z",
+					"duration": "22:07"
+				}
+			},
+			{
+				"id": "videos:from-lab-to-market-in-frontier-sustainability",
+				"slug": "from-lab-to-market-in-frontier-sustainability",
+				"status": "published",
+				"data": {
+					"title": "From Lab to Market in Frontier Sustainability",
+					"excerpt": "Researchers and founders unpack what it takes to commercialise deep climate technology.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Global Founders",
+					"video_date": "2026-06-22T12:00:00Z",
+					"duration": "19:36"
+				}
+			},
+			{
+				"id": "videos:small-business-energy-costs-and-the-transition",
+				"slug": "small-business-energy-costs-and-the-transition",
+				"status": "published",
+				"data": {
+					"title": "Small Business Energy Costs and the Transition",
+					"excerpt": "How small firms are dealing with energy volatility, efficiency investments, and financing gaps.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Global SMBs",
+					"video_date": "2026-06-21T12:00:00Z",
+					"duration": "13:45"
+				}
+			},
+			{
+				"id": "videos:msme-finance-for-greener-supply-chains",
+				"slug": "msme-finance-for-greener-supply-chains",
+				"status": "published",
+				"data": {
+					"title": "MSME Finance for Greener Supply Chains",
+					"excerpt": "Lenders explain invoice finance, working capital, and green credit lines for smaller exporters.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Global SMBs",
+					"video_date": "2026-06-20T12:00:00Z",
+					"duration": "17:19"
+				}
+			},
+			{
+				"id": "videos:digital-tools-for-low-carbon-small-businesses",
+				"slug": "digital-tools-for-low-carbon-small-businesses",
+				"status": "published",
+				"data": {
+					"title": "Digital Tools for Low-Carbon Small Businesses",
+					"excerpt": "A demo-led discussion on affordable software for emissions tracking, procurement, and reporting.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Global SMBs",
+					"video_date": "2026-06-19T12:00:00Z",
+					"duration": "11:52"
+				}
+			},
+			{
+				"id": "videos:diaspora-capital-and-green-growth-corridors",
+				"slug": "diaspora-capital-and-green-growth-corridors",
+				"status": "published",
+				"data": {
+					"title": "Diaspora Capital and Green Growth Corridors",
+					"excerpt": "How remittances, founder networks, and investor communities are shaping cross-border growth.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Diaspora Affairs",
+					"video_date": "2026-06-18T12:00:00Z",
+					"duration": "24:15"
+				}
+			},
+			{
+				"id": "videos:talent-networks-across-the-transition-economy",
+				"slug": "talent-networks-across-the-transition-economy",
+				"status": "published",
+				"data": {
+					"title": "Talent Networks Across the Transition Economy",
+					"excerpt": "A look at global talent flows in clean energy, finance, analytics, and sustainable infrastructure.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Diaspora Affairs",
+					"video_date": "2026-06-17T12:00:00Z",
+					"duration": "15:31"
+				}
+			},
+			{
+				"id": "videos:remittances-investment-and-local-resilience",
+				"slug": "remittances-investment-and-local-resilience",
+				"status": "published",
+				"data": {
+					"title": "Remittances, Investment, and Local Resilience",
+					"excerpt": "Economists discuss how diaspora flows can support adaptation, enterprises, and infrastructure.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Diaspora Affairs",
+					"video_date": "2026-06-16T12:00:00Z",
+					"duration": "18:29"
+				}
+			},
+			{
+				"id": "videos:trade-alliances-in-the-climate-era",
+				"slug": "trade-alliances-in-the-climate-era",
+				"status": "published",
+				"data": {
+					"title": "Trade Alliances in the Climate Era",
+					"excerpt": "Why carbon border rules, industrial policy, and trade agreements are converging.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Global Alliances",
+					"video_date": "2026-06-15T12:00:00Z",
+					"duration": "21:06"
+				}
+			},
+			{
+				"id": "videos:public-private-partnerships-for-transition-infrastructure",
+				"slug": "public-private-partnerships-for-transition-infrastructure",
+				"status": "published",
+				"data": {
+					"title": "Public-Private Partnerships for Transition Infrastructure",
+					"excerpt": "Project finance experts explain the conditions that make blended capital work.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Global Alliances",
+					"video_date": "2026-06-14T12:00:00Z",
+					"duration": "23:44"
+				}
+			},
+			{
+				"id": "videos:regional-cooperation-on-energy-security",
+				"slug": "regional-cooperation-on-energy-security",
+				"status": "published",
+				"data": {
+					"title": "Regional Cooperation on Energy Security",
+					"excerpt": "A panel on grid interconnectors, LNG strategy, renewables, and the geopolitics of energy supply.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Global Alliances",
+					"video_date": "2026-06-13T12:00:00Z",
+					"duration": "28:02"
+				}
+			},
+			{
+				"id": "videos:women-leading-climate-finance",
+				"slug": "women-leading-climate-finance",
+				"status": "published",
+				"data": {
+					"title": "Women Leading Climate Finance",
+					"excerpt": "Senior investors discuss mandate design, risk, and the future of inclusive climate capital.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Women in Lead",
+					"video_date": "2026-06-12T12:00:00Z",
+					"duration": "17:58"
+				}
+			},
+			{
+				"id": "videos:boardroom-parity-and-sustainable-governance",
+				"slug": "boardroom-parity-and-sustainable-governance",
+				"status": "published",
+				"data": {
+					"title": "Boardroom Parity and Sustainable Governance",
+					"excerpt": "Governance leaders examine how diverse boards change risk oversight and long-term strategy.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Women in Lead",
+					"video_date": "2026-06-11T12:00:00Z",
+					"duration": "19:13"
+				}
+			},
+			{
+				"id": "videos:founders-investors-and-the-gender-capital-gap",
+				"slug": "founders-investors-and-the-gender-capital-gap",
+				"status": "published",
+				"data": {
+					"title": "Founders, Investors, and the Gender Capital Gap",
+					"excerpt": "A practical conversation about fundraising, networks, and measurable changes in capital access.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Women in Lead",
+					"video_date": "2026-06-10T12:00:00Z",
+					"duration": "25:27"
+				}
+			},
+			{
+				"id": "videos:ai-and-energy-demand-what-changes-next",
+				"slug": "ai-and-energy-demand-what-changes-next",
+				"status": "published",
+				"data": {
+					"title": "AI and Energy Demand: What Changes Next",
+					"excerpt": "Analysts debate data centers, grid demand, model efficiency, and the economics of compute.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Tech Horizons",
+					"video_date": "2026-06-09T12:00:00Z",
+					"duration": "16:34"
+				}
+			},
+			{
+				"id": "videos:cloud-infrastructure-for-sustainability-data",
+				"slug": "cloud-infrastructure-for-sustainability-data",
+				"status": "published",
+				"data": {
+					"title": "Cloud Infrastructure for Sustainability Data",
+					"excerpt": "Platform leaders discuss the data architecture behind enterprise climate accounting.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Tech Horizons",
+					"video_date": "2026-06-08T12:00:00Z",
+					"duration": "14:49"
+				}
+			},
+			{
+				"id": "videos:cyber-risk-in-connected-energy-systems",
+				"slug": "cyber-risk-in-connected-energy-systems",
+				"status": "published",
+				"data": {
+					"title": "Cyber Risk in Connected Energy Systems",
+					"excerpt": "Security experts explain threats to smart grids, industrial controls, and distributed assets.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Tech Horizons",
+					"video_date": "2026-06-07T12:00:00Z",
+					"duration": "21:31"
+				}
+			},
+			{
+				"id": "videos:innovation-edge-battery-materials",
+				"slug": "innovation-edge-battery-materials",
+				"status": "published",
+				"data": {
+					"title": "Innovation Edge: Battery Materials",
+					"excerpt": "A field report on new chemistries, supply constraints, and recycling economics.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Innovation Edge",
+					"video_date": "2026-06-06T12:00:00Z",
+					"duration": "13:18"
+				}
+			},
+			{
+				"id": "videos:carbon-removal-technologies-under-the-microscope",
+				"slug": "carbon-removal-technologies-under-the-microscope",
+				"status": "published",
+				"data": {
+					"title": "Carbon Removal Technologies Under the Microscope",
+					"excerpt": "What the cost curves and verification challenges say about carbon removal markets.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Innovation Edge",
+					"video_date": "2026-06-05T12:00:00Z",
+					"duration": "20:05"
+				}
+			},
+			{
+				"id": "videos:industrial-software-for-circular-manufacturing",
+				"slug": "industrial-software-for-circular-manufacturing",
+				"status": "published",
+				"data": {
+					"title": "Industrial Software for Circular Manufacturing",
+					"excerpt": "How product passports, traceability tools, and analytics change factory economics.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Innovation Edge",
+					"video_date": "2026-06-04T12:00:00Z",
+					"duration": "18:42"
+				}
+			},
+			{
+				"id": "videos:ceo-roundtable-transition-strategy",
+				"slug": "ceo-roundtable-transition-strategy",
+				"status": "published",
+				"data": {
+					"title": "CEO Roundtable: Transition Strategy",
+					"excerpt": "Executives discuss capital allocation, resilience, reporting, and where boards are pushing hardest.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Executive Suite",
+					"video_date": "2026-06-03T12:00:00Z",
+					"duration": "29:12"
+				}
+			},
+			{
+				"id": "videos:cfo-view-of-climate-risk",
+				"slug": "cfo-view-of-climate-risk",
+				"status": "published",
+				"data": {
+					"title": "The CFO View of Climate Risk",
+					"excerpt": "Finance chiefs explain scenario planning, disclosure, insurance pressure, and capital costs.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Executive Suite",
+					"video_date": "2026-06-02T12:00:00Z",
+					"duration": "22:55"
+				}
+			},
+			{
+				"id": "videos:chief-sustainability-officer-agenda",
+				"slug": "chief-sustainability-officer-agenda",
+				"status": "published",
+				"data": {
+					"title": "The Chief Sustainability Officer Agenda",
+					"excerpt": "A practical discussion on targets, supplier engagement, internal incentives, and board reporting.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Executive Suite",
+					"video_date": "2026-06-01T12:00:00Z",
+					"duration": "19:21"
+				}
+			},
+			{
+				"id": "videos:deeptech-defence-and-resilient-supply-chains",
+				"slug": "deeptech-defence-and-resilient-supply-chains",
+				"status": "published",
+				"data": {
+					"title": "Deeptech, Defence, and Resilient Supply Chains",
+					"excerpt": "Aerospace and defence analysts discuss strategic autonomy, materials, and dual-use innovation.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Aerospace, Defence & Deeptech",
+					"video_date": "2026-05-31T12:00:00Z",
+					"duration": "24:37"
+				}
+			},
+			{
+				"id": "videos:satellites-for-climate-intelligence",
+				"slug": "satellites-for-climate-intelligence",
+				"status": "published",
+				"data": {
+					"title": "Satellites for Climate Intelligence",
+					"excerpt": "How remote sensing is changing agriculture, insurance, carbon markets, and disaster planning.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Aerospace, Defence & Deeptech",
+					"video_date": "2026-05-30T12:00:00Z",
+					"duration": "15:48"
+				}
+			},
+			{
+				"id": "videos:advanced-manufacturing-and-clean-industry",
+				"slug": "advanced-manufacturing-and-clean-industry",
+				"status": "published",
+				"data": {
+					"title": "Advanced Manufacturing and Clean Industry",
+					"excerpt": "Engineers show how robotics, additive manufacturing, and materials science reduce waste.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Aerospace, Defence & Deeptech",
+					"video_date": "2026-05-29T12:00:00Z",
+					"duration": "18:16"
+				}
+			},
+			{
+				"id": "videos:future-of-work-in-the-transition-economy",
+				"slug": "future-of-work-in-the-transition-economy",
+				"status": "published",
+				"data": {
+					"title": "Future of Work in the Transition Economy",
+					"excerpt": "HR leaders discuss skills, reskilling, hybrid work, and the green jobs pipeline.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "HRM & Organizational Development",
+					"video_date": "2026-05-28T12:00:00Z",
+					"duration": "20:33"
+				}
+			},
+			{
+				"id": "videos:organizational-change-for-net-zero",
+				"slug": "organizational-change-for-net-zero",
+				"status": "published",
+				"data": {
+					"title": "Organizational Change for Net Zero",
+					"excerpt": "How companies turn sustainability from a reporting function into operating behaviour.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "HRM & Organizational Development",
+					"video_date": "2026-05-27T12:00:00Z",
+					"duration": "16:09"
+				}
+			},
+			{
+				"id": "videos:people-analytics-and-workforce-resilience",
+				"slug": "people-analytics-and-workforce-resilience",
+				"status": "published",
+				"data": {
+					"title": "People Analytics and Workforce Resilience",
+					"excerpt": "A data-led conversation on retention, productivity, health, and organizational adaptability.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "HRM & Organizational Development",
+					"video_date": "2026-05-26T12:00:00Z",
+					"duration": "14:56"
+				}
+			},
+			{
+				"id": "videos:food-systems-under-climate-stress",
+				"slug": "food-systems-under-climate-stress",
+				"status": "published",
+				"data": {
+					"title": "Food Systems Under Climate Stress",
+					"excerpt": "Agriculture economists explain crop risk, input costs, water pressure, and nutrition security.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Agriculture, Food & Nutrition",
+					"video_date": "2026-05-25T12:00:00Z",
+					"duration": "23:10"
+				}
+			},
+			{
+				"id": "videos:agtech-investment-and-smallholder-productivity",
+				"slug": "agtech-investment-and-smallholder-productivity",
+				"status": "published",
+				"data": {
+					"title": "AgTech Investment and Smallholder Productivity",
+					"excerpt": "Investors and founders discuss sensors, financing, insurance, and farmer adoption.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Agriculture, Food & Nutrition",
+					"video_date": "2026-05-24T12:00:00Z",
+					"duration": "19:07"
+				}
+			},
+			{
+				"id": "videos:nutrition-economics-and-sustainable-diets",
+				"slug": "nutrition-economics-and-sustainable-diets",
+				"status": "published",
+				"data": {
+					"title": "Nutrition Economics and Sustainable Diets",
+					"excerpt": "A conversation about affordability, food policy, consumer behaviour, and health outcomes.",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Agriculture, Food & Nutrition",
+					"video_date": "2026-05-23T12:00:00Z",
+					"duration": "17:41"
+				}
+			},
+			{
+				"id": "videos:climate-finance-portfolio-construction",
+				"slug": "climate-finance-portfolio-construction",
+				"status": "published",
+				"data": {
+					"title": "Climate Finance Portfolio Construction",
+					"excerpt": "Asset managers discuss diversification, transition risk, and how climate themes enter portfolios.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Investment Insights",
+					"video_date": "2026-05-22T12:00:00Z",
+					"duration": "21:54"
+				}
+			},
+			{
+				"id": "videos:private-credit-and-the-energy-transition",
+				"slug": "private-credit-and-the-energy-transition",
+				"status": "published",
+				"data": {
+					"title": "Private Credit and the Energy Transition",
+					"excerpt": "Credit investors explain deal structure, covenants, and the demand for transition capital.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Investment Insights",
+					"video_date": "2026-05-21T12:00:00Z",
+					"duration": "18:38"
+				}
+			},
+			{
 				"id": "videos:carbon-markets-the-price-of-pollution",
 				"slug": "carbon-markets-the-price-of-pollution",
 				"status": "published",
 				"data": {
 					"title": "Carbon Markets: How the Price of Pollution Is Reshaping Finance",
 					"excerpt": "A deep dive into how carbon trading schemes are forcing companies to rethink capital allocation and long-term strategy.",
-					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
-					"category": "Markets",
+					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
+					"category": "Investment Insights",
 					"video_date": "2026-05-20T12:00:00Z",
 					"duration": "14:22"
 				}
 			},
 			{
-				"id": "videos:esg-investing-the-data-behind-sustainable-finance",
-				"slug": "esg-investing-the-data-behind-sustainable-finance",
+				"id": "videos:cooperatives-and-local-transition-finance",
+				"slug": "cooperatives-and-local-transition-finance",
 				"status": "published",
 				"data": {
-					"title": "ESG Investing: The Data Behind Sustainable Finance",
-					"excerpt": "How institutional investors are using ESG scores to screen portfolios and what the research actually shows about returns.",
-					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
-					"category": "ESG",
-					"video_date": "2026-05-10T12:00:00Z",
-					"duration": "18:05"
+					"title": "Cooperatives and Local Transition Finance",
+					"excerpt": "Community finance leaders explain cooperative models for energy, agriculture, and resilience.",
+					"video_url": "https://www.youtube.com/watch?v=9GorqroigqM",
+					"category": "Global Cooperative",
+					"video_date": "2026-05-19T12:00:00Z",
+					"duration": "15:25"
 				}
 			},
 			{
-				"id": "videos:net-zero-by-2050-what-it-actually-means-for-industry",
-				"slug": "net-zero-by-2050-what-it-actually-means-for-industry",
+				"id": "videos:shared-ownership-models-for-clean-energy",
+				"slug": "shared-ownership-models-for-clean-energy",
 				"status": "published",
 				"data": {
-					"title": "Net Zero by 2050: What It Actually Means for Industry",
-					"excerpt": "Breaking down the sectoral pathways, capital requirements, and policy levers needed to hit net zero across heavy industry.",
+					"title": "Shared Ownership Models for Clean Energy",
+					"excerpt": "A practical look at cooperative solar, community grids, and member-owned infrastructure.",
+					"video_url": "https://www.youtube.com/watch?v=KsF_hdjWJjo",
+					"category": "Global Cooperative",
+					"video_date": "2026-05-18T12:00:00Z",
+					"duration": "17:33"
+				}
+			},
+			{
+				"id": "videos:cooperative-supply-chains-and-market-access",
+				"slug": "cooperative-supply-chains-and-market-access",
+				"status": "published",
+				"data": {
+					"title": "Cooperative Supply Chains and Market Access",
+					"excerpt": "How cooperatives help smaller producers aggregate demand, improve traceability, and access buyers.",
 					"video_url": "https://www.youtube.com/watch?v=G4H1N_yXBiA",
-					"category": "Industries",
-					"video_date": "2026-04-28T12:00:00Z",
-					"duration": "21:47"
+					"category": "Global Cooperative",
+					"video_date": "2026-05-17T12:00:00Z",
+					"duration": "16:12"
 				}
 			}
 		],

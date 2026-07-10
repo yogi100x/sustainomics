@@ -488,6 +488,11 @@ for (const video of videos) {
 		justify-content: center;
 		padding: var(--spacing-6);
 	}
+	/* The class's `display: flex` outranks the UA `[hidden]{display:none}`
+	   rule, so without this the overlay shows on load and blocks the page. */
+	.video-lightbox[hidden] {
+		display: none;
+	}
 	.video-lightbox-backdrop {
 		position: absolute;
 		inset: 0;

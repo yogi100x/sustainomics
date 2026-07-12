@@ -20,7 +20,8 @@ export const GET: APIRoute = async ({ params, request }) => {
 		return new Response("Not found", { status: 404, headers: { "Cache-Control": "no-store" } });
 	}
 
-	const filePath = path.join(process.cwd(), "uploads", file);
+	const uploadsDir = process.env.UPLOADS_DIR || path.join(process.cwd(), "uploads");
+	const filePath = path.join(uploadsDir, file);
 	let size: number;
 	try {
 		size = (await stat(filePath)).size;

@@ -46,7 +46,10 @@ ENV NODE_ENV=production
 # @astrojs/node standalone reads HOST/PORT
 ENV HOST=0.0.0.0
 ENV PORT=3000
-# Persisted CMS state lives under /data (mounted volume)
+# Persisted CMS state lives under /data (mounted volume).
+# UPLOADS_DIR is read by BOTH EmDash storage (astro.config.mjs) and the
+# custom PDF route (src/pages/issue-pdf/[file].ts) — keep them in sync.
+# The deploy workflow smoke-tests the PDF route against this path.
 ENV DATABASE_URL=file:/data/data.db
 ENV UPLOADS_DIR=/data/uploads
 

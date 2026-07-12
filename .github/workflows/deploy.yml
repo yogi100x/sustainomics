@@ -23,3 +23,32 @@ jobs:
             docker compose build web
             docker compose up -d web
             docker image prune -f
+
+            # ---- Post-deploy smoke test: PDF route vs UPLOADS_DIR ----------
+            # Guards src/pages/issue-pdf/[file].ts against drifting out of
+            # sync with UPLOADS_DIR=/data/uploads (Dockerfile ENV + cms-data
+            # volume). That exact bug once 404'd every admin-uploaded PDF
+            # while deploys stayed green. We test the NEWEST 'ready' PDF in
+            # the live DB: admin uploads exist ONLY on the /data volume, so a
+            # route reading the baked-in /app/uploads fails here. (A fixed
+            # seed key like 01KVTKWWK8ES6YK100X8N3SGP5.pdf would NOT catch
+            # that bug — seed PDFs are baked into the image too.) At least
+            # one ready PDF always exists: the entrypoint seeds four issues.
+            HOSTPORT=$(docker compose port web 3000 | head -n1 | sed 's/.*://')
+            SMOKE_OK=""
+            for i in $(seq 1 20); do
+              sleep 3
+              KEY=$(docker compose exec -T web node -e 'const db=require("better-sqlite3")("/data/data.db");const r=db.prepare("SELECT storage_key FROM media WHERE mime_type=? AND status=? ORDER BY id DESC LIMIT 1").get("application/pdf","ready");if(!r)throw new Error("no pdf media");console.log(r.storage_key)') || continue
+              CT=$(curl -sf -o /dev/null -w '%{content_type}' -r 0-1023 "http://localhost:$HOSTPORT/issue-pdf/$KEY") || continue
+              SMOKE_OK=1
+              break
+            done
+            if [ -z "$SMOKE_OK" ]; then
+              echo "SMOKE TEST FAILED: /issue-pdf/<newest pdf> not serving after deploy — check UPLOADS_DIR wiring (Dockerfile, src/pages/issue-pdf/[file].ts)"
+              docker compose logs --tail=40 web || true
+              exit 1
+            fi
+            case "$CT" in
+              application/pdf*) echo "Smoke test OK: /issue-pdf/$KEY ($CT)" ;;
+              *) echo "SMOKE TEST FAILED: /issue-pdf/$KEY returned Content-Type '$CT', expected application/pdf"; exit 1 ;;
+            esac

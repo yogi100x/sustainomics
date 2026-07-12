@@ -14,7 +14,9 @@ import { fileURLToPath } from 'url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const db = new Database(path.join(ROOT, 'data.db'));
-const UPLOADS = path.join(ROOT, 'uploads');
+// Check files in the same uploads dir the app actually serves from
+// (UPLOADS_DIR=/data/uploads in Docker — see Dockerfile); ./uploads locally.
+const UPLOADS = process.env.UPLOADS_DIR || path.join(ROOT, 'uploads');
 
 const ISSUES = [
   {

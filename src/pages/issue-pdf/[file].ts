@@ -20,6 +20,12 @@ export const GET: APIRoute = async ({ params, request }) => {
 		return new Response("Not found", { status: 404, headers: { "Cache-Control": "no-store" } });
 	}
 
+	// MUST stay in sync with EmDash's storage dir (astro.config.mjs:
+	// `directory: process.env.UPLOADS_DIR || "./uploads"`) and the Docker
+	// runtime env UPLOADS_DIR=/data/uploads (Dockerfile /data volume) — a
+	// hardcoded ./uploads here once 404'd every admin-uploaded PDF in prod.
+	// The deploy workflow (.github/workflows/deploy.yml) smoke-tests this
+	// route after every deploy.
 	const uploadsDir = process.env.UPLOADS_DIR || path.join(process.cwd(), "uploads");
 	const filePath = path.join(uploadsDir, file);
 	let size: number;

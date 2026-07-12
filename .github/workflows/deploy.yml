@@ -14,15 +14,12 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
+          command_timeout: 15m
           script: |
+            set -e
             cd ~/sustainomics
-            git pull origin main
-            pnpm install --frozen-lockfile
-            pnpm build
-            # Seed on first deploy only (data.db absent)
-            if [ ! -f data.db ]; then
-              npx emdash seed seed/seed.json --on-conflict=update
-            fi
-            # Always run — idempotent, adds any new magazines/media not yet in DB
-            node scripts/setup-magazines.mjs
-            pm2 restart sustainomics
+            git fetch origin main
+            git reset --hard origin/main
+            docker compose build web
+            docker compose up -d web
+            docker image prune -f

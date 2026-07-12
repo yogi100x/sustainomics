@@ -1,0 +1,26 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        # Bake the public site URL into Astro `site` at build time so RSS,
+        # canonical, sitemap, and OG tags use the real domain (not localhost).
+        ORIGIN: ${EMDASH_SITE_URL:-http://localhost:8099}
+    image: sustainomics
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      # Stable secret used to encrypt stored CMS secrets. MUST stay constant
+      # across restarts/updates or existing encrypted data can't be read.
+      EMDASH_ENCRYPTION_KEY: ${EMDASH_ENCRYPTION_KEY:?set EMDASH_ENCRYPTION_KEY in .env}
+      # Public URL the site is served from (used for absolute links/auth).
+      EMDASH_SITE_URL: ${EMDASH_SITE_URL:-http://localhost:3000}
+      ORIGIN: ${EMDASH_SITE_URL:-http://localhost:3000}
+    volumes:
+      # Named volume => CMS data (SQLite DB + uploads) survives
+      # `docker compose down`, restarts, and image rebuilds/updates.
+      - cms-data:/data
+
+volumes:
+  cms-data:

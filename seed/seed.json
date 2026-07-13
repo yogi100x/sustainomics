@@ -280,7 +280,8 @@
 			"labelSingular": "Category",
 			"hierarchical": true,
 			"collections": [
-				"posts"
+				"posts",
+				"magazines"
 			],
 			"terms": [
 				{

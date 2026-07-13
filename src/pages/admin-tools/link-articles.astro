@@ -1,0 +1,328 @@
+---
+// Internal tool: link magazine articles to an issue + section.
+// EmDash's own admin has no picker for `reference`-type fields (the Articles
+// "Issue" field is rendered as a raw `$ref:<id>` text box) — this page is a
+// real dropdown picker on top of the same authenticated content API the
+// admin itself uses (/_emdash/api/content/*). No new auth code: requests
+// carry the browser's existing EmDash session cookie, and the API 401s for
+// anyone not logged in.
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex,nofollow" />
+		<title>Link Articles to Magazine — Admin Tool</title>
+		<style>
+			:root {
+				color-scheme: light;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				font-family:
+					-apple-system,
+					BlinkMacSystemFont,
+					"Segoe UI",
+					system-ui,
+					sans-serif;
+				margin: 0;
+				background: #f4f5f6;
+				color: #111;
+			}
+			header {
+				background: #111;
+				color: #fff;
+				padding: 16px 24px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+			header h1 {
+				font-size: 16px;
+				margin: 0;
+				font-weight: 600;
+			}
+			header a {
+				color: #9ecbff;
+				font-size: 13px;
+				text-decoration: none;
+			}
+			main {
+				max-width: 1100px;
+				margin: 24px auto;
+				padding: 0 20px 60px;
+			}
+			#status {
+				padding: 40px 20px;
+				text-align: center;
+				color: #555;
+			}
+			#status a {
+				color: #0a4ea3;
+				font-weight: 600;
+			}
+			#toolbar {
+				display: none;
+				margin-bottom: 14px;
+			}
+			#search {
+				width: 100%;
+				max-width: 360px;
+				padding: 9px 12px;
+				border: 1px solid #ccc;
+				border-radius: 6px;
+				font-size: 14px;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				background: #fff;
+				border-radius: 8px;
+				overflow: hidden;
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+				display: none;
+			}
+			th,
+			td {
+				text-align: left;
+				padding: 10px 12px;
+				border-bottom: 1px solid #eee;
+				font-size: 13px;
+				vertical-align: middle;
+			}
+			th {
+				background: #fafafa;
+				font-size: 11px;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				color: #666;
+			}
+			td.title {
+				max-width: 280px;
+				font-weight: 500;
+			}
+			select,
+			td input[type="text"] {
+				width: 100%;
+				padding: 6px 8px;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				font-size: 13px;
+				background: #fff;
+			}
+			button.save {
+				padding: 6px 14px;
+				border: none;
+				border-radius: 5px;
+				background: #0a4ea3;
+				color: #fff;
+				font-size: 13px;
+				font-weight: 600;
+				cursor: pointer;
+				white-space: nowrap;
+			}
+			button.save:hover {
+				background: #073d82;
+			}
+			button.save:disabled {
+				opacity: 0.5;
+				cursor: default;
+			}
+			.row-flash {
+				font-size: 12px;
+				margin-left: 8px;
+			}
+			.row-flash.ok {
+				color: #0a7a3d;
+			}
+			.row-flash.err {
+				color: #c8102e;
+			}
+			td.actions {
+				display: flex;
+				align-items: center;
+				white-space: nowrap;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>Link Articles → Magazine Issue</h1>
+			<a href="/_emdash/admin">← Back to Admin</a>
+		</header>
+		<main>
+			<div id="status">Loading…</div>
+			<div id="toolbar">
+				<input id="search" type="text" placeholder="Filter by article title…" />
+			</div>
+			<table id="table">
+				<thead>
+					<tr>
+						<th>Article</th>
+						<th style="width: 220px">Issue</th>
+						<th style="width: 160px">Section</th>
+						<th style="width: 140px"></th>
+					</tr>
+				</thead>
+				<tbody id="rows"></tbody>
+			</table>
+		</main>
+		<script type="module">
+			const statusEl = document.getElementById("status");
+			const toolbarEl = document.getElementById("toolbar");
+			const tableEl = document.getElementById("table");
+			const rowsEl = document.getElementById("rows");
+			const searchEl = document.getElementById("search");
+
+			async function fetchAll(collection) {
+				const items = [];
+				let cursor;
+				for (;;) {
+					const url = new URL(`/_emdash/api/content/${collection}`, location.origin);
+					url.searchParams.set("limit", "100");
+					if (cursor) url.searchParams.set("cursor", cursor);
+					const res = await fetch(url, { credentials: "same-origin", headers: { "X-EmDash-Request": "1" } });
+					if (res.status === 401) {
+						const err = new Error("NOT_AUTHENTICATED");
+						err.code = 401;
+						throw err;
+					}
+					const json = await res.json();
+					if (!res.ok) throw new Error(json?.error?.message || `Failed to load ${collection}`);
+					items.push(...json.data.items);
+					if (!json.data.nextCursor) break;
+					cursor = json.data.nextCursor;
+				}
+				return items;
+			}
+
+			function refValue(v) {
+				return typeof v === "string" && v.startsWith("$ref:") ? v.slice(5) : null;
+			}
+
+			function magazineLabel(mag) {
+				const date = mag.data?.issue_date ? ` (${new Date(mag.data.issue_date).toLocaleDateString("en-US", { month: "short", year: "numeric" })})` : "";
+				return `${mag.data?.title || mag.slug}${date}`;
+			}
+
+			function buildRow(article, magazines) {
+				const tr = document.createElement("tr");
+				tr.dataset.title = (article.data?.title || "").toLowerCase();
+
+				const titleTd = document.createElement("td");
+				titleTd.className = "title";
+				titleTd.textContent = article.data?.title || "(untitled)";
+				tr.appendChild(titleTd);
+
+				const issueTd = document.createElement("td");
+				const select = document.createElement("select");
+				const noneOpt = document.createElement("option");
+				noneOpt.value = "";
+				noneOpt.textContent = "— none —";
+				select.appendChild(noneOpt);
+				const currentId = refValue(article.data?.issue);
+				for (const mag of magazines) {
+					const opt = document.createElement("option");
+					opt.value = mag.id;
+					opt.textContent = magazineLabel(mag);
+					if (mag.id === currentId) opt.selected = true;
+					select.appendChild(opt);
+				}
+				issueTd.appendChild(select);
+				tr.appendChild(issueTd);
+
+				const sectionTd = document.createElement("td");
+				const sectionInput = document.createElement("input");
+				sectionInput.type = "text";
+				sectionInput.placeholder = "e.g. Features";
+				sectionInput.value = article.data?.mag_section || "";
+				sectionTd.appendChild(sectionInput);
+				tr.appendChild(sectionTd);
+
+				const actionsTd = document.createElement("td");
+				actionsTd.className = "actions";
+				const saveBtn = document.createElement("button");
+				saveBtn.className = "save";
+				saveBtn.textContent = "Save";
+				const flash = document.createElement("span");
+				flash.className = "row-flash";
+				saveBtn.addEventListener("click", async () => {
+					saveBtn.disabled = true;
+					flash.textContent = "";
+					flash.className = "row-flash";
+					try {
+						const body = {
+							data: {
+								issue: select.value ? `$ref:${select.value}` : null,
+								mag_section: sectionInput.value || null,
+							},
+						};
+						const res = await fetch(`/_emdash/api/content/articles/${article.id}`, {
+							method: "PUT",
+							credentials: "same-origin",
+							headers: { "Content-Type": "application/json", "X-EmDash-Request": "1" },
+							body: JSON.stringify(body),
+						});
+						const json = await res.json();
+						if (!res.ok) throw new Error(json?.error?.message || "Save failed");
+						// Articles support revisions, so a plain PUT only writes a draft
+						// revision — it never touches the live ec_articles row. Push it
+						// live immediately, but only if the article was already published
+						// (never force-publish something intentionally left as a draft).
+						if (article.status === "published") {
+							const pubRes = await fetch(`/_emdash/api/content/articles/${article.id}/publish`, {
+								method: "POST",
+								credentials: "same-origin",
+								headers: { "X-EmDash-Request": "1" },
+							});
+							const pubJson = await pubRes.json();
+							if (!pubRes.ok) throw new Error(pubJson?.error?.message || "Saved as draft, but publish failed");
+							flash.textContent = "Saved ✓";
+						} else {
+							flash.textContent = "Saved as draft ✓";
+						}
+						flash.className = "row-flash ok";
+					} catch (e) {
+						flash.textContent = e.message;
+						flash.className = "row-flash err";
+					} finally {
+						saveBtn.disabled = false;
+					}
+				});
+				actionsTd.appendChild(saveBtn);
+				actionsTd.appendChild(flash);
+				tr.appendChild(actionsTd);
+
+				return tr;
+			}
+
+			async function init() {
+				try {
+					const [magazines, articles] = await Promise.all([fetchAll("magazines"), fetchAll("articles")]);
+					magazines.sort((a, b) => (b.data?.issue_date || "").localeCompare(a.data?.issue_date || ""));
+					articles.sort((a, b) => (a.data?.title || "").localeCompare(b.data?.title || ""));
+					for (const article of articles) rowsEl.appendChild(buildRow(article, magazines));
+					statusEl.style.display = "none";
+					toolbarEl.style.display = "block";
+					tableEl.style.display = "table";
+					searchEl.addEventListener("input", () => {
+						const q = searchEl.value.toLowerCase();
+						for (const tr of rowsEl.children) tr.style.display = tr.dataset.title.includes(q) ? "" : "none";
+					});
+				} catch (e) {
+					if (e.code === 401) {
+						statusEl.innerHTML = 'Not logged in. <a href="/_emdash/admin">Open EmDash admin</a>, log in, then reload this page.';
+					} else {
+						statusEl.textContent = `Error: ${e.message}`;
+					}
+				}
+			}
+
+			init();
+		</script>
+	</body>
+</html>

@@ -2,10 +2,15 @@
 // Internal tool: link magazine articles to an issue + section.
 // EmDash's own admin has no picker for `reference`-type fields (the Articles
 // "Issue" field is rendered as a raw `$ref:<id>` text box) — this page is a
-// real dropdown picker on top of the same authenticated content API the
+// real checklist picker on top of the same authenticated content API the
 // admin itself uses (/_emdash/api/content/*). No new auth code: requests
 // carry the browser's existing EmDash session cookie, and the API 401s for
 // anyone not logged in.
+//
+// Magazine-centric: pick one issue, then check off every article that
+// belongs in it. An article's `issue` field is a single reference (not an
+// array), so checking it here moves the article OFF whatever issue it was
+// previously on — the row shows that prior issue so the move is visible.
 ---
 
 <!doctype html>
@@ -15,7 +20,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="robots" content="noindex,nofollow" />
 		<title>Link Articles to Magazine — Admin Tool</title>
-		<style>
+		<style is:global>
 			:root {
 				color-scheme: light;
 			}
@@ -52,7 +57,7 @@
 				text-decoration: none;
 			}
 			main {
-				max-width: 1100px;
+				max-width: 1000px;
 				margin: 24px auto;
 				padding: 0 20px 60px;
 			}
@@ -67,15 +72,38 @@
 			}
 			#toolbar {
 				display: none;
-				margin-bottom: 14px;
+				margin-bottom: 16px;
+				gap: 12px;
+				align-items: center;
+				flex-wrap: wrap;
 			}
-			#search {
-				width: 100%;
-				max-width: 360px;
+			#toolbar label {
+				font-size: 12px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				color: #666;
+			}
+			#magazine-select {
 				padding: 9px 12px;
 				border: 1px solid #ccc;
 				border-radius: 6px;
 				font-size: 14px;
+				font-weight: 600;
+				min-width: 320px;
+				background: #fff;
+			}
+			#search {
+				width: 100%;
+				max-width: 280px;
+				padding: 9px 12px;
+				border: 1px solid #ccc;
+				border-radius: 6px;
+				font-size: 14px;
+			}
+			#count {
+				font-size: 12px;
+				color: #888;
 			}
 			table {
 				width: 100%;
@@ -101,11 +129,28 @@
 				letter-spacing: 0.04em;
 				color: #666;
 			}
+			tr.in-issue {
+				background: #f3f8ff;
+			}
+			td.check {
+				width: 36px;
+			}
+			td.check input {
+				width: 17px;
+				height: 17px;
+				cursor: pointer;
+			}
 			td.title {
-				max-width: 280px;
+				max-width: 320px;
 				font-weight: 500;
 			}
-			select,
+			span.elsewhere {
+				font-size: 11px;
+				color: #b45309;
+				font-weight: 400;
+				display: block;
+				margin-top: 2px;
+			}
 			td input[type="text"] {
 				width: 100%;
 				padding: 6px 8px;
@@ -114,27 +159,14 @@
 				font-size: 13px;
 				background: #fff;
 			}
-			button.save {
-				padding: 6px 14px;
-				border: none;
-				border-radius: 5px;
-				background: #0a4ea3;
-				color: #fff;
-				font-size: 13px;
-				font-weight: 600;
-				cursor: pointer;
-				white-space: nowrap;
-			}
-			button.save:hover {
-				background: #073d82;
-			}
-			button.save:disabled {
-				opacity: 0.5;
-				cursor: default;
+			td input[type="text"]:disabled {
+				background: #f5f5f5;
+				color: #aaa;
 			}
 			.row-flash {
 				font-size: 12px;
 				margin-left: 8px;
+				white-space: nowrap;
 			}
 			.row-flash.ok {
 				color: #0a7a3d;
@@ -142,10 +174,11 @@
 			.row-flash.err {
 				color: #c8102e;
 			}
-			td.actions {
+			td.section-cell {
 				display: flex;
 				align-items: center;
 				white-space: nowrap;
+				width: 260px;
 			}
 		</style>
 	</head>
@@ -157,15 +190,17 @@
 		<main>
 			<div id="status">Loading…</div>
 			<div id="toolbar">
+				<label for="magazine-select">Issue</label>
+				<select id="magazine-select"></select>
 				<input id="search" type="text" placeholder="Filter by article title…" />
+				<span id="count"></span>
 			</div>
 			<table id="table">
 				<thead>
 					<tr>
+						<th></th>
 						<th>Article</th>
-						<th style="width: 220px">Issue</th>
-						<th style="width: 160px">Section</th>
-						<th style="width: 140px"></th>
+						<th>Section</th>
 					</tr>
 				</thead>
 				<tbody id="rows"></tbody>
@@ -177,6 +212,8 @@
 			const tableEl = document.getElementById("table");
 			const rowsEl = document.getElementById("rows");
 			const searchEl = document.getElementById("search");
+			const magazineSelectEl = document.getElementById("magazine-select");
+			const countEl = document.getElementById("count");
 
 			async function fetchAll(collection) {
 				const items = [];
@@ -209,95 +246,120 @@
 				return `${mag.data?.title || mag.slug}${date}`;
 			}
 
-			function buildRow(article, magazines) {
+			async function saveArticle(article, { issueId, section }) {
+				const body = { data: { issue: issueId ? `$ref:${issueId}` : null, mag_section: section || null } };
+				const res = await fetch(`/_emdash/api/content/articles/${article.id}`, {
+					method: "PUT",
+					credentials: "same-origin",
+					headers: { "Content-Type": "application/json", "X-EmDash-Request": "1" },
+					body: JSON.stringify(body),
+				});
+				const json = await res.json();
+				if (!res.ok) throw new Error(json?.error?.message || "Save failed");
+				// Articles support revisions, so a plain PUT only writes a draft
+				// revision — it never touches the live ec_articles row. Push it
+				// live immediately, but only if the article was already published
+				// (never force-publish something intentionally left as a draft).
+				if (article.status === "published") {
+					const pubRes = await fetch(`/_emdash/api/content/articles/${article.id}/publish`, {
+						method: "POST",
+						credentials: "same-origin",
+						headers: { "X-EmDash-Request": "1" },
+					});
+					const pubJson = await pubRes.json();
+					if (!pubRes.ok) throw new Error(pubJson?.error?.message || "Saved as draft, but publish failed");
+					return "Saved ✓";
+				}
+				return "Saved as draft ✓";
+			}
+
+			function buildRow(article, magazines, selectedMagazineId) {
 				const tr = document.createElement("tr");
 				tr.dataset.title = (article.data?.title || "").toLowerCase();
+				const currentId = refValue(article.data?.issue);
+				const inSelected = currentId === selectedMagazineId;
+				if (inSelected) tr.classList.add("in-issue");
+
+				const checkTd = document.createElement("td");
+				checkTd.className = "check";
+				const checkbox = document.createElement("input");
+				checkbox.type = "checkbox";
+				checkbox.checked = inSelected;
+				checkTd.appendChild(checkbox);
+				tr.appendChild(checkTd);
 
 				const titleTd = document.createElement("td");
 				titleTd.className = "title";
 				titleTd.textContent = article.data?.title || "(untitled)";
+				if (currentId && !inSelected) {
+					const elsewhere = magazines.find((m) => m.id === currentId);
+					const tag = document.createElement("span");
+					tag.className = "elsewhere";
+					tag.textContent = `currently in: ${elsewhere ? magazineLabel(elsewhere) : currentId}`;
+					titleTd.appendChild(tag);
+				}
 				tr.appendChild(titleTd);
 
-				const issueTd = document.createElement("td");
-				const select = document.createElement("select");
-				const noneOpt = document.createElement("option");
-				noneOpt.value = "";
-				noneOpt.textContent = "— none —";
-				select.appendChild(noneOpt);
-				const currentId = refValue(article.data?.issue);
-				for (const mag of magazines) {
-					const opt = document.createElement("option");
-					opt.value = mag.id;
-					opt.textContent = magazineLabel(mag);
-					if (mag.id === currentId) opt.selected = true;
-					select.appendChild(opt);
-				}
-				issueTd.appendChild(select);
-				tr.appendChild(issueTd);
-
 				const sectionTd = document.createElement("td");
+				sectionTd.className = "section-cell";
 				const sectionInput = document.createElement("input");
 				sectionInput.type = "text";
 				sectionInput.placeholder = "e.g. Features";
-				sectionInput.value = article.data?.mag_section || "";
-				sectionTd.appendChild(sectionInput);
-				tr.appendChild(sectionTd);
-
-				const actionsTd = document.createElement("td");
-				actionsTd.className = "actions";
-				const saveBtn = document.createElement("button");
-				saveBtn.className = "save";
-				saveBtn.textContent = "Save";
+				sectionInput.value = inSelected ? article.data?.mag_section || "" : "";
+				sectionInput.disabled = !checkbox.checked;
 				const flash = document.createElement("span");
 				flash.className = "row-flash";
-				saveBtn.addEventListener("click", async () => {
-					saveBtn.disabled = true;
-					flash.textContent = "";
+
+				async function doSave() {
+					flash.textContent = "Saving…";
 					flash.className = "row-flash";
 					try {
-						const body = {
-							data: {
-								issue: select.value ? `$ref:${select.value}` : null,
-								mag_section: sectionInput.value || null,
-							},
-						};
-						const res = await fetch(`/_emdash/api/content/articles/${article.id}`, {
-							method: "PUT",
-							credentials: "same-origin",
-							headers: { "Content-Type": "application/json", "X-EmDash-Request": "1" },
-							body: JSON.stringify(body),
+						const msg = await saveArticle(article, {
+							issueId: checkbox.checked ? selectedMagazineId : null,
+							section: checkbox.checked ? sectionInput.value : null,
 						});
-						const json = await res.json();
-						if (!res.ok) throw new Error(json?.error?.message || "Save failed");
-						// Articles support revisions, so a plain PUT only writes a draft
-						// revision — it never touches the live ec_articles row. Push it
-						// live immediately, but only if the article was already published
-						// (never force-publish something intentionally left as a draft).
-						if (article.status === "published") {
-							const pubRes = await fetch(`/_emdash/api/content/articles/${article.id}/publish`, {
-								method: "POST",
-								credentials: "same-origin",
-								headers: { "X-EmDash-Request": "1" },
-							});
-							const pubJson = await pubRes.json();
-							if (!pubRes.ok) throw new Error(pubJson?.error?.message || "Saved as draft, but publish failed");
-							flash.textContent = "Saved ✓";
-						} else {
-							flash.textContent = "Saved as draft ✓";
-						}
+						article.data.issue = checkbox.checked ? `$ref:${selectedMagazineId}` : null;
+						article.data.mag_section = checkbox.checked ? sectionInput.value : null;
+						tr.classList.toggle("in-issue", checkbox.checked);
+						flash.textContent = msg;
 						flash.className = "row-flash ok";
 					} catch (e) {
 						flash.textContent = e.message;
 						flash.className = "row-flash err";
-					} finally {
-						saveBtn.disabled = false;
 					}
+				}
+
+				checkbox.addEventListener("change", () => {
+					sectionInput.disabled = !checkbox.checked;
+					if (checkbox.checked) sectionInput.focus();
+					doSave();
 				});
-				actionsTd.appendChild(saveBtn);
-				actionsTd.appendChild(flash);
-				tr.appendChild(actionsTd);
+				sectionInput.addEventListener("change", () => {
+					if (checkbox.checked) doSave();
+				});
+
+				sectionTd.appendChild(sectionInput);
+				sectionTd.appendChild(flash);
+				tr.appendChild(sectionTd);
 
 				return tr;
+			}
+
+			function renderRows(articles, magazines, selectedMagazineId) {
+				rowsEl.innerHTML = "";
+				for (const article of articles) rowsEl.appendChild(buildRow(article, magazines, selectedMagazineId));
+				applyFilter();
+			}
+
+			function applyFilter() {
+				const q = searchEl.value.toLowerCase();
+				let visible = 0;
+				for (const tr of rowsEl.children) {
+					const show = tr.dataset.title.includes(q);
+					tr.style.display = show ? "" : "none";
+					if (show) visible++;
+				}
+				countEl.textContent = `${visible} article${visible === 1 ? "" : "s"}`;
 			}
 
 			async function init() {
@@ -305,14 +367,21 @@
 					const [magazines, articles] = await Promise.all([fetchAll("magazines"), fetchAll("articles")]);
 					magazines.sort((a, b) => (b.data?.issue_date || "").localeCompare(a.data?.issue_date || ""));
 					articles.sort((a, b) => (a.data?.title || "").localeCompare(b.data?.title || ""));
-					for (const article of articles) rowsEl.appendChild(buildRow(article, magazines));
+
+					for (const mag of magazines) {
+						const opt = document.createElement("option");
+						opt.value = mag.id;
+						opt.textContent = magazineLabel(mag);
+						magazineSelectEl.appendChild(opt);
+					}
+
 					statusEl.style.display = "none";
-					toolbarEl.style.display = "block";
+					toolbarEl.style.display = "flex";
 					tableEl.style.display = "table";
-					searchEl.addEventListener("input", () => {
-						const q = searchEl.value.toLowerCase();
-						for (const tr of rowsEl.children) tr.style.display = tr.dataset.title.includes(q) ? "" : "none";
-					});
+
+					renderRows(articles, magazines, magazineSelectEl.value);
+					magazineSelectEl.addEventListener("change", () => renderRows(articles, magazines, magazineSelectEl.value));
+					searchEl.addEventListener("input", applyFilter);
 				} catch (e) {
 					if (e.code === 401) {
 						statusEl.innerHTML = 'Not logged in. <a href="/_emdash/admin">Open EmDash admin</a>, log in, then reload this page.';

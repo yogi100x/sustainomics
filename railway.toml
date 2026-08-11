@@ -1,0 +1,18 @@
+# Railway config-as-code for Sustainomics (EmDash/Astro + SQLite volume)
+# Dashboard values are overridden by this file for each deployment.
+# https://docs.railway.com/config-as-code
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# Entrypoint seeds SQLite + magazines on first boot; allow time for that.
+healthcheckPath = "/"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+# Zero-downtime: keep old instance up while new one becomes healthy.
+# Note: SQLite + a single volume means only one replica can mount /data.
+overlapSeconds = 0
+drainingSeconds = 10

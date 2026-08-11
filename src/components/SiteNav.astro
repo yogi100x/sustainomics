@@ -369,19 +369,24 @@ const UTILITY_LINKS = [
 	}
 
 	/* ---------- Search (EmDash LiveSearch) ---------- */
-	.snav-search {
+	/* LiveSearch renders as a separate component, so Astro never stamps
+	   SiteNav's scope attribute onto it — every rule targeting it must be
+	   :global(), and theming goes through the CSS vars it reads. */
+	:global(.snav-search) {
 		position: relative;
 		width: 220px;
+		--emdash-search-bg: #141414;
+		--emdash-search-text: #fff;
+		--emdash-search-border: #333;
+		--emdash-search-border-focus: #fff;
+		--emdash-search-muted: #888;
 	}
 	:global(.snav-search-input) {
 		width: 100%;
 		padding: 7px 12px;
 		font-family: var(--font-sans);
 		font-size: var(--font-size-sm);
-		border: 1px solid #333;
 		border-radius: 3px;
-		background: #141414;
-		color: #fff;
 		transition:
 			border-color var(--transition-fast),
 			box-shadow var(--transition-fast);
@@ -392,7 +397,6 @@ const UTILITY_LINKS = [
 	:global(.snav-search-input):focus,
 	:global(.snav-search-input):focus-visible {
 		outline: none;
-		border-color: #fff !important;
 		box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
 	}
 	:global(.snav-search-results) {

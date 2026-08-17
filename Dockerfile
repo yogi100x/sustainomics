@@ -18,10 +18,11 @@ RUN corepack enable
 
 WORKDIR /app
 
-# Install deps first (better layer caching)
+# Install deps first (better layer caching).
+# Note: avoid BuildKit cache mounts here — Railway requires a
+# service-specific cache id (`s/<serviceId>-...`) and rejects plain ids.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 # Build the app.
 # NOTE: astro.config.mjs reads these env vars when the config is evaluated,
@@ -67,7 +68,8 @@ COPY --from=builder /app ./
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-VOLUME ["/data"]
+# Persist SQLite + uploads via Railway volume mount at /data
+# (do not declare Docker VOLUME — Railway rejects it; use platform volumes).
 EXPOSE 3000
 
 ENTRYPOINT ["docker-entrypoint.sh"]

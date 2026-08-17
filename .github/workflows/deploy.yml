@@ -12,6 +12,11 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # gcpit-tech/sustainomics is the only deployer: it alone holds the
+    # RAILWAY_TOKEN secret. The mirror remote (yogi100x/sustainomics) runs the
+    # same workflow, so skip there instead of failing on a missing secret and
+    # instead of racing two builds into the same Railway project.
+    if: github.repository == 'gcpit-tech/sustainomics'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
